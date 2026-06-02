@@ -88,6 +88,11 @@ select {
 
 select option { background: #0e1018; }
 
+input:disabled, select:disabled, textarea:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 textarea { resize: vertical; min-height: 90px; }
 
 .captcha-wrap {

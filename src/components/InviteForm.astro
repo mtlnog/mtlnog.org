@@ -64,9 +64,8 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
 
     <div class="field">
       <label for="invite-type">{f.fields.inviteType.label} <span class="req">*</span></label>
-      <select id="invite-type" name="invite_type" required>
-        <option value="" disabled selected>{f.fields.inviteType.placeholder}</option>
-        <option value="slack">{f.fields.inviteType.slack}</option>
+      <select id="invite-type" name="invite_type" disabled>
+        <option value="slack" selected>{f.fields.inviteType.slack}</option>
       </select>
     </div>
 
