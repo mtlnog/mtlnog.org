@@ -49,3 +49,7 @@ The footer uses a plain `mailto:hello@mtlnog.org`. Enable **Scrape Shield > Emai
 ## CI
 
 `.github/workflows/ci.yml` runs tests + a build (with dummy public env values) on every PR and push to `main`. It does not deploy.
+
+## License
+
+[MIT](LICENSE) (c) 2026 MTLNOG (Montreal Network Operator Group).
