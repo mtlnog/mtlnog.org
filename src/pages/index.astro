@@ -1,4 +1,23 @@
 ---
-// Redirect root to the default locale (fr)
+// Bare "/" entry point: client-side language detection + redirect.
+// No-JS visitors get a meta-refresh to /fr/ (Quebec default) and visible links.
 ---
-<meta http-equiv="refresh" content="0;url=/fr/" />
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MTLNOG</title>
+    <noscript><meta http-equiv="refresh" content="0; url=/fr/" /></noscript>
+  </head>
+  <body>
+    <p>Redirecting… <a href="/fr/">Français</a> | <a href="/en/">English</a></p>
+    <script>
+      import { detectLocale } from '../i18n/detect';
+      const saved = localStorage.getItem('mtlnog-lang');
+      const langs = navigator.languages ?? [navigator.language ?? 'en'];
+      const target = detectLocale(saved, langs);
+      window.location.replace(target === 'fr' ? '/fr/' : '/en/');
+    </script>
+  </body>
+</html>
