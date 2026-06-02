@@ -9,9 +9,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MTLNOG</title>
     <noscript><meta http-equiv="refresh" content="0; url=/fr/" /></noscript>
+    <style is:inline>
+      :root { color-scheme: dark; }
+      html, body { height: 100%; margin: 0; }
+      body {
+        background: #08090d;
+        color: #9ba5c4;
+        font-family: 'Share Tech Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+      .redirect {
+        opacity: 0;
+        animation: redirectFade 0.4s ease 0.15s forwards;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .redirect a { color: #e8162b; text-decoration: none; }
+      .redirect a:hover { color: #ff2d42; }
+      .redirect .sep { color: #7c8aaa; margin: 0 0.5rem; }
+      @keyframes redirectFade { to { opacity: 1; } }
+      @media (prefers-reduced-motion: reduce) {
+        .redirect { animation: none; opacity: 1; }
+      }
+    </style>
   </head>
   <body>
-    <p>Redirecting… <a href="/fr/">Français</a> | <a href="/en/">English</a></p>
+    <p class="redirect">Redirecting… <a href="/fr/">Français</a><span class="sep">|</span><a href="/en/">English</a></p>
     <script>
       import { detectLocale } from '../i18n/detect';
       const saved = localStorage.getItem('mtlnog-lang');
