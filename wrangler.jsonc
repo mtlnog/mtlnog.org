@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mtlnog-org",
+  "compatibility_date": "2026-06-02",
+  // Static-assets-only Worker: no server script, just the built site.
+  // `directory` replaces the old Pages "build output directory".
+  "assets": {
+    "directory": "./dist"
+  }
+}

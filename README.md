@@ -31,14 +31,16 @@ npm run build     # static output to dist/
 npm run preview   # serve the built site locally
 ```
 
-## Deploy (Cloudflare Pages - native build)
+## Deploy (Cloudflare Workers - static assets)
 
-The GitHub repo is connected to Cloudflare Pages; CF builds and deploys on push.
+The GitHub repo is connected to Cloudflare via Workers Builds; CF builds and deploys on push to `main`. Deploy config lives in `wrangler.jsonc` (Worker name `mtlnog-org`; the built site in `./dist` is served as static assets).
 
 - **Build command:** `npm run build`
-- **Output directory:** `dist`
+- **Deploy command:** `npx wrangler deploy`
 - **Node version:** from `.nvmrc` (20)
-- **Environment variables** (set for both Production and Preview): `PUBLIC_FORMSPREE_ID`, `PUBLIC_HCAPTCHA_SITEKEY`
+- **Build environment variables** (set for Production and Preview): `PUBLIC_FORMSPREE_ID`, `PUBLIC_HCAPTCHA_SITEKEY`
+
+Deploy manually with `npm run deploy` (requires `wrangler login` or a `CLOUDFLARE_API_TOKEN`).
 
 ### Production email obfuscation
 

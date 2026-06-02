@@ -39,11 +39,11 @@ Color tokens: `--bg #08090d`, `--surface #0e1018`, `--border #2a3048`,
 | i18n URL strategy | **Both locales prefixed**: `/fr/` and `/en/`; bare `/` redirects by browser language |
 | Default ordering | FR-first content ordering preserved where both appear |
 | Form submission | **AJAX** via `fetch()` to Formspree with inline `.status` messages; button disabled while sending |
-| Credentials/config | Formspree form ID + hCaptcha sitekey injected via Astro `PUBLIC_*` env vars; real `.env` git-ignored, `.env.example` committed with placeholders; production values set in the Cloudflare Pages dashboard |
+| Credentials/config | Formspree form ID + hCaptcha sitekey injected via Astro `PUBLIC_*` env vars; real `.env` git-ignored, `.env.example` committed with placeholders; production values set as build variables in the Cloudflare Workers project |
 | Logo | **Extract** base64 → `public/logo.png` real asset |
 | Color states | **Align to red accent** (fix cyan focus/hover/status flashes) |
 | Email | Plain `mailto:hello@mtlnog.org` in source; rely on Cloudflare's serve-time **Email Address Obfuscation** (Scrape Shield) in production |
-| Deploy | **Cloudflare Pages native build** (CF builds on push to GitHub; build command `npm run build`, output `dist`) |
+| Deploy | **Cloudflare Workers Builds** (static assets via `wrangler.jsonc`; CF builds + deploys on push; `npm run build` then `npx wrangler deploy`) |
 | CI gate | Lightweight **GitHub Actions** workflow runs tests + build check on PRs (no deploy) |
 
 > **Note on "secrets":** the hCaptcha *sitekey* and Formspree *form ID* are public client-side identifiers — they are sent to every browser and appear in the deployed HTML/JS regardless. Env-var injection provides config hygiene and easy rotation, **not** secrecy. The genuinely secret hCaptcha secret key lives on Formspree's side, never in this repo.
@@ -55,11 +55,12 @@ Static Astro project (`output: 'static'`), no SSR runtime.
 ```
 mtlnog_dot_org/
 ├─ astro.config.mjs          # i18n: locales ['fr','en'], defaultLocale 'fr', prefixDefaultLocale: true
+├─ wrangler.jsonc            # Cloudflare Workers deploy config (assets.directory: ./dist)
 ├─ package.json
 ├─ .env.example              # PUBLIC_FORMSPREE_ID / PUBLIC_HCAPTCHA_SITEKEY placeholders (committed)
 ├─ .env                      # real values for local dev (git-ignored)
 ├─ .github/workflows/ci.yml  # PR gate: npm test + npm run build (no deploy)
-├─ README.md                 # build, config, and Cloudflare Pages deploy notes
+├─ README.md                 # build, config, and Cloudflare Workers deploy notes
 ├─ public/
 │  └─ logo.png               # decoded from source base64 (605×147 PNG)
 ├─ src/
@@ -164,21 +165,23 @@ Values that vary by environment are injected, not hard-coded:
   injection is for config hygiene/rotation, not concealment. No private key
   (hCaptcha secret) exists in this repo; Formspree holds it.
 
-## Deployment (Cloudflare Pages)
+## Deployment (Cloudflare Workers — static assets)
 
-- **Native build:** the GitHub repo is connected to Cloudflare Pages; CF builds
-  on push. Settings (in the CF dashboard): build command `npm run build`, output
-  directory `dist`, Node 20+.
-- **Env vars:** `PUBLIC_FORMSPREE_ID` and `PUBLIC_HCAPTCHA_SITEKEY` set in the
-  CF Pages project (Production + Preview environments).
+- **Workers Builds:** the GitHub repo is connected to Cloudflare via Workers
+  Builds; CF builds and deploys on push to `main`. Build command `npm run build`,
+  deploy command `npx wrangler deploy`, Node from `.nvmrc` (20). Deploy config is
+  `wrangler.jsonc` (Worker name `mtlnog-org`; `assets.directory: ./dist` serves
+  the built site — no server script).
+- **Env vars:** `PUBLIC_FORMSPREE_ID` and `PUBLIC_HCAPTCHA_SITEKEY` set as build
+  variables in the Worker project (Production + Preview).
 - **Email obfuscation:** the source uses a plain `mailto:hello@mtlnog.org`.
   Enable Cloudflare's **Email Address Obfuscation** (Scrape Shield) on the
   production zone — Cloudflare rewrites the address at serve time. No source-side
   obfuscation is hand-rolled.
 - **CI gate (GitHub Actions):** `.github/workflows/ci.yml` runs `npm ci`,
   `npm test`, and `npm run build` on pull requests. It does **not** deploy
-  (CF Pages owns deploy). The build step uses dummy `PUBLIC_*` values so it
-  validates without needing real secrets.
+  (Cloudflare Workers Builds owns deploy). The build step uses dummy `PUBLIC_*`
+  values so it validates without needing real secrets.
 
 ## Styling
 

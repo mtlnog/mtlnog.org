@@ -11,3 +11,6 @@ dist/
 # Local Node version manager config (use .nvmrc as the committed source of truth)
 mise.toml
 .mise.toml
+
+# Wrangler local state/cache
+.wrangler/
