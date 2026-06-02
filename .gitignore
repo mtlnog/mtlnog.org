@@ -2,3 +2,8 @@ node_modules/
 dist/
 .astro/
 .DS_Store
+
+# Local environment values (never commit real credentials)
+.env
+.env.*
+!.env.example
