@@ -32,6 +32,7 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
     data-success={f.status.success}
     data-error={f.status.error}
     data-network-error={f.status.networkError}
+    data-captcha-error={f.status.captchaError}
   >
     <div class="field">
       <label for="fname">{f.fields.fname.label} <span class="req">*</span></label>
@@ -100,6 +101,18 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
       e.preventDefault();
       statusEl.className = 'status';
       statusEl.textContent = '';
+
+      // Require a completed hCaptcha before sending.
+      const h = (window as unknown as {
+        hcaptcha?: { getResponse?: () => string; reset: () => void };
+      }).hcaptcha;
+      const token = h?.getResponse ? h.getResponse() : '';
+      if (!token) {
+        statusEl.textContent = form.dataset.captchaError ?? '';
+        statusEl.classList.add('error');
+        return;
+      }
+
       btn.disabled = true;
 
       try {
@@ -113,7 +126,6 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
           statusEl.textContent = form.dataset.success ?? '';
           statusEl.classList.add('success');
           form.reset();
-          const h = (window as unknown as { hcaptcha?: { reset: () => void } }).hcaptcha;
           if (h) h.reset();
         } else {
           const data = await res.json().catch(() => null);

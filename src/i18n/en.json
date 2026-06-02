@@ -46,7 +46,8 @@
     "status": {
       "success": "Thanks! Your request has been sent.",
       "error": "Something went wrong. Please try again.",
-      "networkError": "Network error. Please check your connection and try again."
+      "networkError": "Network error. Please check your connection and try again.",
+      "captchaError": "Please complete the verification before sending."
     }
   }
 }

@@ -46,7 +46,8 @@
     "status": {
       "success": "Merci ! Votre demande a été envoyée.",
       "error": "Une erreur s'est produite. Veuillez réessayer.",
-      "networkError": "Erreur réseau. Veuillez vérifier votre connexion et réessayer."
+      "networkError": "Erreur réseau. Veuillez vérifier votre connexion et réessayer.",
+      "captchaError": "Veuillez compléter la vérification avant d'envoyer."
     }
   }
 }
