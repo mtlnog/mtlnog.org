@@ -39,9 +39,14 @@ Color tokens: `--bg #08090d`, `--surface #0e1018`, `--border #2a3048`,
 | i18n URL strategy | **Both locales prefixed**: `/fr/` and `/en/`; bare `/` redirects by browser language |
 | Default ordering | FR-first content ordering preserved where both appear |
 | Form submission | **AJAX** via `fetch()` to Formspree with inline `.status` messages; button disabled while sending |
-| Credentials | **Keep** existing Formspree endpoint + hCaptcha sitekey |
+| Credentials/config | Formspree form ID + hCaptcha sitekey injected via Astro `PUBLIC_*` env vars; real `.env` git-ignored, `.env.example` committed with placeholders; production values set in the Cloudflare Pages dashboard |
 | Logo | **Extract** base64 → `public/logo.png` real asset |
 | Color states | **Align to red accent** (fix cyan focus/hover/status flashes) |
+| Email | Plain `mailto:hello@mtlnog.org` in source; rely on Cloudflare's serve-time **Email Address Obfuscation** (Scrape Shield) in production |
+| Deploy | **Cloudflare Pages native build** (CF builds on push to GitHub; build command `npm run build`, output `dist`) |
+| CI gate | Lightweight **GitHub Actions** workflow runs tests + build check on PRs (no deploy) |
+
+> **Note on "secrets":** the hCaptcha *sitekey* and Formspree *form ID* are public client-side identifiers — they are sent to every browser and appear in the deployed HTML/JS regardless. Env-var injection provides config hygiene and easy rotation, **not** secrecy. The genuinely secret hCaptcha secret key lives on Formspree's side, never in this repo.
 
 ## Architecture
 
@@ -51,6 +56,10 @@ Static Astro project (`output: 'static'`), no SSR runtime.
 mtlnog_dot_org/
 ├─ astro.config.mjs          # i18n: locales ['fr','en'], defaultLocale 'fr', prefixDefaultLocale: true
 ├─ package.json
+├─ .env.example              # PUBLIC_FORMSPREE_ID / PUBLIC_HCAPTCHA_SITEKEY placeholders (committed)
+├─ .env                      # real values for local dev (git-ignored)
+├─ .github/workflows/ci.yml  # PR gate: npm test + npm run build (no deploy)
+├─ README.md                 # build, config, and Cloudflare Pages deploy notes
 ├─ public/
 │  └─ logo.png               # decoded from source base64 (605×147 PNG)
 ├─ src/
@@ -132,6 +141,45 @@ Inline script in `InviteForm`:
 hCaptcha continues to load via `https://js.hcaptcha.com/1/api.js`. Submit
 requires a captcha token (Formspree enforces server-side; client also checks).
 
+The Formspree action URL and hCaptcha `data-sitekey` are read from env vars in
+the component frontmatter (`import.meta.env.PUBLIC_FORMSPREE_ID` /
+`PUBLIC_HCAPTCHA_SITEKEY`). A guard in the frontmatter throws at build time if
+either is missing, so a misconfigured CI build fails fast instead of shipping a
+broken form.
+
+## Configuration & secrets
+
+Values that vary by environment are injected, not hard-coded:
+
+| Env var | Used for | Public? |
+|---|---|---|
+| `PUBLIC_FORMSPREE_ID` | Formspree form id → `https://formspree.io/f/<id>` | Yes (in shipped HTML) |
+| `PUBLIC_HCAPTCHA_SITEKEY` | hCaptcha `data-sitekey` | Yes (in shipped HTML) |
+
+- `.env.example` (committed) documents both with placeholder values.
+- `.env` (git-ignored) holds the real values for local dev/build.
+- Astro requires the `PUBLIC_` prefix to expose a var to component/client code;
+  these become part of the static output by design.
+- **Not secret:** both are client-side identifiers visible in any served page —
+  injection is for config hygiene/rotation, not concealment. No private key
+  (hCaptcha secret) exists in this repo; Formspree holds it.
+
+## Deployment (Cloudflare Pages)
+
+- **Native build:** the GitHub repo is connected to Cloudflare Pages; CF builds
+  on push. Settings (in the CF dashboard): build command `npm run build`, output
+  directory `dist`, Node 20+.
+- **Env vars:** `PUBLIC_FORMSPREE_ID` and `PUBLIC_HCAPTCHA_SITEKEY` set in the
+  CF Pages project (Production + Preview environments).
+- **Email obfuscation:** the source uses a plain `mailto:hello@mtlnog.org`.
+  Enable Cloudflare's **Email Address Obfuscation** (Scrape Shield) on the
+  production zone — Cloudflare rewrites the address at serve time. No source-side
+  obfuscation is hand-rolled.
+- **CI gate (GitHub Actions):** `.github/workflows/ci.yml` runs `npm ci`,
+  `npm test`, and `npm run build` on pull requests. It does **not** deploy
+  (CF Pages owns deploy). The build step uses dummy `PUBLIC_*` values so it
+  validates without needing real secrets.
+
 ## Styling
 
 Port the source `<style>` block **verbatim** into the SCSS partials — identical
@@ -166,3 +214,6 @@ analytics, no build-time image optimization beyond serving the static PNG.
 - Form submits via AJAX and shows localized inline success/error without leaving the page
 - Layout matches the source at desktop and ≤600px; no cyan remains in focus/hover/status states
 - All styling originates from SCSS partials compiled by Astro (no inline `<style>` blocks of substance)
+- No Formspree id or hCaptcha sitekey is hard-coded in tracked source; both come from `PUBLIC_*` env vars, with `.env` git-ignored and `.env.example` committed
+- A build with missing env vars fails fast (frontmatter guard), rather than shipping a broken form
+- `.github/workflows/ci.yml` runs tests + build on PRs and passes with dummy env values

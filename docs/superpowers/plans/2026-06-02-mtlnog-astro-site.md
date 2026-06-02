@@ -6,7 +6,7 @@
 
 **Architecture:** Static Astro project. Two single-language pages (`/fr/`, `/en/`) assembled from shared components that receive a per-locale string dictionary. The bare `/` is a tiny client-side redirect page that picks a locale from `localStorage` then `navigator.languages`. All styling lives in SCSS partials compiled by Astro into one hashed CSS file. The invite form submits to Formspree via `fetch()` and shows localized inline status messages.
 
-**Tech Stack:** Astro 5, Sass (SCSS), Vitest (for the pure i18n/detection logic), Formspree + hCaptcha (existing credentials).
+**Tech Stack:** Astro 5, Sass (SCSS), Vitest (for the pure i18n/detection logic), Formspree + hCaptcha (injected via `PUBLIC_*` env vars). Deployed via Cloudflare Pages native build; GitHub Actions runs a test+build PR gate.
 
 ---
 
@@ -17,6 +17,10 @@
 | `package.json` | Dependencies + scripts (`dev`, `build`, `preview`, `test`) |
 | `astro.config.mjs` | Static output + i18n locale config |
 | `tsconfig.json` | Strict TS, JSON module resolution |
+| `.env.example` / `.env` | `PUBLIC_*` credential placeholders (committed) / real values (git-ignored) |
+| `.gitignore` | Extended to ignore `.env` files |
+| `.github/workflows/ci.yml` | PR gate: tests + build (dummy env), no deploy |
+| `README.md` | Build, config, and Cloudflare Pages deploy notes |
 | `public/logo.png` | Decoded brand logo asset (605×147) |
 | `src/i18n/utils.ts` | `Locale` type, `getStrings`, `otherLocale`, `isLocale`, `Strings` type |
 | `src/i18n/detect.ts` | Pure `detectLocale(saved, navigatorLanguages)` |
@@ -41,6 +45,11 @@
 - Create: `package.json`
 - Create: `astro.config.mjs`
 - Create: `tsconfig.json`
+- Create: `.env.example`
+- Create: `.env` (git-ignored, local only)
+- Modify: `.gitignore`
+
+> A `.gitignore` already exists at the repo root (ignoring `node_modules/`, `dist/`, `.astro/`, `.DS_Store`). This task extends it to ignore `.env` files.
 
 - [ ] **Step 1: Create `package.json`**
 
@@ -105,12 +114,49 @@ Expected: completes without error; `node_modules/` and `package-lock.json` creat
 Run: `npx astro --version`
 Expected: prints a version number (e.g. `5.x.x`).
 
-- [ ] **Step 6: Commit**
+- [ ] **Step 6: Add `.env` files to `.gitignore`**
+
+Append these lines to the existing `.gitignore`:
+
+```gitignore
+# Local environment values (never commit real credentials)
+.env
+.env.*
+!.env.example
+```
+
+- [ ] **Step 7: Create `.env.example` (committed, placeholders only)**
+
+```dotenv
+# Public client-side identifiers — injected at build time.
+# These ARE visible in the shipped HTML; this file documents them, it does not hide them.
+PUBLIC_FORMSPREE_ID=your-formspree-form-id
+PUBLIC_HCAPTCHA_SITEKEY=your-hcaptcha-sitekey
+```
+
+- [ ] **Step 8: Create local `.env` with the real values (git-ignored)**
+
+This file must NOT be committed (Step 6 ignores it). It holds the real values so
+local dev and local builds work:
+
+```dotenv
+PUBLIC_FORMSPREE_ID=xjgznrjb
+PUBLIC_HCAPTCHA_SITEKEY=7a007138-8286-449e-af82-7bd25d9ed86a
+```
+
+- [ ] **Step 9: Verify `.env` is ignored by git**
+
+Run: `git check-ignore .env && git status --porcelain | grep -c '\.env$'`
+Expected: prints `.env` (it is ignored), then `0` (it is not in the staging/working list). If `.env` shows up as untracked, fix `.gitignore` before continuing.
+
+- [ ] **Step 10: Commit**
 
 ```bash
-git add package.json package-lock.json astro.config.mjs tsconfig.json
-git commit -m "Scaffold Astro project with i18n config"
+git add package.json package-lock.json astro.config.mjs tsconfig.json .gitignore .env.example
+git commit -m "Scaffold Astro project with i18n config and env-based credentials"
 ```
+
+> Sanity check: confirm `.env` is NOT in the commit (`git show --stat HEAD | grep -c '\.env$'` should print `0`; `.env.example` is fine).
 
 ---
 
@@ -1183,6 +1229,17 @@ interface Props {
 
 const { strings } = Astro.props;
 const f = strings.form;
+
+// Public client-side identifiers, injected from env (.env locally, CF Pages dashboard in prod).
+// Fail the build fast if either is missing so we never ship a broken form.
+const FORMSPREE_ID = import.meta.env.PUBLIC_FORMSPREE_ID;
+const HCAPTCHA_SITEKEY = import.meta.env.PUBLIC_HCAPTCHA_SITEKEY;
+if (!FORMSPREE_ID || !HCAPTCHA_SITEKEY) {
+  throw new Error(
+    'Missing PUBLIC_FORMSPREE_ID or PUBLIC_HCAPTCHA_SITEKEY. Set them in .env (local) or the Cloudflare Pages dashboard (prod).',
+  );
+}
+const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
 ---
 <section class="form-section" id="invite">
   <div class="section-label">{f.sectionLabel}</div>
@@ -1191,7 +1248,7 @@ const f = strings.form;
 
   <form
     id="invite-form"
-    action="https://formspree.io/f/xjgznrjb"
+    action={formAction}
     method="POST"
     novalidate
     data-success={f.status.success}
@@ -1241,7 +1298,7 @@ const f = strings.form;
 
     <div class="captcha-wrap">
       <label>{f.fields.captcha} <span class="req">*</span></label>
-      <div class="h-captcha" data-sitekey="7a007138-8286-449e-af82-7bd25d9ed86a" data-theme="dark"></div>
+      <div class="h-captcha" data-sitekey={HCAPTCHA_SITEKEY} data-theme="dark"></div>
     </div>
 
     <div class="status" id="form-status" role="alert"></div>
@@ -1446,7 +1503,22 @@ Expected: success; `dist/` contains `index.html`, `fr/index.html`, `en/index.htm
 Run: `cat dist/_astro/*.css | grep -c '232,22,43\|232, 22, 43\|#ff2d42' && cat dist/_astro/*.css | grep -c '0,229,255\|0, 229, 255\|#33ecff'`
 Expected: first count `>= 1` (red fixes present); second count `0` (no cyan remains).
 
-- [ ] **Step 4: Manual smoke test in a browser**
+- [ ] **Step 4: Confirm credentials are NOT hard-coded in tracked source**
+
+Run: `git grep -n 'xjgznrjb\|7a007138-8286-449e-af82-7bd25d9ed86a' -- src ':!docs' || echo "OK: no hard-coded credentials in src"`
+Expected: prints `OK: no hard-coded credentials in src` (the values live only in the git-ignored `.env` and the CF Pages dashboard).
+
+- [ ] **Step 5: Confirm the build still injected the values into the output**
+
+Run: `grep -c 'formspree.io/f/xjgznrjb' dist/fr/index.html && grep -c 'data-sitekey="7a007138-8286-449e-af82-7bd25d9ed86a"' dist/fr/index.html`
+Expected: both `1` — the env values were baked into the shipped HTML at build time (expected: these are public identifiers).
+
+- [ ] **Step 6: Verify the missing-env guard fails the build**
+
+Run: `rm -rf dist && env -u PUBLIC_FORMSPREE_ID PUBLIC_HCAPTCHA_SITEKEY sh -c 'mv .env .env.bak; npm run build; status=$?; mv .env.bak .env; exit $status'`
+Expected: build FAILS with the error "Missing PUBLIC_FORMSPREE_ID or PUBLIC_HCAPTCHA_SITEKEY…". Then re-run `npm run build` and confirm it succeeds again with `.env` restored.
+
+- [ ] **Step 7: Manual smoke test in a browser**
 
 Run: `npm run preview`
 Then open the printed URL and verify manually:
@@ -1459,11 +1531,115 @@ Then open the printed URL and verify manually:
 
 Stop preview with Ctrl-C when done.
 
-- [ ] **Step 5: Final commit (if any verification fixes were made)**
+- [ ] **Step 8: Final commit (if any verification fixes were made)**
 
 ```bash
 git add -A
 git commit -m "Verify build and finalize MTLNOG Astro site"
+```
+
+---
+
+## Task 14: Deployment config (Cloudflare Pages + CI gate)
+
+**Files:**
+- Create: `.github/workflows/ci.yml`
+- Create: `README.md`
+
+> Deploy is handled by Cloudflare Pages' **native build** (no in-repo deploy step). This task adds (a) a GitHub Actions PR gate that runs tests + a build with dummy env values, and (b) a README documenting the CF Pages dashboard settings and the production email-obfuscation toggle.
+
+- [ ] **Step 1: Create `.github/workflows/ci.yml`**
+
+```yaml
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Build (dummy public env values — real ones live in Cloudflare Pages)
+        run: npm run build
+        env:
+          PUBLIC_FORMSPREE_ID: ci-dummy
+          PUBLIC_HCAPTCHA_SITEKEY: 10000000-ffff-ffff-ffff-000000000001
+```
+
+(`10000000-ffff-ffff-ffff-000000000001` is hCaptcha's public "always passes" test sitekey — fine for a build-only check that never submits.)
+
+- [ ] **Step 2: Create `README.md`**
+
+````markdown
+# MTLNOG site
+
+Bilingual (FR/EN) static site for the Montreal Network Operator Group, built with Astro.
+
+## Develop
+
+```bash
+npm install
+cp .env.example .env   # then fill in real values (see below)
+npm run dev
+```
+
+## Configuration
+
+Two public, client-side identifiers are injected via env vars (Astro requires the `PUBLIC_` prefix):
+
+| Var | Value |
+|---|---|
+| `PUBLIC_FORMSPREE_ID` | Formspree form id (the part after `/f/`) |
+| `PUBLIC_HCAPTCHA_SITEKEY` | hCaptcha sitekey |
+
+These appear in the shipped HTML — they are not secrets. Locally they live in `.env` (git-ignored). In production they are set in the Cloudflare Pages dashboard.
+
+## Build & test
+
+```bash
+npm test          # vitest (i18n + detection logic)
+npm run build     # static output to dist/
+npm run preview   # serve the built site locally
+```
+
+## Deploy (Cloudflare Pages — native build)
+
+The GitHub repo is connected to Cloudflare Pages; CF builds and deploys on push.
+
+- **Build command:** `npm run build`
+- **Output directory:** `dist`
+- **Node version:** 20+
+- **Environment variables** (set for both Production and Preview): `PUBLIC_FORMSPREE_ID`, `PUBLIC_HCAPTCHA_SITEKEY`
+
+### Production email obfuscation
+
+The footer uses a plain `mailto:hello@mtlnog.org`. Enable **Scrape Shield → Email Address Obfuscation** on the production Cloudflare zone so Cloudflare rewrites the address at serve time. No source-side obfuscation is needed.
+
+## CI
+
+`.github/workflows/ci.yml` runs tests + a build (with dummy public env values) on every PR and push to `main`. It does not deploy.
+````
+
+- [ ] **Step 3: Verify the CI workflow is valid YAML**
+
+Run: `python3 -c "import yaml,sys; yaml.safe_load(open('.github/workflows/ci.yml')); print('valid yaml')"`
+Expected: prints `valid yaml`.
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add .github/workflows/ci.yml README.md
+git commit -m "Add CI gate workflow and Cloudflare Pages deployment docs"
 ```
 
 ---
@@ -1479,8 +1655,13 @@ git commit -m "Verify build and finalize MTLNOG Astro site"
 - Logo extracted to file → Task 2. ✓
 - Color alignment (3 cyan→red fixes) → Task 5 (+ verified Task 13 step 3). ✓
 - Per-language `<html lang>` + localized `<title>`/description → Tasks 6, 11. ✓
+- Credentials out of git via `PUBLIC_*` env vars; `.env` ignored, `.env.example` committed → Task 1 (+ form reads env in Task 10, verified Task 13 steps 4–6). ✓
+- Build/publish from CI: Cloudflare Pages native build + GitHub Actions PR gate → Task 14. ✓
+- Production email obfuscation via Cloudflare Scrape Shield (plain `mailto:` in source) → Task 6 footer + documented in Task 14 README. ✓
 - YAGNI (no CMS/extra pages/islands) → respected. ✓
 
 **Placeholder scan:** No "TBD"/"implement later"; every code step contains complete content. Mastodon/LinkedIn SVG paths are concrete (Simple Icons); X path from source. Note about possible `utils.test.ts` assertion update in Task 4 step 4 is explicit with the exact replacement code.
 
 **Type consistency:** `Locale`/`Strings` defined in Task 3, imported consistently in Tasks 6–11. `detectLocale(saved, navigatorLanguages)` signature matches its call site in Task 12. `getStrings`/`otherLocale`/`isLocale` names consistent throughout. Form `data-*` attributes (`data-success`/`data-error`/`data-network-error`) set in Task 10 markup match `form.dataset.success`/`.error`/`.networkError` reads in the same task's script. CSS class names (`.header-actions`, `.lang-switch .active`, `.divider-wrap`) defined in Task 5 match markup in Tasks 7, 8, 11.
+
+**Env-var consistency:** `PUBLIC_FORMSPREE_ID` / `PUBLIC_HCAPTCHA_SITEKEY` names are identical across `.env.example` and `.env` (Task 1), the `import.meta.env.PUBLIC_*` reads + guard (Task 10), the CI workflow `env:` block (Task 14), and the README/CF Pages docs (Task 14). The real values used in local `.env` (Task 1) match the values asserted in the build-injection check (Task 13 step 5).
