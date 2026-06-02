@@ -1,0 +1,7 @@
+@media (max-width: 600px) {
+  form { grid-template-columns: 1fr; }
+  .field.full { grid-column: 1; }
+  .captcha-wrap { grid-column: 1; }
+  .submit-row { grid-column: 1; }
+  nav { display: none; }
+}

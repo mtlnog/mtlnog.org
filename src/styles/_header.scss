@@ -1,0 +1,78 @@
+header {
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+  animation: fadeDown 0.7s ease both;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-mark {
+  height: 32px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  font-family: var(--mono);
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+
+  span {
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    display: block;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+}
+
+.header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+nav {
+  display: flex;
+  gap: 1.75rem;
+  align-items: center;
+
+  a {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+
+    &:hover { color: var(--accent); }
+  }
+}
+
+.lang-switch {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+
+  a,
+  span {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    transition: color 0.2s;
+  }
+
+  a:hover { color: var(--accent); }
+  .active { color: var(--accent); }
+  .sep { color: var(--muted); }
+}
