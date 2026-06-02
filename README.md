@@ -21,7 +21,7 @@ Two public, client-side identifiers are injected via env vars (Astro requires th
 | `PUBLIC_FORMSPREE_ID` | Formspree form id (the part after `/f/`) |
 | `PUBLIC_HCAPTCHA_SITEKEY` | hCaptcha sitekey |
 
-These appear in the shipped HTML — they are not secrets. Locally they live in `.env` (git-ignored). In production they are set in the Cloudflare Pages dashboard. The build fails fast if either is missing.
+These appear in the shipped HTML - they are not secrets. Locally they live in `.env` (git-ignored). In production they are set in the Cloudflare Pages dashboard. The build fails fast if either is missing.
 
 ## Build & test
 
@@ -31,7 +31,7 @@ npm run build     # static output to dist/
 npm run preview   # serve the built site locally
 ```
 
-## Deploy (Cloudflare Pages — native build)
+## Deploy (Cloudflare Pages - native build)
 
 The GitHub repo is connected to Cloudflare Pages; CF builds and deploys on push.
 
@@ -42,7 +42,7 @@ The GitHub repo is connected to Cloudflare Pages; CF builds and deploys on push.
 
 ### Production email obfuscation
 
-The footer uses a plain `mailto:hello@mtlnog.org`. Enable **Scrape Shield → Email Address Obfuscation** on the production Cloudflare zone so Cloudflare rewrites the address at serve time. No source-side obfuscation is needed.
+The footer uses a plain `mailto:hello@mtlnog.org`. Enable **Scrape Shield > Email Address Obfuscation** on the production Cloudflare zone so Cloudflare rewrites the address at serve time. No source-side obfuscation is needed.
 
 ## CI
 
