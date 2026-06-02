@@ -10,7 +10,7 @@ cp .env.example .env   # then fill in real values (see below)
 npm run dev
 ```
 
-Node version is pinned in `.nvmrc` (Node 20); nvm, mise, and Cloudflare Pages all read it.
+Node version is pinned in `.nvmrc` (Node 22, required by wrangler); nvm, mise, and Cloudflare all read it.
 
 ## Configuration
 
@@ -37,7 +37,7 @@ The GitHub repo is connected to Cloudflare via Workers Builds; CF builds and dep
 
 - **Build command:** `npm run build`
 - **Deploy command:** `npx wrangler deploy`
-- **Node version:** from `.nvmrc` (20)
+- **Node version:** from `.nvmrc` (22)
 - **Build environment variables** (set for Production and Preview): `PUBLIC_FORMSPREE_ID`, `PUBLIC_HCAPTCHA_SITEKEY`
 
 Deploy manually with `npm run deploy` (requires `wrangler login` or a `CLOUDFLARE_API_TOKEN`).

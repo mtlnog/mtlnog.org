@@ -169,7 +169,7 @@ Values that vary by environment are injected, not hard-coded:
 
 - **Workers Builds:** the GitHub repo is connected to Cloudflare via Workers
   Builds; CF builds and deploys on push to `main`. Build command `npm run build`,
-  deploy command `npx wrangler deploy`, Node from `.nvmrc` (20). Deploy config is
+  deploy command `npx wrangler deploy`, Node from `.nvmrc` (22). Deploy config is
   `wrangler.jsonc` (Worker name `mtlnog-org`; `assets.directory: ./dist` serves
   the built site — no server script).
 - **Env vars:** `PUBLIC_FORMSPREE_ID` and `PUBLIC_HCAPTCHA_SITEKEY` set as build
