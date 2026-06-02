@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "title": "MTLNOG // Montreal Network Operator Group",
+    "description": "MTLNOG brings together network engineers and operators in Montréal, Quebec, and beyond to share knowledge and foster connections within the network operator community."
+  },
+  "nav": {
+    "invite": "Request an Invite"
+  },
+  "hero": {
+    "intro": "MTLNOG brings together network engineers and operators in Montréal, Quebec, and beyond to share knowledge and foster connections within the network operator community."
+  },
+  "form": {
+    "sectionLabel": "Request Access",
+    "heading": "Join the Community",
+    "sub": "The Slack workspace is subject to approval by the MTLNOG team.",
+    "fields": {
+      "fname": { "label": "First Name", "placeholder": "John" },
+      "lname": { "label": "Last Name", "placeholder": "Smith" },
+      "email": { "label": "Email", "placeholder": "you@example.net" },
+      "org": { "label": "Organization / ASN", "placeholder": "Acme Networks / AS12345" },
+      "role": {
+        "label": "Role",
+        "placeholder": "Select…",
+        "options": [
+          "Network Engineer",
+          "Network Operator",
+          "Systems & Infrastructure Engineer",
+          "Network Manager",
+          "Researcher & Academic",
+          "Other"
+        ]
+      },
+      "inviteType": {
+        "label": "Invitation For",
+        "placeholder": "Select…",
+        "slack": "Slack Workspace"
+      },
+      "intro": {
+        "label": "Brief Introduction",
+        "placeholder": "Tell us about your networking background and why you'd like to join MTLNOG."
+      },
+      "captcha": "Verification"
+    },
+    "submit": "Send →",
+    "note": "Your info is used solely to review your membership request.",
+    "status": {
+      "success": "Thanks! Your request has been sent.",
+      "error": "Something went wrong. Please try again.",
+      "networkError": "Network error. Please check your connection and try again."
+    }
+  }
+}

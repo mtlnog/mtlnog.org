@@ -1,0 +1,132 @@
+---
+import type { Strings } from '../i18n/utils';
+
+interface Props {
+  strings: Strings;
+}
+
+const { strings } = Astro.props;
+const f = strings.form;
+
+// Public client-side identifiers, injected from env (.env locally, CF Pages dashboard in prod).
+// Fail the build fast if either is missing so we never ship a broken form.
+const FORMSPREE_ID = import.meta.env.PUBLIC_FORMSPREE_ID;
+const HCAPTCHA_SITEKEY = import.meta.env.PUBLIC_HCAPTCHA_SITEKEY;
+if (!FORMSPREE_ID || !HCAPTCHA_SITEKEY) {
+  throw new Error(
+    'Missing PUBLIC_FORMSPREE_ID or PUBLIC_HCAPTCHA_SITEKEY. Set them in .env (local) or the Cloudflare Pages dashboard (prod).',
+  );
+}
+const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
+---
+<section class="form-section" id="invite">
+  <div class="section-label">{f.sectionLabel}</div>
+  <h2>{f.heading}</h2>
+  <p class="sub">{f.sub}</p>
+
+  <form
+    id="invite-form"
+    action={formAction}
+    method="POST"
+    novalidate
+    data-success={f.status.success}
+    data-error={f.status.error}
+    data-network-error={f.status.networkError}
+  >
+    <div class="field">
+      <label for="fname">{f.fields.fname.label} <span class="req">*</span></label>
+      <input type="text" id="fname" name="fname" autocomplete="given-name" required placeholder={f.fields.fname.placeholder} />
+    </div>
+
+    <div class="field">
+      <label for="lname">{f.fields.lname.label} <span class="req">*</span></label>
+      <input type="text" id="lname" name="lname" autocomplete="family-name" required placeholder={f.fields.lname.placeholder} />
+    </div>
+
+    <div class="field">
+      <label for="email">{f.fields.email.label} <span class="req">*</span></label>
+      <input type="email" id="email" name="email" autocomplete="email" required placeholder={f.fields.email.placeholder} />
+    </div>
+
+    <div class="field">
+      <label for="org">{f.fields.org.label}</label>
+      <input type="text" id="org" name="org" placeholder={f.fields.org.placeholder} />
+    </div>
+
+    <div class="field">
+      <label for="role">{f.fields.role.label} <span class="req">*</span></label>
+      <select id="role" name="role" required>
+        <option value="" disabled selected>{f.fields.role.placeholder}</option>
+        {f.fields.role.options.map((opt) => <option>{opt}</option>)}
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="invite-type">{f.fields.inviteType.label} <span class="req">*</span></label>
+      <select id="invite-type" name="invite_type" required>
+        <option value="" disabled selected>{f.fields.inviteType.placeholder}</option>
+        <option value="slack">{f.fields.inviteType.slack}</option>
+      </select>
+    </div>
+
+    <div class="field full">
+      <label for="intro">{f.fields.intro.label}</label>
+      <textarea id="intro" name="intro" placeholder={f.fields.intro.placeholder}></textarea>
+    </div>
+
+    <div class="captcha-wrap">
+      <label>{f.fields.captcha} <span class="req">*</span></label>
+      <div class="h-captcha" data-sitekey={HCAPTCHA_SITEKEY} data-theme="dark"></div>
+    </div>
+
+    <div class="status" id="form-status" role="alert"></div>
+
+    <div class="submit-row">
+      <button type="submit" id="submit-btn">{f.submit}</button>
+      <p class="form-note">{f.note}</p>
+    </div>
+  </form>
+</section>
+
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
+<script>
+  const form = document.getElementById('invite-form') as HTMLFormElement | null;
+  const statusEl = document.getElementById('form-status');
+  const btn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+
+  if (form && statusEl && btn) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.className = 'status';
+      statusEl.textContent = '';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+
+        if (res.ok) {
+          statusEl.textContent = form.dataset.success ?? '';
+          statusEl.classList.add('success');
+          form.reset();
+          const h = (window as unknown as { hcaptcha?: { reset: () => void } }).hcaptcha;
+          if (h) h.reset();
+        } else {
+          const data = await res.json().catch(() => null);
+          const apiMsg = data?.errors?.map((x: { message: string }) => x.message).join(', ');
+          statusEl.textContent = apiMsg || form.dataset.error || '';
+          statusEl.classList.add('error');
+        }
+      } catch {
+        statusEl.textContent = form.dataset.networkError ?? '';
+        statusEl.classList.add('error');
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  }
+</script>

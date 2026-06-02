@@ -101,7 +101,7 @@ Each component takes a `strings` object (the active locale's dictionary) and a
 - **LanguageSwitcher.astro** — props: `locale`. Renders `FR · EN`, current locale marked active, the other links to its `/xx/` page. Inline script writes chosen locale to `localStorage('mtlnog-lang')`.
 - **Hero.astro** — props: `strings`. Tag, `<h1>`, intro paragraph(s), social pills with inline SVGs.
 - **InviteForm.astro** — props: `strings`. Full form, hCaptcha div, status node. Inline `<script>` does AJAX submit (below). hCaptcha API script loaded here/in Base.
-- **Footer.astro** — props: `strings`. Copyright + email + social links.
+- **Footer.astro** — no props (language-neutral). Copyright (dynamic year) + email + social links.
 
 ## Data flow
 

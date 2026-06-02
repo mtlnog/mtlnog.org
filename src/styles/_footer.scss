@@ -1,0 +1,26 @@
+footer {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+
+  p {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  a {
+    color: var(--muted);
+    text-decoration: none;
+
+    &:hover { color: var(--accent); }
+  }
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
