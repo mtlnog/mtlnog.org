@@ -6,7 +6,21 @@
 
 **Architecture:** Static Astro project. Two single-language pages (`/fr/`, `/en/`) assembled from shared components that receive a per-locale string dictionary. The bare `/` is a tiny client-side redirect page that picks a locale from `localStorage` then `navigator.languages`. All styling lives in SCSS partials compiled by Astro into one hashed CSS file. The invite form submits to Formspree via `fetch()` and shows localized inline status messages.
 
-**Tech Stack:** Astro 5, Sass (SCSS), Vitest (for the pure i18n/detection logic), Formspree + hCaptcha (injected via `PUBLIC_*` env vars). Deployed via Cloudflare Pages native build; GitHub Actions runs a test+build PR gate.
+**Tech Stack:** Astro 5, Sass (SCSS), Vitest (for the pure i18n/detection logic), Formspree + hCaptcha (injected via `PUBLIC_*` env vars). Deployed via Cloudflare Workers Builds (static assets via `wrangler.jsonc`); GitHub Actions runs a test+build PR gate.
+
+---
+
+## Post-implementation updates (2026-06-02)
+
+This plan is the original execution record, reconciled to the shipped repo. Changes made during integration / after switching hosting target:
+
+- **Hosting is Cloudflare Workers Builds (static assets), not Pages.** Deploy = `npx wrangler deploy` driven by a committed `wrangler.jsonc` (`assets.directory: ./dist`, Worker name `mtlnog-org`); `wrangler` is a dev dep; `npm run deploy` deploys manually. (Task 14 reflects this.)
+- **Node pinned to 22** in `.nvmrc` (was 20) - `wrangler` requires Node >=22; CI uses `node-version-file: '.nvmrc'`.
+- **`astro.config.mjs` has `routing.redirectToDefaultLocale: false`** (Task 12) - otherwise Astro auto-redirects `/` to `/fr/` and overrides the custom detection page.
+- **`astro.config.mjs` has `server.allowedHosts: true`** - lets `astro dev`/`preview --host` be reached by hostname (local tooling only; production is static).
+- **`preview` script binds `--host`** by default; **`package.json` has an `engines` field**.
+- **Footer copyright year is dynamic** (`new Date().getFullYear()`), not a hardcoded 2025.
+- **A root `src/pages/index.astro` is mandatory** with `prefixDefaultLocale: true` (Astro errors without it); Task 12 puts the detection redirect there.
 
 ---
 
@@ -18,9 +32,11 @@
 | `astro.config.mjs` | Static output + i18n locale config |
 | `tsconfig.json` | Strict TS, JSON module resolution |
 | `.env.example` / `.env` | `PUBLIC_*` credential placeholders (committed) / real values (git-ignored) |
-| `.gitignore` | Extended to ignore `.env` files |
+| `.gitignore` | Extended to ignore `.env` files and `.wrangler/` |
 | `.github/workflows/ci.yml` | PR gate: tests + build (dummy env), no deploy |
-| `README.md` | Build, config, and Cloudflare Pages deploy notes |
+| `README.md` | Build, config, and Cloudflare Workers deploy notes |
+| `wrangler.jsonc` | Cloudflare Workers deploy config (`assets.directory: ./dist`) |
+| `.nvmrc` | Pins Node 22 (CI + Cloudflare read it) |
 | `public/logo.png` | Decoded brand logo asset (605×147) |
 | `src/i18n/utils.ts` | `Locale` type, `getStrings`, `otherLocale`, `isLocale`, `Strings` type |
 | `src/i18n/detect.ts` | Pure `detectLocale(saved, navigatorLanguages)` |
@@ -1230,13 +1246,13 @@ interface Props {
 const { strings } = Astro.props;
 const f = strings.form;
 
-// Public client-side identifiers, injected from env (.env locally, CF Pages dashboard in prod).
+// Public client-side identifiers, injected from env (.env locally, Cloudflare Workers project in prod).
 // Fail the build fast if either is missing so we never ship a broken form.
 const FORMSPREE_ID = import.meta.env.PUBLIC_FORMSPREE_ID;
 const HCAPTCHA_SITEKEY = import.meta.env.PUBLIC_HCAPTCHA_SITEKEY;
 if (!FORMSPREE_ID || !HCAPTCHA_SITEKEY) {
   throw new Error(
-    'Missing PUBLIC_FORMSPREE_ID or PUBLIC_HCAPTCHA_SITEKEY. Set them in .env (local) or the Cloudflare Pages dashboard (prod).',
+    'Missing PUBLIC_FORMSPREE_ID or PUBLIC_HCAPTCHA_SITEKEY. Set them in .env (local) or the Cloudflare Workers project (prod).',
   );
 }
 const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
@@ -1506,7 +1522,7 @@ Expected: first count `>= 1` (red fixes present); second count `0` (no cyan rema
 - [ ] **Step 4: Confirm credentials are NOT hard-coded in tracked source**
 
 Run: `git grep -n 'xjgznrjb\|7a007138-8286-449e-af82-7bd25d9ed86a' -- src ':!docs' || echo "OK: no hard-coded credentials in src"`
-Expected: prints `OK: no hard-coded credentials in src` (the values live only in the git-ignored `.env` and the CF Pages dashboard).
+Expected: prints `OK: no hard-coded credentials in src` (the values live only in the git-ignored `.env` and the Cloudflare Workers project).
 
 - [ ] **Step 5: Confirm the build still injected the values into the output**
 
@@ -1540,15 +1556,39 @@ git commit -m "Verify build and finalize MTLNOG Astro site"
 
 ---
 
-## Task 14: Deployment config (Cloudflare Pages + CI gate)
+## Task 14: Deployment config (Cloudflare Workers + CI gate)
 
 **Files:**
+- Create: `.nvmrc`
+- Create: `wrangler.jsonc`
 - Create: `.github/workflows/ci.yml`
 - Create: `README.md`
+- Modify: `package.json` (add `wrangler` dev dep + `deploy` script)
+- Modify: `.gitignore` (ignore `.wrangler/`)
 
-> Deploy is handled by Cloudflare Pages' **native build** (no in-repo deploy step). This task adds (a) a GitHub Actions PR gate that runs tests + a build with dummy env values, and (b) a README documenting the CF Pages dashboard settings and the production email-obfuscation toggle.
+> Deploy is handled by **Cloudflare Workers Builds**: CF builds and deploys on push to `main`, driven by a committed `wrangler.jsonc` that serves the built `./dist` as static assets (`npx wrangler deploy`). This task also adds a GitHub Actions PR gate (tests + build with dummy env) and a README documenting setup + the production email-obfuscation toggle. `wrangler` requires Node >=22, so `.nvmrc` pins 22.
 
-- [ ] **Step 1: Create `.github/workflows/ci.yml`**
+- [ ] **Step 1: Pin Node** - create `.nvmrc` containing the single line `22`.
+
+- [ ] **Step 2: Add wrangler + deploy script** - run `npm install -D wrangler`, and add `"deploy": "wrangler deploy"` to `package.json` scripts.
+
+- [ ] **Step 3: Create `wrangler.jsonc`**
+
+```jsonc
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mtlnog-org",
+  "compatibility_date": "2026-06-02",
+  // Static-assets-only Worker: no server script, just the built site.
+  "assets": {
+    "directory": "./dist"
+  }
+}
+```
+
+- [ ] **Step 4: Ignore wrangler cache** - append `.wrangler/` to `.gitignore`.
+
+- [ ] **Step 5: Create `.github/workflows/ci.yml`**
 
 ```yaml
 name: CI
@@ -1565,20 +1605,20 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: '.nvmrc'
           cache: npm
       - run: npm ci
       - run: npm test
-      - name: Build (dummy public env values — real ones live in Cloudflare Pages)
+      - name: Build (dummy public env values - real ones live in the Cloudflare Workers project)
         run: npm run build
         env:
           PUBLIC_FORMSPREE_ID: ci-dummy
           PUBLIC_HCAPTCHA_SITEKEY: 10000000-ffff-ffff-ffff-000000000001
 ```
 
-(`10000000-ffff-ffff-ffff-000000000001` is hCaptcha's public "always passes" test sitekey — fine for a build-only check that never submits.)
+(`10000000-ffff-ffff-ffff-000000000001` is hCaptcha's public "always passes" test sitekey - fine for a build-only check that never submits. `node-version-file: '.nvmrc'` keeps CI in sync with the pin.)
 
-- [ ] **Step 2: Create `README.md`**
+- [ ] **Step 6: Create `README.md`** (final shipped content)
 
 ````markdown
 # MTLNOG site
@@ -1593,6 +1633,8 @@ cp .env.example .env   # then fill in real values (see below)
 npm run dev
 ```
 
+Node version is pinned in `.nvmrc` (Node 22, required by wrangler); nvm, mise, and Cloudflare all read it.
+
 ## Configuration
 
 Two public, client-side identifiers are injected via env vars (Astro requires the `PUBLIC_` prefix):
@@ -1602,7 +1644,7 @@ Two public, client-side identifiers are injected via env vars (Astro requires th
 | `PUBLIC_FORMSPREE_ID` | Formspree form id (the part after `/f/`) |
 | `PUBLIC_HCAPTCHA_SITEKEY` | hCaptcha sitekey |
 
-These appear in the shipped HTML — they are not secrets. Locally they live in `.env` (git-ignored). In production they are set in the Cloudflare Pages dashboard.
+These appear in the shipped HTML - they are not secrets. Locally they live in `.env` (git-ignored). In production they are set as build variables in the Cloudflare Workers project. The build fails fast if either is missing.
 
 ## Build & test
 
@@ -1612,34 +1654,33 @@ npm run build     # static output to dist/
 npm run preview   # serve the built site locally
 ```
 
-## Deploy (Cloudflare Pages — native build)
+## Deploy (Cloudflare Workers - static assets)
 
-The GitHub repo is connected to Cloudflare Pages; CF builds and deploys on push.
+The GitHub repo is connected to Cloudflare via Workers Builds; CF builds and deploys on push to `main`. Deploy config lives in `wrangler.jsonc` (Worker name `mtlnog-org`; the built site in `./dist` is served as static assets).
 
 - **Build command:** `npm run build`
-- **Output directory:** `dist`
-- **Node version:** 20+
-- **Environment variables** (set for both Production and Preview): `PUBLIC_FORMSPREE_ID`, `PUBLIC_HCAPTCHA_SITEKEY`
+- **Deploy command:** `npx wrangler deploy`
+- **Node version:** from `.nvmrc` (22)
+- **Build environment variables** (set for Production and Preview): `PUBLIC_FORMSPREE_ID`, `PUBLIC_HCAPTCHA_SITEKEY`
+
+Deploy manually with `npm run deploy` (requires `wrangler login` or a `CLOUDFLARE_API_TOKEN`).
 
 ### Production email obfuscation
 
-The footer uses a plain `mailto:hello@mtlnog.org`. Enable **Scrape Shield → Email Address Obfuscation** on the production Cloudflare zone so Cloudflare rewrites the address at serve time. No source-side obfuscation is needed.
+The footer uses a plain `mailto:hello@mtlnog.org`. Enable **Scrape Shield > Email Address Obfuscation** on the production Cloudflare zone so Cloudflare rewrites the address at serve time. No source-side obfuscation is needed.
 
 ## CI
 
 `.github/workflows/ci.yml` runs tests + a build (with dummy public env values) on every PR and push to `main`. It does not deploy.
 ````
 
-- [ ] **Step 3: Verify the CI workflow is valid YAML**
+- [ ] **Step 7: Validate** - run `npx wrangler deploy --dry-run` (reads `./dist`, validates `wrangler.jsonc`, no upload) and `python3 -c "import yaml; yaml.safe_load(open('.github/workflows/ci.yml')); print('valid yaml')"`.
 
-Run: `python3 -c "import yaml,sys; yaml.safe_load(open('.github/workflows/ci.yml')); print('valid yaml')"`
-Expected: prints `valid yaml`.
-
-- [ ] **Step 4: Commit**
+- [ ] **Step 8: Commit**
 
 ```bash
-git add .github/workflows/ci.yml README.md
-git commit -m "Add CI gate workflow and Cloudflare Pages deployment docs"
+git add .nvmrc wrangler.jsonc .github/workflows/ci.yml README.md package.json package-lock.json .gitignore
+git commit -m "Add CI gate workflow and Cloudflare Workers deployment docs"
 ```
 
 ---
@@ -1656,7 +1697,7 @@ git commit -m "Add CI gate workflow and Cloudflare Pages deployment docs"
 - Color alignment (3 cyan→red fixes) → Task 5 (+ verified Task 13 step 3). ✓
 - Per-language `<html lang>` + localized `<title>`/description → Tasks 6, 11. ✓
 - Credentials out of git via `PUBLIC_*` env vars; `.env` ignored, `.env.example` committed → Task 1 (+ form reads env in Task 10, verified Task 13 steps 4–6). ✓
-- Build/publish from CI: Cloudflare Pages native build + GitHub Actions PR gate → Task 14. ✓
+- Build/publish from CI: Cloudflare Workers Builds + GitHub Actions PR gate → Task 14. ✓
 - Production email obfuscation via Cloudflare Scrape Shield (plain `mailto:` in source) → Task 6 footer + documented in Task 14 README. ✓
 - YAGNI (no CMS/extra pages/islands) → respected. ✓
 
@@ -1664,4 +1705,4 @@ git commit -m "Add CI gate workflow and Cloudflare Pages deployment docs"
 
 **Type consistency:** `Locale`/`Strings` defined in Task 3, imported consistently in Tasks 6–11. `detectLocale(saved, navigatorLanguages)` signature matches its call site in Task 12. `getStrings`/`otherLocale`/`isLocale` names consistent throughout. Form `data-*` attributes (`data-success`/`data-error`/`data-network-error`) set in Task 10 markup match `form.dataset.success`/`.error`/`.networkError` reads in the same task's script. CSS class names (`.header-actions`, `.lang-switch .active`, `.divider-wrap`) defined in Task 5 match markup in Tasks 7, 8, 11.
 
-**Env-var consistency:** `PUBLIC_FORMSPREE_ID` / `PUBLIC_HCAPTCHA_SITEKEY` names are identical across `.env.example` and `.env` (Task 1), the `import.meta.env.PUBLIC_*` reads + guard (Task 10), the CI workflow `env:` block (Task 14), and the README/CF Pages docs (Task 14). The real values used in local `.env` (Task 1) match the values asserted in the build-injection check (Task 13 step 5).
+**Env-var consistency:** `PUBLIC_FORMSPREE_ID` / `PUBLIC_HCAPTCHA_SITEKEY` names are identical across `.env.example` and `.env` (Task 1), the `import.meta.env.PUBLIC_*` reads + guard (Task 10), the CI workflow `env:` block (Task 14), and the README/Workers docs (Task 14). The real values used in local `.env` (Task 1) match the values asserted in the build-injection check (Task 13 step 5).

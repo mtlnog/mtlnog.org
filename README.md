@@ -21,7 +21,7 @@ Two public, client-side identifiers are injected via env vars (Astro requires th
 | `PUBLIC_FORMSPREE_ID` | Formspree form id (the part after `/f/`) |
 | `PUBLIC_HCAPTCHA_SITEKEY` | hCaptcha sitekey |
 
-These appear in the shipped HTML - they are not secrets. Locally they live in `.env` (git-ignored). In production they are set in the Cloudflare Pages dashboard. The build fails fast if either is missing.
+These appear in the shipped HTML - they are not secrets. Locally they live in `.env` (git-ignored). In production they are set as build variables in the Cloudflare Workers project. The build fails fast if either is missing.
 
 ## Build & test
 

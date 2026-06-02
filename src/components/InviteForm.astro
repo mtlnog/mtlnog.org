@@ -8,13 +8,13 @@ interface Props {
 const { strings } = Astro.props;
 const f = strings.form;
 
-// Public client-side identifiers, injected from env (.env locally, CF Pages dashboard in prod).
+// Public client-side identifiers, injected from env (.env locally, Cloudflare Workers project in prod).
 // Fail the build fast if either is missing so we never ship a broken form.
 const FORMSPREE_ID = import.meta.env.PUBLIC_FORMSPREE_ID;
 const HCAPTCHA_SITEKEY = import.meta.env.PUBLIC_HCAPTCHA_SITEKEY;
 if (!FORMSPREE_ID || !HCAPTCHA_SITEKEY) {
   throw new Error(
-    'Missing PUBLIC_FORMSPREE_ID or PUBLIC_HCAPTCHA_SITEKEY. Set them in .env (local) or the Cloudflare Pages dashboard (prod).',
+    'Missing PUBLIC_FORMSPREE_ID or PUBLIC_HCAPTCHA_SITEKEY. Set them in .env (local) or the Cloudflare Workers project (prod).',
   );
 }
 const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
