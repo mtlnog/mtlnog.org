@@ -1,0 +1,28 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import type { Locale, Strings } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+  strings: Strings;
+}
+
+const { locale, strings } = Astro.props;
+---
+<header>
+  <div class="inner-wrap header-inner">
+    <img class="logo-mark" src="/logo.png" alt="MTLNOG logo" width="605" height="147" />
+    <div class="logo-text">
+      MTLNOG
+      <span>Montreal Network Operator Group</span>
+    </div>
+    <div class="header-actions">
+      <nav>
+        <a href="https://www.linkedin.com/company/mtlnog/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://mastodon.social/@mtlnog" target="_blank" rel="noopener">Mastodon</a>
+        <a href="#invite">{strings.nav.invite}</a>
+      </nav>
+      <LanguageSwitcher locale={locale} />
+    </div>
+  </div>
+</header>
