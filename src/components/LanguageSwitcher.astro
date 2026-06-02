@@ -1,0 +1,27 @@
+---
+import type { Locale } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+<div class="lang-switch">
+  {locale === 'fr'
+    ? <span class="active">FR</span>
+    : <a href="/fr/" data-lang="fr">FR</a>}
+  <span class="sep">·</span>
+  {locale === 'en'
+    ? <span class="active">EN</span>
+    : <a href="/en/" data-lang="en">EN</a>}
+</div>
+
+<script>
+  document.querySelectorAll('.lang-switch a[data-lang]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const lang = el.getAttribute('data-lang');
+      if (lang) localStorage.setItem('mtlnog-lang', lang);
+    });
+  });
+</script>
