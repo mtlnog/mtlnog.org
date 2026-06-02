@@ -1,1 +1,52 @@
-{ "meta": { "title": "MTLNOG", "description": "fr" } }
+{
+  "meta": {
+    "title": "MTLNOG // Montreal Network Operator Group",
+    "description": "MTLNOG réunit les ingénieurs et opérateurs de réseau à Montréal, au Québec et au-delà pour partager des connaissances et favoriser les échanges au sein de la communauté des opérateurs de réseau."
+  },
+  "nav": {
+    "invite": "Demander une invitation"
+  },
+  "hero": {
+    "intro": "MTLNOG réunit les ingénieurs et opérateurs de réseau à Montréal, au Québec et au-delà pour partager des connaissances et favoriser les échanges au sein de la communauté des opérateurs de réseau."
+  },
+  "form": {
+    "sectionLabel": "Demande d'accès",
+    "heading": "Rejoindre la communauté",
+    "sub": "Le workspace Slack est soumis à approbation par l'équipe MTLNOG.",
+    "fields": {
+      "fname": { "label": "Prénom", "placeholder": "Jean" },
+      "lname": { "label": "Nom", "placeholder": "Tremblay" },
+      "email": { "label": "Courriel", "placeholder": "vous@exemple.net" },
+      "org": { "label": "Organisation / ASN", "placeholder": "Acme Networks / AS12345" },
+      "role": {
+        "label": "Rôle",
+        "placeholder": "Sélectionner…",
+        "options": [
+          "Ingénieur réseau",
+          "Opérateur réseau",
+          "Ingénieur systèmes",
+          "Gestionnaire réseau",
+          "Chercheur",
+          "Autre"
+        ]
+      },
+      "inviteType": {
+        "label": "Invitation pour",
+        "placeholder": "Sélectionner…",
+        "slack": "Workspace Slack"
+      },
+      "intro": {
+        "label": "Présentation",
+        "placeholder": "Parlez-nous de votre expérience en réseaux et pourquoi vous souhaitez rejoindre MTLNOG."
+      },
+      "captcha": "Vérification"
+    },
+    "submit": "Envoyer →",
+    "note": "Vos données ne servent qu'à évaluer votre demande.",
+    "status": {
+      "success": "Merci ! Votre demande a été envoyée.",
+      "error": "Une erreur s'est produite. Veuillez réessayer.",
+      "networkError": "Erreur réseau. Veuillez vérifier votre connexion et réessayer."
+    }
+  }
+}

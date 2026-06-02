@@ -7,8 +7,8 @@ describe('locale utils', () => {
   });
 
   it('getStrings returns the matching dictionary', () => {
-    expect(getStrings('fr').meta.description).toBe('fr');
-    expect(getStrings('en').meta.description).toBe('en');
+    expect(getStrings('fr').nav.invite).toBe('Demander une invitation');
+    expect(getStrings('en').nav.invite).toBe('Request an Invite');
   });
 
   it('otherLocale flips the locale', () => {
