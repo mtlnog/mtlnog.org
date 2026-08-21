@@ -33,7 +33,8 @@
       "inviteType": {
         "label": "Invitation For",
         "placeholder": "Select…",
-        "slack": "Slack Workspace"
+        "slack": "Slack Workspace",
+        "sponsorship": "Sponsorship"
       },
       "intro": {
         "label": "Brief Introduction",
