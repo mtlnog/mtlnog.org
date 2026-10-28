@@ -8,7 +8,8 @@ CREATE TABLE submissions (
   delivered_at INTEGER,
   attempts INTEGER NOT NULL DEFAULT 0,
   last_error TEXT,
-  failed_at INTEGER
+  failed_at INTEGER,
+  alerted_at INTEGER
 );
 
 CREATE INDEX submissions_pending ON submissions (delivered_at, failed_at, created_at);

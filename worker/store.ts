@@ -15,6 +15,7 @@ export interface Row {
   attempts: number;
   last_error: string | null;
   failed_at: number | null;
+  alerted_at: number | null;
 }
 
 export interface Store {
@@ -24,6 +25,9 @@ export interface Store {
   markDelivered(id: number, now: number): Promise<void>;
   markAttemptFailed(id: number, error: string): Promise<void>;
   markFailed(id: number, now: number): Promise<void>;
+  // Failed rows whose warning has not reached Slack yet; oldest first.
+  pendingAlerts(limit: number): Promise<Row[]>;
+  markAlerted(id: number, now: number): Promise<void>;
   // Deletes rows delivered more than KEEP_DELIVERED_MS ago; returns how many.
   purgeDelivered(now: number): Promise<number>;
 }
@@ -62,6 +66,16 @@ export function d1Store(db: D1Database): Store {
     },
     async markFailed(id, now) {
       await db.prepare('UPDATE submissions SET failed_at = ? WHERE id = ?').bind(now, id).run();
+    },
+    async pendingAlerts(limit) {
+      const { results } = await db
+        .prepare('SELECT * FROM submissions WHERE failed_at IS NOT NULL AND alerted_at IS NULL ORDER BY created_at, id LIMIT ?')
+        .bind(limit)
+        .all<DbRow>();
+      return results.map((r) => ({ ...r, payload: JSON.parse(r.payload) as Submission }));
+    },
+    async markAlerted(id, now) {
+      await db.prepare('UPDATE submissions SET alerted_at = ? WHERE id = ?').bind(now, id).run();
     },
     async purgeDelivered(now) {
       const result = await db

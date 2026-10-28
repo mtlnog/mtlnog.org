@@ -2,10 +2,16 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "mtlnog-org",
   "compatibility_date": "2026-06-02",
-  // Static-assets-only Worker: no server script, just the built site.
-  // `directory` replaces the old Pages "build output directory".
+  // The script only handles /api/* (contact form) and the cron; every other path is served from dist/.
+  "main": "worker/index.ts",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  // Retries undelivered contact submissions and purges old ones.
+  "triggers": {
+    "crons": ["*/5 * * * *"]
   },
   // Contact form submissions. database_id is set when the database is created (see README).
   "d1_databases": [

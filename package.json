@@ -12,12 +12,15 @@
     "build": "astro build",
     "preview": "astro preview --host",
     "test": "vitest run",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "typecheck:worker": "tsc -p worker",
+    "dev:worker": "astro build && wrangler dev"
   },
   "dependencies": {
     "astro": "^5.0.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260702.1",
     "sass": "^1.80.0",
     "vitest": "^2.1.0",
     "wrangler": "^4.97.0"

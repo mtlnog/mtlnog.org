@@ -23,7 +23,7 @@ describe('Store (memory reference)', () => {
     const a = await store.insert(sub, NOW);
     const b = await store.insert(sub, NOW);
     expect(b).toBeGreaterThan(a);
-    expect(store.rows[0]).toMatchObject({ id: a, topic: 'general', locale: 'en', payload: sub, attempts: 0, delivered_at: null, failed_at: null });
+    expect(store.rows[0]).toMatchObject({ id: a, topic: 'general', locale: 'en', payload: sub, attempts: 0, delivered_at: null, failed_at: null, alerted_at: null });
   });
 
   it('retryable skips fresh, delivered and failed rows', async () => {
@@ -52,6 +52,17 @@ describe('Store (memory reference)', () => {
     await store.markAttemptFailed(id, 'http_500');
     await store.markAttemptFailed(id, 'network');
     expect(store.rows[0]).toMatchObject({ attempts: 2, last_error: 'network' });
+  });
+
+  it('pendingAlerts lists failed rows until they are marked alerted', async () => {
+    const store = memoryStore();
+    const failed = await store.insert(sub, NOW - DAY);
+    await store.markFailed(failed, NOW);
+    await store.insert(sub, NOW - DAY);
+    expect((await store.pendingAlerts(25)).map((r) => r.id)).toEqual([failed]);
+    await store.markAlerted(failed, NOW);
+    expect(await store.pendingAlerts(25)).toEqual([]);
+    expect(store.rows[0].alerted_at).toBe(NOW);
   });
 
   it('purgeDelivered deletes only rows delivered more than 30 days ago', async () => {

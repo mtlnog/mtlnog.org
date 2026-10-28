@@ -20,6 +20,7 @@ export function memoryStore(): Store & { rows: Row[] } {
         attempts: 0,
         last_error: null,
         failed_at: null,
+        alerted_at: null,
       });
       return id;
     },
@@ -44,6 +45,17 @@ export function memoryStore(): Store & { rows: Row[] } {
     async markFailed(id, now) {
       const row = find(id);
       if (row) row.failed_at = now;
+    },
+    async pendingAlerts(limit) {
+      return rows
+        .filter((r) => r.failed_at !== null && r.alerted_at === null)
+        .sort((a, b) => a.created_at - b.created_at || a.id - b.id)
+        .slice(0, limit)
+        .map((r) => ({ ...r }));
+    },
+    async markAlerted(id, now) {
+      const row = find(id);
+      if (row) row.alerted_at = now;
     },
     async purgeDelivered(now) {
       const keep = rows.filter((r) => r.delivered_at === null || r.delivered_at >= now - KEEP_DELIVERED_MS);

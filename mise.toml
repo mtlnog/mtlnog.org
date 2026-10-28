@@ -23,6 +23,16 @@ description = "Build the static site to dist/"
 depends = ["install"]
 run = "npm run build"
 
+[tasks.dev-worker]
+description = "Build, then run the Worker (API + assets) locally with a local D1"
+depends = ["install"]
+run = "npm run dev:worker"
+
+[tasks.typecheck]
+description = "Type-check the Worker"
+depends = ["install"]
+run = "npm run typecheck:worker"
+
 [tasks.preview]
 description = "Serve the built site locally"
 depends = ["build"]
