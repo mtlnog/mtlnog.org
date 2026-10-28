@@ -23,4 +23,14 @@
   .month-name { font-size: 1rem; }
   .month-note { font-size: 0.6rem; letter-spacing: 0.08em; }
   .tier-grid { grid-template-columns: 1fr; }
+
+  // 44px-tall tap areas for nav and language links; the text size stays the same.
+  nav { row-gap: 0; }
+  nav a,
+  .lang-switch a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .lang-switch a { min-width: 44px; justify-content: center; }
 }
