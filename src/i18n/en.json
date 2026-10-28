@@ -97,5 +97,106 @@
         "bio": "Denis Bonneau is a recognized leader in the telecommunications, digital infrastructure, and broadcast technology sectors. With more than 20 years of experience in business development and building technology communities, he recently joined MTLNOG as an Ad Hoc Director. Drawing on his experience with SMPTE, where he actively contributed to the growth and visibility of the Montreal/Quebec Section, Denis supports MTLNOG in developing its activities, strengthening its network of partners, and creating high-value events for Quebec’s networking and Internet community."
       }
     }
+  },
+  "sponsorship": {
+    "meta": {
+      "title": "Sponsorship // MTLNOG",
+      "description": "Sponsor MTLNOG’s in-person meetings in Montréal: sponsorship tiers, projected costs and how your support is used."
+    },
+    "label": "Sponsorship {year} · BBQ & meetings",
+    "heading": "Support Montreal’s network operator community",
+    "missionHeading": "Our mission",
+    "mission": [
+      "MTLNOG is a non-profit organization established in 2019 with the aim of fostering coordination and collaboration among network operators in the greater Montreal area. Our mission is to facilitate knowledge sharing and professional development among networking professionals from diverse industries.",
+      "We strive to promote meaningful partnerships and collaborations among our members to address common challenges and achieve shared objectives in network operations. Additionally, we are dedicated to engaging with the broader community, including students and professionals in the IT field, to raise awareness about networking technologies and create a platform for community interaction, partnership and learning."
+    ],
+    "cta": "Become a sponsor →",
+    "stats": {
+      "label": "Statistics · {date}",
+      "members": "total members",
+      "weeklyActive": "weekly active members",
+      "monthlyMessages": "messages posted monthly",
+      "industries": "industries",
+      "industriesLine": "Industries: ISPs, NSPs, MSPs, gaming, education, government, network vendors."
+    },
+    "program": {
+      "label": "Sponsorship program · {year}",
+      "intro": "To ensure the success of our in-person meetings, we have developed a comprehensive sponsorship program. This program aims to secure financial support from sponsors, partners, and donors to cover the costs associated with organizing and hosting these events.",
+      "schedule": "For the year {year}, we are planning three events tentatively scheduled for {months}.",
+      "tentative": "tentative"
+    },
+    "tiers": {
+      "label": "Sponsorship tiers",
+      "perYear": "yearly",
+      "limit": "limited to {n} sponsors",
+      "upcomingPage": "“Upcoming meetings”",
+      "pastPage": "“Past meetings”",
+      "gold": {
+        "name": "Gold",
+        "bullets": [
+          "Valid for all three (3) MTLNOG events of {year}.",
+          "Provides local recognition and branding exposure, extending to all MTLNOG events throughout the year",
+          "Priority placement of your company logo/presence with banners (provided by the sponsor)",
+          "Logo placement on swag (for {year}, t-shirt only) as MTLNOG’s Gold partner",
+          "Large-sized logo and link on the {upcoming} page of MTLNOG’s website",
+          "Two social media posts (before and after each {year} meeting) on LinkedIn, Mastodon, Bluesky, and X",
+          "Speaking slot (15-20 min) at one {year} meeting of your choice",
+          "Permanent mention on the {past} page",
+          "Exclusive sponsor provided marketing material and SWAG allowed during selected event"
+        ]
+      },
+      "silver": {
+        "name": "Silver",
+        "bullets": [
+          "Valid for all three MTLNOG events of {year}.",
+          "Provides year long local recognition and branding exposure.",
+          "Logo and link on the {upcoming} page of MTLNOG’s website",
+          "Two social media posts (before and after each of the meetings) on LinkedIn, Mastodon, Bluesky, and X",
+          "Sponsorship highlight during welcoming presentation.",
+          "Permanent mention on the {past} page"
+        ]
+      }
+    },
+    "venue": {
+      "label": "Venue",
+      "text": "To minimize expenses, we are seeking sponsors, partners, and donors who can provide meeting spaces free of charge. As per our current sponsorship plans, renting meeting spaces is not financially feasible. We greatly appreciate any support in this regard."
+    },
+    "costs": {
+      "label": "Projected costs · per meeting (approximately 20–25 people)",
+      "meeting": {
+        "name": "Meeting expenses",
+        "text": "This includes various costs associated with organizing the event, such as administrative fees, logistical arrangements, and any necessary equipment or supplies."
+      },
+      "food": {
+        "name": "Food and beverages (non-alcoholic)",
+        "text": "To ensure a comfortable and engaging environment for attendees, we will provide quality food and non-alcoholic beverages. These provisions contribute to the overall meeting experience. Alcoholic beverages may be provided (for free) if the venue allows for it without a permit from the Régie des alcools, des courses et des jeux (RACJ)."
+      },
+      "organization": {
+        "name": "Organization fee",
+        "text": "This fee covers the expenses associated with managing and coordinating the event, including pre-event planning, logistics, and on-site support. It helps ensure the smooth execution of the meeting."
+      },
+      "swag": {
+        "heading": "Swag",
+        "intro": "To foster a sense of unity and pride among participants, we plan to provide event-specific merchandise, such as t-shirts, as part of the sponsorship program. Everybody loves swag.",
+        "first": {
+          "name": "First batch of swag (approximately 20–25 people)",
+          "text": "We will collaborate with an existing local partner to produce the initial batch of t-shirts. These shirts will serve as mementos for participants, highlighting their participation in the event."
+        },
+        "second": {
+          "name": "Second batch of swag",
+          "amount": "Subject to sponsorship",
+          "text": "If we secure sufficient sponsors, we aim to produce an additional batch of t-shirts for a later {year} meeting. This will allow us to extend the opportunity for participants to receive personalized event merchandise."
+        }
+      }
+    },
+    "closing": {
+      "heading": "Partner with us",
+      "paragraphs": [
+        "By participating in our sponsorship program, you will not only contribute to the success of our in-person meetings but also gain exposure and recognition within our community. Your generosity will help us continue organizing meaningful and engaging events for our participants.",
+        "Please let us know if you have any questions or require further information. We look forward to partnering with you to make our events a resounding success."
+      ],
+      "cta": "Contact us →",
+      "note": "Note: The proposed sponsorship program is subject to revision and customization based on individual sponsors’ requirements and preferences."
+    }
   }
 }

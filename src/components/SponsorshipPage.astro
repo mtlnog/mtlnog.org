@@ -1,0 +1,150 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import { getStrings, type Locale } from '../i18n/utils';
+import { pathFor, sponsorFormHref } from '../i18n/routes';
+import { sponsorship as data } from '../data/sponsorship';
+import { fill, formatCad, formatList, formatNumber, monthName, monthYear, splitAt } from '../lib/format';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getStrings(locale);
+const s = t.sponsorship;
+const year = data.year;
+const ctaHref = sponsorFormHref(locale);
+const meetingsHref = pathFor('meetings', locale);
+
+const months = data.months.map((m) => monthName(m, locale));
+
+const stats = [
+  { value: formatNumber(data.stats.members, locale), label: s.stats.members },
+  { value: formatNumber(data.stats.weeklyActive, locale), label: s.stats.weeklyActive },
+  { value: `~${formatNumber(data.stats.monthlyMessages, locale)}`, label: s.stats.monthlyMessages },
+  { value: formatNumber(data.stats.industries, locale), label: s.stats.industries },
+];
+
+const tiers = [
+  { key: 'gold', text: s.tiers.gold, ...data.tiers.gold },
+  { key: 'silver', text: s.tiers.silver, ...data.tiers.silver },
+] as const;
+
+// A bullet may contain {upcoming} or {past}; that placeholder becomes a link to the Meetings page.
+const pageLinks = [
+  { key: 'upcoming', label: s.tiers.upcomingPage, href: `${meetingsHref}#upcoming` },
+  { key: 'past', label: s.tiers.pastPage, href: `${meetingsHref}#past` },
+];
+function bullet(template: string) {
+  const text = fill(template, { year });
+  for (const link of pageLinks) {
+    const parts = splitAt(text, link.key);
+    if (parts) return { before: parts[0], link, after: parts[1] };
+  }
+  return { before: text, link: null, after: '' };
+}
+
+const costs = [
+  { text: s.costs.meeting, amount: formatCad(data.costs.meeting, locale) },
+  { text: s.costs.food, amount: formatCad(data.costs.food, locale) },
+  { text: s.costs.organization, amount: formatCad(data.costs.organization, locale) },
+];
+---
+<Base locale={locale} strings={t} page="sponsorship" title={s.meta.title} description={s.meta.description}>
+  <Header locale={locale} strings={t} page="sponsorship" />
+  <main class="page-main sponsorship">
+    <section class="page-header">
+      <div class="section-label">{fill(s.label, { year })}</div>
+      <h1>{s.heading}</h1>
+      <h3>{s.missionHeading}</h3>
+      {s.mission.map((p) => <p>{p}</p>)}
+      <a class="btn" href={ctaHref}>{s.cta}</a>
+    </section>
+
+    <section class="page-section">
+      <div class="section-label">{fill(s.stats.label, { date: monthYear(data.statsDate, locale) })}</div>
+      <div class="stat-grid">
+        {stats.map((stat) => (
+          <div class="stat">
+            <div class="stat-value">{stat.value}</div>
+            <div class="stat-label">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+      <p class="stat-note">{s.stats.industriesLine}</p>
+    </section>
+
+    <section class="page-section">
+      <div class="section-label">{fill(s.program.label, { year })}</div>
+      <p>{s.program.intro}</p>
+      <p>{fill(s.program.schedule, { year, months: formatList(months, locale) })}</p>
+      <div class="month-grid">
+        {months.map((month) => (
+          <div class="month">
+            <div class="month-name">{month}</div>
+            <div class="month-note">{s.program.tentative}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="section-label">{s.tiers.label}</div>
+      <div class="tier-grid">
+        {tiers.map((tier) => (
+          <div class={`tier tier-${tier.key}`}>
+            <div class="tier-name">{tier.text.name}</div>
+            <div class="tier-price">{formatCad(tier.price, locale)}</div>
+            <div class="tier-cap">{s.tiers.perYear} · {fill(s.tiers.limit, { n: tier.limit })}</div>
+            <ul>
+              {tier.text.bullets.map((b) => {
+                const item = bullet(b);
+                return (
+                  <li>
+                    {item.before}{item.link && <a href={item.link.href}>{item.link.label}</a>}{item.after}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="section-label">{s.venue.label}</div>
+      <div class="callout"><p>{s.venue.text}</p></div>
+    </section>
+
+    <section class="page-section">
+      <div class="section-label">{s.costs.label}</div>
+      {costs.map((cost) => (
+        <div class="cost">
+          <span class="cost-name">{cost.text.name}</span>
+          <span class="cost-amount">{cost.amount}</span>
+          <p>{cost.text.text}</p>
+        </div>
+      ))}
+      <h3>{s.costs.swag.heading}</h3>
+      <p>{s.costs.swag.intro}</p>
+      <div class="cost">
+        <span class="cost-name">{s.costs.swag.first.name}</span>
+        <span class="cost-amount">{formatCad(data.costs.swagFirstBatch, locale)}</span>
+        <p>{s.costs.swag.first.text}</p>
+      </div>
+      <div class="cost">
+        <span class="cost-name">{s.costs.swag.second.name}</span>
+        <span class="cost-amount cost-pending">{s.costs.swag.second.amount}</span>
+        <p>{fill(s.costs.swag.second.text, { year })}</p>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <h2>{s.closing.heading}</h2>
+      {s.closing.paragraphs.map((p) => <p>{p}</p>)}
+      <a class="btn" href={ctaHref}>{s.closing.cta}</a>
+      <p class="fine-print">{s.closing.note}</p>
+    </section>
+  </main>
+</Base>

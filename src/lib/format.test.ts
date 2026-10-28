@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { formatCad, monthName, monthYear, fill, initials } from './format';
+import { formatCad, formatNumber, formatList, monthName, monthYear, fill, initials, splitAt } from './format';
 
 // Intl emits non-breaking spaces (U+00A0 / U+202F); normalize for comparison.
 const n = (s: string) => s.replace(/\s/g, ' ');
@@ -34,5 +34,29 @@ describe('initials', () => {
   it('takes the first letter of each name', () => {
     expect(initials('Jonathan Senecal')).toBe('JS');
     expect(initials('Eric Dugas')).toBe('ED');
+  });
+});
+
+describe('formatNumber', () => {
+  it('groups thousands per locale', () => {
+    expect(n(formatNumber(1600, 'en'))).toBe('1,600');
+    expect(n(formatNumber(1600, 'fr'))).toBe('1 600');
+  });
+});
+
+describe('formatList', () => {
+  it('joins items with the locale conjunction', () => {
+    expect(formatList(['Mars', 'Août', 'Octobre'], 'fr')).toBe('Mars, Août et Octobre');
+    expect(formatList(['March', 'August', 'October'], 'en')).toMatch(/^March, August,? and October$/);
+  });
+});
+
+describe('splitAt', () => {
+  it('splits a template around one placeholder', () => {
+    expect(splitAt('Logo on the {upcoming} page', 'upcoming')).toEqual(['Logo on the ', ' page']);
+  });
+
+  it('returns null when the placeholder is absent', () => {
+    expect(splitAt('No link here', 'upcoming')).toBeNull();
   });
 });

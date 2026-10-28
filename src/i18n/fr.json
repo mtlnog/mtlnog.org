@@ -97,5 +97,106 @@
         "bio": "Denis Bonneau est un leader reconnu dans les secteurs des télécommunications, des infrastructures numériques et des technologies de diffusion. Fort de plus de 20 ans d’expérience en développement des affaires et en mobilisation de communautés technologiques, il s’est récemment joint à l’organisation de MTLNOG à titre de directeur ad hoc. En s’appuyant sur son expérience au sein de SMPTE, où il a contribué activement à la croissance et au rayonnement de la section Montréal/Québec, Denis accompagne MTLNOG dans le développement de ses activités, le renforcement de son réseau de partenaires et la création d’événements à forte valeur pour la communauté des réseaux et de l’Internet au Québec."
       }
     }
+  },
+  "sponsorship": {
+    "meta": {
+      "title": "Commandites // MTLNOG",
+      "description": "Commanditez les rencontres en personne de MTLNOG à Montréal : niveaux de commandite, coûts prévus et utilisation de votre soutien."
+    },
+    "label": "Commandites {year} · BBQ et rencontres",
+    "heading": "Soutenez la communauté des opérateurs réseau de Montréal",
+    "missionHeading": "Notre mission",
+    "mission": [
+      "MTLNOG est un organisme à but non lucratif fondé en 2019 dans le but de favoriser la coordination et la collaboration entre les opérateurs réseau de la grande région de Montréal. Notre mission est de faciliter le partage de connaissances et le développement professionnel des spécialistes en réseautique issus de divers secteurs.",
+      "Nous cherchons à favoriser des partenariats et des collaborations porteurs entre nos membres afin de relever des défis communs et d’atteindre des objectifs partagés en matière d’exploitation de réseaux. Nous tenons également à rejoindre la communauté au sens large, notamment les étudiants et les professionnels des TI, afin de faire connaître les technologies réseau et d’offrir un espace d’échange, de partenariat et d’apprentissage."
+    ],
+    "cta": "Devenir commanditaire →",
+    "stats": {
+      "label": "Statistiques · {date}",
+      "members": "membres au total",
+      "weeklyActive": "membres actifs chaque semaine",
+      "monthlyMessages": "messages publiés par mois",
+      "industries": "secteurs",
+      "industriesLine": "Secteurs : FAI, fournisseurs de services réseau (NSP), fournisseurs de services gérés (MSP), jeu vidéo, éducation, gouvernement, fournisseurs d’équipement réseau."
+    },
+    "program": {
+      "label": "Programme de commandites · {year}",
+      "intro": "Pour assurer le succès de nos rencontres en personne, nous avons mis sur pied un programme de commandites complet. Ce programme vise à obtenir le soutien financier de commanditaires, de partenaires et de donateurs afin de couvrir les coûts liés à l’organisation et à la tenue de ces événements.",
+      "schedule": "Pour {year}, nous planifions trois événements, provisoirement prévus en {months}.",
+      "tentative": "à confirmer"
+    },
+    "tiers": {
+      "label": "Niveaux de commandite",
+      "perYear": "par année",
+      "limit": "limité à {n} commanditaires",
+      "upcomingPage": "« Rencontres à venir »",
+      "pastPage": "« Rencontres passées »",
+      "gold": {
+        "name": "Or",
+        "bullets": [
+          "Valide pour les trois (3) événements MTLNOG de {year}.",
+          "Offre une visibilité locale et une exposition de votre marque à tous les événements MTLNOG de l’année",
+          "Placement prioritaire du logo et de la présence de votre entreprise, avec bannières (fournies par le commanditaire)",
+          "Logo sur les articles promotionnels ({year} : t-shirt seulement) à titre de partenaire Or de MTLNOG",
+          "Grand logo et lien sur la page {upcoming} du site web de MTLNOG",
+          "Deux publications sur les réseaux sociaux (avant et après chaque rencontre de {year}) sur LinkedIn, Mastodon, Bluesky et X",
+          "Plage de présentation (15 à 20 min) lors d’une rencontre de {year} de votre choix",
+          "Mention permanente sur la page {past}",
+          "Matériel promotionnel et articles exclusifs du commanditaire permis lors de l’événement choisi"
+        ]
+      },
+      "silver": {
+        "name": "Argent",
+        "bullets": [
+          "Valide pour les trois événements MTLNOG de {year}.",
+          "Offre une visibilité locale et une exposition de votre marque toute l’année.",
+          "Logo et lien sur la page {upcoming} du site web de MTLNOG",
+          "Deux publications sur les réseaux sociaux (avant et après chacune des rencontres) sur LinkedIn, Mastodon, Bluesky et X",
+          "Mention du commanditaire lors de la présentation d’accueil.",
+          "Mention permanente sur la page {past}"
+        ]
+      }
+    },
+    "venue": {
+      "label": "Lieu",
+      "text": "Pour réduire nos dépenses, nous recherchons des commanditaires, des partenaires et des donateurs qui peuvent offrir gratuitement des espaces de rencontre. Selon nos prévisions actuelles en matière de commandites, la location de salles n’est pas financièrement envisageable. Nous vous serions très reconnaissants de tout soutien à cet égard."
+    },
+    "costs": {
+      "label": "Coûts prévus · par rencontre (environ 20 à 25 personnes)",
+      "meeting": {
+        "name": "Frais de rencontre",
+        "text": "Ce montant comprend divers coûts liés à l’organisation de l’événement, comme les frais administratifs, la logistique et l’équipement ou les fournitures nécessaires."
+      },
+      "food": {
+        "name": "Nourriture et boissons (sans alcool)",
+        "text": "Pour offrir un environnement agréable et stimulant aux participants, nous fournirons de la nourriture et des boissons sans alcool de qualité. Ces provisions contribuent à l’expérience globale de la rencontre. Des boissons alcoolisées pourraient être offertes (gratuitement) si le lieu le permet sans permis de la Régie des alcools, des courses et des jeux (RACJ)."
+      },
+      "organization": {
+        "name": "Frais d’organisation",
+        "text": "Ces frais couvrent les dépenses liées à la gestion et à la coordination de l’événement, y compris la planification préalable, la logistique et le soutien sur place. Ils contribuent au bon déroulement de la rencontre."
+      },
+      "swag": {
+        "heading": "Articles promotionnels",
+        "intro": "Pour favoriser un sentiment d’unité et de fierté chez les participants, nous prévoyons offrir des articles propres à l’événement, comme des t-shirts, dans le cadre du programme de commandites. Tout le monde aime les articles promotionnels!",
+        "first": {
+          "name": "Premier lot d’articles (environ 20 à 25 personnes)",
+          "text": "Nous collaborerons avec un partenaire local existant pour produire le premier lot de t-shirts. Ces t-shirts serviront de souvenirs aux participants et souligneront leur participation à l’événement."
+        },
+        "second": {
+          "name": "Deuxième lot d’articles",
+          "amount": "Selon les commandites",
+          "text": "Si nous obtenons suffisamment de commanditaires, nous comptons produire un lot supplémentaire de t-shirts pour une rencontre ultérieure en {year}. Les participants auront ainsi une autre occasion de recevoir des articles personnalisés de l’événement."
+        }
+      }
+    },
+    "closing": {
+      "heading": "Devenez partenaire",
+      "paragraphs": [
+        "En participant à notre programme de commandites, vous contribuerez non seulement au succès de nos rencontres en personne, mais vous gagnerez aussi en visibilité et en reconnaissance au sein de notre communauté. Votre générosité nous aidera à continuer d’organiser des événements enrichissants et stimulants pour nos participants.",
+        "N’hésitez pas à nous écrire si vous avez des questions ou besoin de plus d’information. Nous avons hâte de collaborer avec vous pour faire de nos événements un franc succès."
+      ],
+      "cta": "Nous joindre →",
+      "note": "Note : Le programme de commandites proposé peut être révisé et adapté selon les besoins et les préférences de chaque commanditaire."
+    }
   }
 }

@@ -48,3 +48,18 @@ export function initials(name: string): string {
     .map((part) => part.charAt(0).toUpperCase())
     .join('');
 }
+
+export function formatNumber(value: number, locale: Locale): string {
+  return new Intl.NumberFormat(intlLocale[locale]).format(value);
+}
+
+export function formatList(items: string[], locale: Locale): string {
+  return new Intl.ListFormat(intlLocale[locale], { type: 'conjunction' }).format(items);
+}
+
+// Splits 'text {key} more' into ['text ', ' more'] so a link can be placed between.
+export function splitAt(template: string, key: string): [string, string] | null {
+  const marker = `{${key}}`;
+  const i = template.indexOf(marker);
+  return i === -1 ? null : [template.slice(0, i), template.slice(i + marker.length)];
+}

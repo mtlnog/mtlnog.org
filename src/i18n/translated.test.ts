@@ -3,7 +3,7 @@ import fr from './fr.json';
 import en from './en.json';
 
 // Page sections whose French text must not be left in English.
-const SECTIONS = ['meetings', 'team'] as const;
+const SECTIONS = ['meetings', 'team', 'sponsorship'] as const;
 
 // Leaf paths that are legitimately identical in both languages.
 const SAME_IN_BOTH: string[] = [];
