@@ -1,5 +1,6 @@
 ---
 import type { Strings } from '../i18n/utils';
+import { INVITE_TYPES } from '../lib/inviteType';
 
 interface Props {
   strings: Strings;
@@ -66,8 +67,7 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
       <label for="invite-type">{f.fields.inviteType.label} <span class="req">*</span></label>
       <select id="invite-type" name="invite_type" required>
         <option value="" disabled selected>{f.fields.inviteType.placeholder}</option>
-        <option value="slack">{f.fields.inviteType.slack}</option>
-        <option value="sponsorship">{f.fields.inviteType.sponsorship}</option>
+        {INVITE_TYPES.map((type) => <option value={type}>{f.fields.inviteType[type]}</option>)}
       </select>
     </div>
 
@@ -93,6 +93,13 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
 <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 
 <script>
+  import { inviteTypeFromSearch } from '../lib/inviteType';
+
+  // Links like /en/?type=sponsorship#invite pre-select the invite type.
+  const presetType = inviteTypeFromSearch(window.location.search);
+  const typeSelect = document.getElementById('invite-type') as HTMLSelectElement | null;
+  if (presetType && typeSelect) typeSelect.value = presetType;
+
   const form = document.getElementById('invite-form') as HTMLFormElement | null;
   const statusEl = document.getElementById('form-status');
   const btn = document.getElementById('submit-btn') as HTMLButtonElement | null;
