@@ -8,9 +8,9 @@ dist/
 .env.*
 !.env.example
 
-# Local Node version manager config (use .nvmrc as the committed source of truth)
-mise.toml
-.mise.toml
+# Local mise overrides
+mise.local.toml
+.mise.local.toml
 
 # Wrangler local state/cache
 .wrangler/

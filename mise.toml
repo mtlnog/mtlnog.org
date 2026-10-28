@@ -1,0 +1,34 @@
+# Node version comes from .nvmrc (shared with Cloudflare Workers Builds and CI).
+[settings]
+idiomatic_version_file_enable_tools = ["node"]
+
+[tasks.install]
+description = "Install npm dependencies (skipped when package-lock.json is unchanged)"
+run = "npm ci"
+sources = ["package.json", "package-lock.json"]
+outputs = ["node_modules/.package-lock.json"]
+
+[tasks.dev]
+description = "Start the Astro dev server"
+depends = ["install"]
+run = "npm run dev"
+
+[tasks.test]
+description = "Run the vitest suite"
+depends = ["install"]
+run = "npm test"
+
+[tasks.build]
+description = "Build the static site to dist/"
+depends = ["install"]
+run = "npm run build"
+
+[tasks.preview]
+description = "Serve the built site locally"
+depends = ["build"]
+run = "npm run preview"
+
+[tasks.deploy]
+description = "Deploy dist/ to Cloudflare Workers"
+depends = ["build"]
+run = "npm run deploy"

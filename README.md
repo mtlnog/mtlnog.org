@@ -5,12 +5,12 @@ Bilingual (FR/EN) static site for the Montreal Network Operator Group, built wit
 ## Develop
 
 ```bash
-npm install
+mise install           # installs Node (version from .nvmrc)
 cp .env.example .env   # then fill in real values (see below)
-npm run dev
+mise run dev           # installs npm deps if needed, then starts astro dev
 ```
 
-Node version is pinned in `.nvmrc` (Node 22, required by wrangler); nvm, mise, and Cloudflare all read it.
+Node version is pinned in `.nvmrc` (Node 22, required by wrangler); mise, nvm, CI, and Cloudflare all read it. `mise tasks` lists the available tasks (`dev`, `test`, `build`, `preview`, `deploy`); each one runs `npm ci` first if the lockfile changed. Plain `npm install` / `npm run …` still works without mise.
 
 ## Configuration
 
