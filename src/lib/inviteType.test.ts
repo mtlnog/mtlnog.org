@@ -5,6 +5,9 @@ describe('inviteTypeFromSearch', () => {
   it('returns a known invite type', () => {
     expect(inviteTypeFromSearch('?type=sponsorship')).toBe('sponsorship');
     expect(inviteTypeFromSearch('?type=slack&x=1')).toBe('slack');
+    expect(inviteTypeFromSearch('?type=venue')).toBe('venue');
+    expect(inviteTypeFromSearch('?type=speaking')).toBe('speaking');
+    expect(inviteTypeFromSearch('?type=general')).toBe('general');
   });
 
   it('ignores unknown, differently cased, empty or missing values', () => {
