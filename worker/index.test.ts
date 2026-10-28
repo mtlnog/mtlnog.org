@@ -68,7 +68,7 @@ describe('handleContact', () => {
   });
 
   it('answers ok to a filled honeypot without storing or calling out', async () => {
-    const res = await handleContact(post({ ...general, turnstile_validation: 'spam' }), env, deps(), waitUntil);
+    const res = await handleContact(post({ ...general, validation: 'spam' }), env, deps(), waitUntil);
     expect(await json(res)).toEqual({ status: 200, body: { ok: true } });
     await settle();
     expect(store.rows).toHaveLength(0);
