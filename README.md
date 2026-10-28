@@ -36,16 +36,18 @@ npm run preview   # serve the built site locally
 | Page | French | English |
 |---|---|---|
 | Home + invite form | `/fr/` | `/en/` |
-| Meetings | `/fr/rencontres/` | `/en/meetings/` |
+| Events | `/fr/evenements/` | `/en/events/` |
 | Team | `/fr/equipe/` | `/en/team/` |
 | Sponsorship | `/fr/commandites/` | `/en/sponsorship/` |
 
 URLs are defined once in `src/i18n/routes.ts`. All page text lives in `src/i18n/{fr,en}.json`. Facts that change over time live in `src/data/`:
 
-- `sponsorship.ts`: program year, stats and their date, meeting months, tier prices and limits, per-meeting costs. Update it each year.
-- `meetings.ts`: add a meeting (`date`, `title`, `venue`, optional `url`) and it shows under Upcoming until its date passes, then under Past on the next build.
+- `sponsorship.ts`: program year, stats and their date, event months, tier prices and limits, per-event costs. Update it each year.
+- `meetings.ts`: add an event (`date`, `title`, `venue`, optional `url`) to the Events page; it shows under Upcoming until its date passes, then under Past on the next build.
 - `team.ts`: members and emails. To add a photo, put it in `public/team/` and set `photo: '/team/<name>.jpg'`; until then the page shows initials.
 - `social.ts`: social links used in the hero, footer and Team page.
+
+The old `/fr/rencontres/` and `/en/meetings/` URLs redirect to the Events page (`public/_redirects`).
 
 Links like `/en/?type=sponsorship#invite` open the invite form with that option pre-selected.
 

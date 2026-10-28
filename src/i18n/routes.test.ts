@@ -4,8 +4,8 @@ import { routes, pathFor, inviteHref, sponsorFormHref } from './routes';
 describe('route map', () => {
   it('maps each page to its localized path', () => {
     expect(pathFor('home', 'fr')).toBe('/fr/');
-    expect(pathFor('meetings', 'fr')).toBe('/fr/rencontres/');
-    expect(pathFor('meetings', 'en')).toBe('/en/meetings/');
+    expect(pathFor('meetings', 'fr')).toBe('/fr/evenements/');
+    expect(pathFor('meetings', 'en')).toBe('/en/events/');
     expect(pathFor('team', 'fr')).toBe('/fr/equipe/');
     expect(pathFor('team', 'en')).toBe('/en/team/');
     expect(pathFor('sponsorship', 'fr')).toBe('/fr/commandites/');

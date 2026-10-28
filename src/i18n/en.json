@@ -4,7 +4,7 @@
     "description": "MTLNOG brings together network engineers and operators in Montréal, Quebec, and beyond to share knowledge and foster connections within the network operator community."
   },
   "nav": {
-    "meetings": "Meetings",
+    "meetings": "Events",
     "team": "Team",
     "sponsorship": "Sponsorship",
     "invite": "Request an Invite"
@@ -56,23 +56,23 @@
   },
   "meetings": {
     "meta": {
-      "title": "Meetings // MTLNOG",
-      "description": "Upcoming and past in-person meetings of MTLNOG, the Montreal Network Operator Group."
+      "title": "Events // MTLNOG",
+      "description": "Upcoming and past in-person events of MTLNOG, the Montreal Network Operator Group."
     },
-    "label": "Meetings",
-    "heading": "In-person meetings",
-    "intro": "MTLNOG brings network operators together in person a few times a year. Three meetings are being planned for 2027.",
+    "label": "Events",
+    "heading": "In-person events",
+    "intro": "MTLNOG brings network operators together in person a few times a year. Three events are being planned for 2027.",
     "upcoming": {
-      "heading": "Upcoming meetings",
-      "emptyTitle": "No meeting scheduled yet",
+      "heading": "Upcoming events",
+      "emptyTitle": "No event scheduled yet",
       "emptyText": "Dates are announced in the Slack workspace first.",
       "emptyLink": "Request an invite →"
     },
     "past": {
-      "heading": "Past meetings",
-      "emptyTitle": "No meetings listed yet",
-      "emptyText": "Meetings will be listed here starting with our 2027 season.",
-      "emptyLink": "Sponsor a meeting →"
+      "heading": "Past events",
+      "emptyTitle": "No events listed yet",
+      "emptyText": "Events will be listed here starting with our 2027 season.",
+      "emptyLink": "Sponsor an event →"
     }
   },
   "team": {
@@ -101,7 +101,7 @@
   "sponsorship": {
     "meta": {
       "title": "Sponsorship // MTLNOG",
-      "description": "Sponsor MTLNOG’s in-person meetings in Montréal: sponsorship tiers, projected costs and how your support is used."
+      "description": "Sponsor MTLNOG’s in-person events in Montréal: sponsorship tiers, projected costs and how your support is used."
     },
     "label": "Sponsorship {year} · BBQ & meetings",
     "heading": "Support Montreal’s network operator community",
@@ -121,7 +121,7 @@
     },
     "program": {
       "label": "Sponsorship program · {year}",
-      "intro": "To ensure the success of our in-person meetings, we have developed a comprehensive sponsorship program. This program aims to secure financial support from sponsors, partners, and donors to cover the costs associated with organizing and hosting these events.",
+      "intro": "To ensure the success of our in-person events, we have developed a comprehensive sponsorship program. This program aims to secure financial support from sponsors, partners, and donors to cover the costs associated with organizing and hosting these events.",
       "schedule": "For the year {year}, we are planning three events tentatively scheduled for {months}.",
       "tentative": "tentative"
     },
@@ -129,8 +129,8 @@
       "label": "Sponsorship tiers",
       "perYear": "yearly",
       "limit": "limited to {n} sponsors",
-      "upcomingPage": "“Upcoming meetings”",
-      "pastPage": "“Past meetings”",
+      "upcomingPage": "“Upcoming events”",
+      "pastPage": "“Past events”",
       "gold": {
         "name": "Gold",
         "bullets": [
@@ -139,8 +139,8 @@
           "Priority placement of your company logo/presence with banners (provided by the sponsor)",
           "Logo placement on swag (for {year}, t-shirt only) as MTLNOG’s Gold partner",
           "Large-sized logo and link on the {upcoming} page of MTLNOG’s website",
-          "Two social media posts (before and after each {year} meeting) on LinkedIn, Mastodon, Bluesky, and X",
-          "Speaking slot (15-20 min) at one {year} meeting of your choice",
+          "Two social media posts (before and after each {year} event) on LinkedIn, Mastodon, Bluesky, and X",
+          "Speaking slot (15-20 min) at one {year} event of your choice",
           "Permanent mention on the {past} page",
           "Exclusive right to distribute your marketing material and swag at the selected event"
         ]
@@ -151,7 +151,7 @@
           "Valid for all three MTLNOG events of {year}.",
           "Provides year long local recognition and branding exposure.",
           "Logo and link on the {upcoming} page of MTLNOG’s website",
-          "Two social media posts (before and after each of the meetings) on LinkedIn, Mastodon, Bluesky, and X",
+          "Two social media posts (before and after each of the events) on LinkedIn, Mastodon, Bluesky, and X",
           "Sponsorship highlight during welcoming presentation.",
           "Permanent mention on the {past} page"
         ]
@@ -159,21 +159,21 @@
     },
     "venue": {
       "label": "Venue",
-      "text": "To minimize expenses, we are seeking sponsors, partners, and donors who can provide meeting spaces free of charge. As per our current sponsorship plans, renting meeting spaces is not financially feasible. We greatly appreciate any support in this regard."
+      "text": "To minimize expenses, we are seeking sponsors, partners, and donors who can provide event spaces free of charge. As per our current sponsorship plans, renting event spaces is not financially feasible. We greatly appreciate any support in this regard."
     },
     "costs": {
-      "label": "Projected costs · per meeting (approximately 20–25 people)",
+      "label": "Projected costs · per event (approximately 20–25 people)",
       "meeting": {
-        "name": "Meeting expenses",
+        "name": "Event expenses",
         "text": "This includes various costs associated with organizing the event, such as administrative fees, logistical arrangements, and any necessary equipment or supplies."
       },
       "food": {
         "name": "Food and beverages (non-alcoholic)",
-        "text": "To ensure a comfortable and engaging environment for attendees, we will provide quality food and non-alcoholic beverages. These provisions contribute to the overall meeting experience. Alcoholic beverages may be provided (for free) if the venue allows for it without a permit from the Régie des alcools, des courses et des jeux (RACJ)."
+        "text": "To ensure a comfortable and engaging environment for attendees, we will provide quality food and non-alcoholic beverages. These provisions contribute to the overall event experience. Alcoholic beverages may be provided (for free) if the venue allows for it without a permit from the Régie des alcools, des courses et des jeux (RACJ)."
       },
       "organization": {
         "name": "Organization fee",
-        "text": "This fee covers the expenses associated with managing and coordinating the event, including pre-event planning, logistics, and on-site support. It helps ensure the smooth execution of the meeting."
+        "text": "This fee covers the expenses associated with managing and coordinating the event, including pre-event planning, logistics, and on-site support. It helps ensure the smooth execution of the event."
       },
       "swag": {
         "heading": "Swag",
@@ -185,14 +185,14 @@
         "second": {
           "name": "Second batch of swag",
           "amount": "Subject to sponsorship",
-          "text": "If we secure sufficient sponsors, we aim to produce an additional batch of t-shirts for a later {year} meeting. This will allow us to extend the opportunity for participants to receive personalized event merchandise."
+          "text": "If we secure sufficient sponsors, we aim to produce an additional batch of t-shirts for a later {year} event. This will allow us to extend the opportunity for participants to receive personalized event merchandise."
         }
       }
     },
     "closing": {
       "heading": "Partner with us",
       "paragraphs": [
-        "By participating in our sponsorship program, you will not only contribute to the success of our in-person meetings but also gain exposure and recognition within our community. Your generosity will help us continue organizing meaningful and engaging events for our participants.",
+        "By participating in our sponsorship program, you will not only contribute to the success of our in-person events but also gain exposure and recognition within our community. Your generosity will help us continue organizing meaningful and engaging events for our participants.",
         "Please let us know if you have any questions or require further information. We look forward to partnering with you to make our events a resounding success."
       ],
       "cta": "Contact us →",

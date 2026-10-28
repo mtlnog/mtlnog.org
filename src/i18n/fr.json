@@ -4,7 +4,7 @@
     "description": "MTLNOG réunit les ingénieurs et opérateurs de réseau à Montréal, au Québec et au-delà pour partager des connaissances et favoriser les échanges au sein de la communauté des opérateurs de réseau."
   },
   "nav": {
-    "meetings": "Rencontres",
+    "meetings": "Événements",
     "team": "Équipe",
     "sponsorship": "Commandites",
     "invite": "Demander une invitation"
@@ -56,23 +56,23 @@
   },
   "meetings": {
     "meta": {
-      "title": "Rencontres // MTLNOG",
-      "description": "Les rencontres en personne à venir et passées de MTLNOG, le groupe des opérateurs réseau de Montréal."
+      "title": "Événements // MTLNOG",
+      "description": "Les événements en personne à venir et passés de MTLNOG, le groupe des opérateurs réseau de Montréal."
     },
-    "label": "Rencontres",
-    "heading": "Rencontres en personne",
-    "intro": "MTLNOG réunit les opérateurs réseau en personne quelques fois par année. Trois rencontres sont en préparation pour 2027.",
+    "label": "Événements",
+    "heading": "Événements en personne",
+    "intro": "MTLNOG réunit les opérateurs réseau en personne quelques fois par année. Trois événements sont en préparation pour 2027.",
     "upcoming": {
-      "heading": "Rencontres à venir",
-      "emptyTitle": "Aucune rencontre prévue pour l'instant",
+      "heading": "Événements à venir",
+      "emptyTitle": "Aucun événement prévu pour l’instant",
       "emptyText": "Les dates sont d'abord annoncées dans l'espace de travail Slack.",
       "emptyLink": "Demander une invitation →"
     },
     "past": {
-      "heading": "Rencontres passées",
-      "emptyTitle": "Aucune rencontre répertoriée pour l'instant",
-      "emptyText": "Les rencontres seront répertoriées ici à partir de notre saison 2027.",
-      "emptyLink": "Commanditer une rencontre →"
+      "heading": "Événements passés",
+      "emptyTitle": "Aucun événement répertorié pour l’instant",
+      "emptyText": "Les événements seront répertoriés ici à partir de notre saison 2027.",
+      "emptyLink": "Commanditer un événement →"
     }
   },
   "team": {
@@ -101,7 +101,7 @@
   "sponsorship": {
     "meta": {
       "title": "Commandites // MTLNOG",
-      "description": "Commanditez les rencontres en personne de MTLNOG à Montréal : niveaux de commandite, coûts prévus et utilisation de votre soutien."
+      "description": "Commanditez les événements en personne de MTLNOG à Montréal : niveaux de commandite, coûts prévus et utilisation de votre soutien."
     },
     "label": "Commandites {year} · BBQ et rencontres",
     "heading": "Soutenez la communauté des opérateurs réseau de Montréal",
@@ -121,7 +121,7 @@
     },
     "program": {
       "label": "Programme de commandites · {year}",
-      "intro": "Pour assurer le succès de nos rencontres en personne, nous avons mis sur pied un programme de commandites complet. Ce programme vise à obtenir le soutien financier de commanditaires, de partenaires et de donateurs afin de couvrir les coûts liés à l’organisation et à la tenue de ces événements.",
+      "intro": "Pour assurer le succès de nos événements en personne, nous avons mis sur pied un programme de commandites complet. Ce programme vise à obtenir le soutien financier de commanditaires, de partenaires et de donateurs afin de couvrir les coûts liés à l’organisation et à la tenue de ces événements.",
       "schedule": "Pour {year}, nous planifions trois événements, provisoirement prévus en {months}.",
       "tentative": "à confirmer"
     },
@@ -129,8 +129,8 @@
       "label": "Niveaux de commandite",
       "perYear": "par année",
       "limit": "limité à {n} commanditaires",
-      "upcomingPage": "« Rencontres à venir »",
-      "pastPage": "« Rencontres passées »",
+      "upcomingPage": "« Événements à venir »",
+      "pastPage": "« Événements passés »",
       "gold": {
         "name": "Or",
         "bullets": [
@@ -139,8 +139,8 @@
           "Placement prioritaire du logo et de la présence de votre entreprise, avec bannières (fournies par le commanditaire)",
           "Logo sur les articles promotionnels ({year} : t-shirt seulement) à titre de partenaire Or de MTLNOG",
           "Grand logo et lien sur la page {upcoming} du site web de MTLNOG",
-          "Deux publications sur les réseaux sociaux (avant et après chaque rencontre de {year}) sur LinkedIn, Mastodon, Bluesky et X",
-          "Plage de présentation (15 à 20 min) lors d’une rencontre de {year} de votre choix",
+          "Deux publications sur les réseaux sociaux (avant et après chaque événement de {year}) sur LinkedIn, Mastodon, Bluesky et X",
+          "Plage de présentation (15 à 20 min) lors d’un événement de {year} de votre choix",
           "Mention permanente sur la page {past}",
           "Droit exclusif de distribuer votre matériel promotionnel et vos articles promotionnels lors de l’événement choisi"
         ]
@@ -151,7 +151,7 @@
           "Valide pour les trois événements MTLNOG de {year}.",
           "Offre une visibilité locale et une exposition de votre marque toute l’année.",
           "Logo et lien sur la page {upcoming} du site web de MTLNOG",
-          "Deux publications sur les réseaux sociaux (avant et après chacune des rencontres) sur LinkedIn, Mastodon, Bluesky et X",
+          "Deux publications sur les réseaux sociaux (avant et après chacun des événements) sur LinkedIn, Mastodon, Bluesky et X",
           "Mention du commanditaire lors de la présentation d’accueil.",
           "Mention permanente sur la page {past}"
         ]
@@ -159,21 +159,21 @@
     },
     "venue": {
       "label": "Lieu",
-      "text": "Pour réduire nos dépenses, nous recherchons des commanditaires, des partenaires et des donateurs qui peuvent offrir gratuitement des espaces de rencontre. Selon nos prévisions actuelles en matière de commandites, la location de salles n’est pas financièrement envisageable. Nous vous serions très reconnaissants de tout soutien à cet égard."
+      "text": "Pour réduire nos dépenses, nous recherchons des commanditaires, des partenaires et des donateurs qui peuvent offrir gratuitement des lieux pour nos événements. Selon nos prévisions actuelles en matière de commandites, la location de salles n’est pas financièrement envisageable. Nous vous serions très reconnaissants de tout soutien à cet égard."
     },
     "costs": {
-      "label": "Coûts prévus · par rencontre (environ 20 à 25 personnes)",
+      "label": "Coûts prévus · par événement (environ 20 à 25 personnes)",
       "meeting": {
-        "name": "Frais de rencontre",
+        "name": "Frais d’événement",
         "text": "Ce montant comprend divers coûts liés à l’organisation de l’événement, comme les frais administratifs, la logistique et l’équipement ou les fournitures nécessaires."
       },
       "food": {
         "name": "Nourriture et boissons (sans alcool)",
-        "text": "Pour offrir un environnement agréable et stimulant aux participants, nous fournirons de la nourriture et des boissons sans alcool de qualité. Ces provisions contribuent à l’expérience globale de la rencontre. Des boissons alcoolisées pourraient être offertes (gratuitement) si le lieu le permet sans permis de la Régie des alcools, des courses et des jeux (RACJ)."
+        "text": "Pour offrir un environnement agréable et stimulant aux participants, nous fournirons de la nourriture et des boissons sans alcool de qualité. Ces provisions contribuent à l’expérience globale de l’événement. Des boissons alcoolisées pourraient être offertes (gratuitement) si le lieu le permet sans permis de la Régie des alcools, des courses et des jeux (RACJ)."
       },
       "organization": {
         "name": "Frais d’organisation",
-        "text": "Ces frais couvrent les dépenses liées à la gestion et à la coordination de l’événement, y compris la planification préalable, la logistique et le soutien sur place. Ils contribuent au bon déroulement de la rencontre."
+        "text": "Ces frais couvrent les dépenses liées à la gestion et à la coordination de l’événement, y compris la planification préalable, la logistique et le soutien sur place. Ils contribuent au bon déroulement de l’événement."
       },
       "swag": {
         "heading": "Articles promotionnels",
@@ -185,14 +185,14 @@
         "second": {
           "name": "Deuxième lot d’articles",
           "amount": "Selon les commandites",
-          "text": "Si nous obtenons suffisamment de commanditaires, nous comptons produire un lot supplémentaire de t-shirts pour une rencontre ultérieure en {year}. Les participants auront ainsi une autre occasion de recevoir des articles personnalisés de l’événement."
+          "text": "Si nous obtenons suffisamment de commanditaires, nous comptons produire un lot supplémentaire de t-shirts pour un événement ultérieur en {year}. Les participants auront ainsi une autre occasion de recevoir des articles personnalisés de l’événement."
         }
       }
     },
     "closing": {
       "heading": "Devenez partenaire",
       "paragraphs": [
-        "En participant à notre programme de commandites, vous contribuerez non seulement au succès de nos rencontres en personne, mais vous gagnerez aussi en visibilité et en reconnaissance au sein de notre communauté. Votre générosité nous aidera à continuer d’organiser des événements enrichissants et stimulants pour nos participants.",
+        "En participant à notre programme de commandites, vous contribuerez non seulement au succès de nos événements en personne, mais vous gagnerez aussi en visibilité et en reconnaissance au sein de notre communauté. Votre générosité nous aidera à continuer d’organiser des événements enrichissants et stimulants pour nos participants.",
         "N’hésitez pas à nous écrire si vous avez des questions ou besoin de plus d’information. Nous avons hâte de collaborer avec vous pour faire de nos événements un franc succès."
       ],
       "cta": "Nous joindre →",

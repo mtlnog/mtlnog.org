@@ -5,7 +5,7 @@ export type PageKey = 'home' | 'meetings' | 'team' | 'sponsorship';
 // Single source of truth for page URLs in each language.
 export const routes: Record<PageKey, Record<Locale, string>> = {
   home: { fr: '/fr/', en: '/en/' },
-  meetings: { fr: '/fr/rencontres/', en: '/en/meetings/' },
+  meetings: { fr: '/fr/evenements/', en: '/en/events/' },
   team: { fr: '/fr/equipe/', en: '/en/team/' },
   sponsorship: { fr: '/fr/commandites/', en: '/en/sponsorship/' },
 };
