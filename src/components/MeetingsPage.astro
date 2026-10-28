@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Header from './Header.astro';
 import { getStrings, type Locale } from '../i18n/utils';
 import { pathFor, inviteHref } from '../i18n/routes';
-import { meetings, splitMeetings, type Meeting } from '../data/meetings';
+import { meetings, montrealDate, splitMeetings, type Meeting } from '../data/meetings';
 
 interface Props {
   locale: Locale;
@@ -14,7 +14,7 @@ const t = getStrings(locale);
 const m = t.meetings;
 
 // Split at build time; a rebuild moves meetings from upcoming to past.
-const today = new Date().toISOString().slice(0, 10);
+const today = montrealDate(new Date());
 const { upcoming, past } = splitMeetings(meetings, today);
 
 const sections: {

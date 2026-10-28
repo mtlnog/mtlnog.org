@@ -1,8 +1,5 @@
-@media (max-width: 600px) {
-  form { grid-template-columns: 1fr; }
-  .field.full { grid-column: 1; }
-  .captcha-wrap { grid-column: 1; }
-  .submit-row { grid-column: 1; }
+// The header (logo + 4 nav links + language switch) needs ~740px on one row.
+@media (max-width: 800px) {
   .header-inner { flex-wrap: wrap; row-gap: 1rem; }
   .header-actions {
     margin-left: 0;
@@ -10,14 +7,20 @@
     justify-content: space-between;
     gap: 1rem;
   }
+  nav { flex-wrap: wrap; gap: 0.6rem 1.25rem; }
+}
+
+@media (max-width: 600px) {
+  form { grid-template-columns: 1fr; }
+  .field.full { grid-column: 1; }
+  .captcha-wrap { grid-column: 1; }
+  .submit-row { grid-column: 1; }
   .page-main { padding: 2.5rem 1.25rem 4rem; }
   .page-header h1 { font-size: 1.6rem; }
   .person { grid-template-columns: 1fr; gap: 1.25rem; }
   .person-photo { width: 120px; height: 120px; }
   .stat-grid { grid-template-columns: 1fr 1fr; }
+  .month-name { font-size: 1rem; }
+  .month-note { font-size: 0.6rem; letter-spacing: 0.08em; }
   .tier-grid { grid-template-columns: 1fr; }
-  nav {
-    flex-wrap: wrap;
-    gap: 0.6rem 1.25rem;
-  }
 }

@@ -13,8 +13,8 @@ describe('formatCad', () => {
 });
 
 describe('month helpers', () => {
-  it('returns a capitalized month name', () => {
-    expect(monthName(3, 'fr')).toBe('Mars');
+  it('returns the month name as written mid-sentence', () => {
+    expect(monthName(3, 'fr')).toBe('mars');
     expect(monthName(10, 'en')).toBe('October');
   });
 
@@ -46,7 +46,7 @@ describe('formatNumber', () => {
 
 describe('formatList', () => {
   it('joins items with the locale conjunction', () => {
-    expect(formatList(['Mars', 'Août', 'Octobre'], 'fr')).toBe('Mars, Août et Octobre');
+    expect(formatList(['mars', 'août', 'octobre'], 'fr')).toBe('mars, août et octobre');
     expect(formatList(['March', 'August', 'October'], 'en')).toMatch(/^March, August,? and October$/);
   });
 });

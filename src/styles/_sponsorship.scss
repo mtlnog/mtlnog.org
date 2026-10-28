@@ -58,19 +58,21 @@
 
 .month-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.75rem;
   margin-top: 1rem;
 }
 
 .month {
   border: 1px dashed var(--border);
-  padding: 1rem;
+  padding: 1rem 0.5rem;
+  overflow-wrap: anywhere;
   text-align: center;
 }
 
 .month-name {
   font-family: var(--mono);
+  text-transform: capitalize;
   font-size: 1.15rem;
   color: #fff;
 }

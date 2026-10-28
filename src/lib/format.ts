@@ -15,11 +15,10 @@ export function formatCad(amount: number, locale: Locale): string {
   }).format(amount);
 }
 
+// Month name as written mid-sentence ('mars' in French, 'March' in English).
 export function monthName(month: number, locale: Locale): string {
   const date = new Date(Date.UTC(2000, month - 1, 1));
-  return capitalize(
-    new Intl.DateTimeFormat(intlLocale[locale], { month: 'long', timeZone: 'UTC' }).format(date),
-  );
+  return new Intl.DateTimeFormat(intlLocale[locale], { month: 'long', timeZone: 'UTC' }).format(date);
 }
 
 // '2026-10' -> 'October 2026' / 'Octobre 2026'

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { splitMeetings } from './meetings';
+import { splitMeetings, montrealDate } from './meetings';
 
 describe('splitMeetings', () => {
   const a = { date: '2027-03-18', title: 'A', venue: 'V' };
@@ -19,5 +19,13 @@ describe('splitMeetings', () => {
 
   it('handles an empty list', () => {
     expect(splitMeetings([], '2027-01-01')).toEqual({ upcoming: [], past: [] });
+  });
+});
+
+describe('montrealDate', () => {
+  it('uses the Montréal calendar date, not UTC', () => {
+    // 20:30 EDT on March 17 is already March 18 in UTC.
+    expect(montrealDate(new Date('2027-03-18T00:30:00Z'))).toBe('2027-03-17');
+    expect(montrealDate(new Date('2027-03-18T12:00:00Z'))).toBe('2027-03-18');
   });
 });

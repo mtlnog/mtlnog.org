@@ -16,3 +16,8 @@ export function splitMeetings(
   const past = list.filter((m) => m.date < today).sort((a, b) => b.date.localeCompare(a.date));
   return { upcoming, past };
 }
+
+// Today's date in Montréal as YYYY-MM-DD (builds run in UTC).
+export function montrealDate(now: Date): string {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto' }).format(now);
+}
