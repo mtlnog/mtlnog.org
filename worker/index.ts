@@ -81,20 +81,39 @@ export async function handleContact(
   return reply(200, { ok: true });
 }
 
+// Runs one step; a failure is logged (without personal data) and doesn't stop the others.
+async function attempt(label: string, step: () => Promise<unknown>): Promise<void> {
+  try {
+    await step();
+  } catch {
+    console.error(`contact cron: ${label} failed`);
+  }
+}
+
 export async function runScheduled(env: Env, deps: Deps): Promise<void> {
   const now = deps.now();
-  for (const row of await deps.store.retryable(now, BATCH)) {
-    if (now - row.created_at >= GIVE_UP_MS) await deps.store.markFailed(row.id, now);
-    else await deliver(row.id, row.payload, env, deps);
-  }
+
+  await attempt('retry', async () => {
+    for (const row of await deps.store.retryable(now, BATCH)) {
+      await attempt(`retry #${row.id}`, () =>
+        now - row.created_at >= GIVE_UP_MS
+          ? deps.store.markFailed(row.id, now)
+          : deliver(row.id, row.payload, env, deps),
+      );
+    }
+  });
 
   // Warnings go through the same webhook, so they are retried on later runs too.
-  for (const row of await deps.store.pendingAlerts(BATCH)) {
-    const result = await postToSlack(env.SLACK_WEBHOOK_URL, buildFailureAlert(row.id, row.topic), deps.fetchFn);
-    if (result.ok) await deps.store.markAlerted(row.id, now);
-  }
+  await attempt('alerts', async () => {
+    for (const row of await deps.store.pendingAlerts(BATCH)) {
+      await attempt(`alert #${row.id}`, async () => {
+        const result = await postToSlack(env.SLACK_WEBHOOK_URL, buildFailureAlert(row.id, row.topic), deps.fetchFn);
+        if (result.ok) await deps.store.markAlerted(row.id, now);
+      });
+    }
+  });
 
-  await deps.store.purgeDelivered(now);
+  await attempt('purge', () => deps.store.purgeDelivered(now));
 }
 
 const liveDeps = (env: Env): Deps => ({ store: d1Store(env.DB), fetchFn: fetch, now: Date.now });

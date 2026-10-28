@@ -97,6 +97,18 @@ The GitHub repo is connected to Cloudflare via Workers Builds; CF builds and dep
 - **Build environment variables** (set for Production and Preview): `PUBLIC_TURNSTILE_SITEKEY`
 - **Worker secrets:** `TURNSTILE_SECRET`, `SLACK_WEBHOOK_URL` (set once with `wrangler secret put`)
 
+### First deploy of the contact form
+
+Do these once, before merging the branch that adds the Worker; the deploy fails while `database_id` is still `"local"`:
+
+1. Create the private Slack channel and its incoming webhook.
+2. `npx wrangler d1 create mtlnog-contact`, then put the printed `database_id` in `wrangler.jsonc` and commit it.
+3. `npx wrangler d1 migrations apply DB --remote`
+4. `npx wrangler secret put TURNSTILE_SECRET` and `npx wrangler secret put SLACK_WEBHOOK_URL`
+5. Check the Turnstile widget's allowed hostnames include `mtlnog.org`, and set `PUBLIC_TURNSTILE_SITEKEY` in the Workers Builds settings.
+6. Merge and push, then send one message per topic on the live site and check each lands in Slack.
+7. Remove the old `PUBLIC_FORMSPREE_ID` and `PUBLIC_HCAPTCHA_SITEKEY` build variables.
+
 Deploy manually with `npm run deploy` (requires `wrangler login` or a `CLOUDFLARE_API_TOKEN`).
 
 ## CI

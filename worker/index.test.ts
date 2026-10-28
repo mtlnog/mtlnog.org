@@ -159,6 +159,24 @@ describe('runScheduled', () => {
     expect(calls.filter((c) => c.url === WEBHOOK)).toHaveLength(2);
   });
 
+  it('keeps going when one row fails, then still alerts and purges', async () => {
+    const bad = await store.insert(sub, NOW - 3 * MIN);
+    const good = await store.insert(sub, NOW - 2 * MIN);
+    const failed = await store.insert(sub, NOW - 25 * HOUR);
+    await store.markFailed(failed, NOW - HOUR);
+    const old = await store.insert(sub, NOW - 40 * DAY);
+    await store.markDelivered(old, NOW - 31 * DAY);
+    const markDelivered = store.markDelivered.bind(store);
+    store.markDelivered = async (id, now) => {
+      if (id === bad) throw new Error('db hiccup');
+      return markDelivered(id, now);
+    };
+    await runScheduled(env, deps());
+    expect(store.rows.find((r) => r.id === good)?.delivered_at).toBe(NOW);
+    expect(store.rows.find((r) => r.id === failed)?.alerted_at).toBe(NOW);
+    expect(store.rows.some((r) => r.id === old)).toBe(false);
+  });
+
   it('purges rows delivered more than 30 days ago', async () => {
     const old = await store.insert(sub, NOW - 40 * DAY);
     await store.markDelivered(old, NOW - 31 * DAY);

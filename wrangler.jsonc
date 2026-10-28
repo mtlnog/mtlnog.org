@@ -13,7 +13,8 @@
   "triggers": {
     "crons": ["*/5 * * * *"]
   },
-  // Contact form submissions. database_id is set when the database is created (see README).
+  // Contact form submissions. "local" only works with --local: replace it with the id printed by
+  // `npx wrangler d1 create mtlnog-contact` before the first deploy (README, "First deploy of the contact form").
   "d1_databases": [
     {
       "binding": "DB",

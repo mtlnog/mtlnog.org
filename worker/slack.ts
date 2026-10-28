@@ -31,36 +31,72 @@ export function escapeSlack(text: string): string {
   return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function show(value: FieldValue): string {
-  return escapeSlack(Array.isArray(value) ? value.join(', ') : String(value));
+// Slack rejects a section text over 3,000 characters and a section field over 2,000.
+const SECTION_MAX = 3000;
+const FIELD_MAX = 2000;
+
+const raw = (value: FieldValue) => (Array.isArray(value) ? value.join(', ') : String(value));
+
+// Splits text into escaped chunks of at most `max` characters, never inside an escape.
+function escapedChunks(text: string, max: number): string[] {
+  const chunks: string[] = [];
+  let current = '';
+  for (const char of text) {
+    const piece = escapeSlack(char);
+    if (current.length + piece.length > max) {
+      chunks.push(current);
+      current = '';
+    }
+    current += piece;
+  }
+  if (current || !chunks.length) chunks.push(current);
+  return chunks;
 }
+
+// Escapes text and shortens it to `max` characters, ending with an ellipsis when cut.
+function clamp(text: string, max: number): string {
+  const chunks = escapedChunks(text, max - 1);
+  return chunks.length === 1 ? chunks[0] : `${chunks[0]}…`;
+}
+
+const field = (label: string, value: string) => {
+  const head = `*${label}*\n`;
+  return { type: 'mrkdwn', text: head + clamp(value, FIELD_MAX - head.length) };
+};
 
 export function buildSubmissionMessage(id: number, sub: Submission): { text: string; blocks: unknown[] } {
   const topic = TOPIC_LABELS[sub.topic];
-  const name = escapeSlack(`${sub.fname} ${sub.lname}`);
+  const fullName = `${sub.fname} ${sub.lname}`;
   const lang = sub.locale.toUpperCase();
 
   const people = [
-    `*Name*\n${name}`,
-    `*Email*\n${escapeSlack(sub.email)}`,
-    `*Organization*\n${sub.org ? escapeSlack(sub.org) : '—'}`,
-    `*Language*\n${lang}`,
+    field('Name', fullName),
+    field('Email', sub.email),
+    field('Organization', sub.org || '—'),
+    field('Language', lang),
   ];
   const details = Object.entries(sub.fields)
     .filter(([key]) => key in FIELD_LABELS)
-    .map(([key, value]) => `*${FIELD_LABELS[key]}*\n${show(value)}`);
-  const texts = Object.entries(sub.fields)
-    .filter(([key]) => key in LONG_FIELDS)
-    .map(([key, value]) => `*${LONG_FIELDS[key]}*\n${show(value)}`);
+    .map(([key, value]) => field(FIELD_LABELS[key], raw(value)));
 
   const blocks: unknown[] = [
     { type: 'header', text: { type: 'plain_text', text: `${topic} · #${id}` } },
-    { type: 'section', fields: people.map((text) => ({ type: 'mrkdwn', text })) },
+    { type: 'section', fields: people },
   ];
-  if (details.length) blocks.push({ type: 'section', fields: details.map((text) => ({ type: 'mrkdwn', text })) });
-  for (const text of texts) blocks.push({ type: 'section', text: { type: 'mrkdwn', text } });
+  if (details.length) blocks.push({ type: 'section', fields: details });
 
-  return { text: `New ${topic} request from ${name} (${lang})`, blocks };
+  // Long text is split over as many sections as it needs, so nothing is cut.
+  for (const [key, value] of Object.entries(sub.fields)) {
+    if (!(key in LONG_FIELDS)) continue;
+    const label = LONG_FIELDS[key];
+    const contLabel = `*${label} (cont.)*\n`;
+    escapedChunks(raw(value), SECTION_MAX - contLabel.length).forEach((chunk, i) => {
+      const head = i === 0 ? `*${label}*\n` : contLabel;
+      blocks.push({ type: 'section', text: { type: 'mrkdwn', text: head + chunk } });
+    });
+  }
+
+  return { text: `New ${topic} request from ${clamp(fullName, 200)} (${lang})`, blocks };
 }
 
 export function buildFailureAlert(id: number, topic: Topic): { text: string } {
