@@ -101,7 +101,7 @@
   "sponsorship": {
     "meta": {
       "title": "Sponsorship // MTLNOG",
-      "description": "Sponsor MTLNOG's in-person events in Montréal: sponsorship tiers, projected costs and how your support is used."
+      "description": "Sponsor MTLNOG's in-person events in Montréal: sponsorship tiers, and where your support goes."
     },
     "label": "Sponsorship {year} · BBQ & meetings",
     "heading": "Support Montreal's network operator community",
@@ -162,32 +162,14 @@
       "text": "Have a space that could host network operators for an evening? We're looking for organizations that can provide a venue free of charge. Requirements such as capacity, A/V and location vary from event to event, and we'll work them out with you."
     },
     "costs": {
-      "label": "Projected costs · per event (approximately 20–25 people)",
-      "meeting": {
-        "name": "Event expenses",
-        "text": "This includes various costs associated with organizing the event, such as administrative fees, logistical arrangements, and any necessary equipment or supplies."
-      },
-      "food": {
-        "name": "Food and beverages (non-alcoholic)",
-        "text": "To ensure a comfortable and engaging environment for attendees, we will provide quality food and non-alcoholic beverages. These provisions contribute to the overall event experience. Alcoholic beverages may be provided (for free) if the venue allows for it without a permit from the Régie des alcools, des courses et des jeux (RACJ)."
-      },
-      "organization": {
-        "name": "Organization fee",
-        "text": "This fee covers the expenses associated with managing and coordinating the event, including pre-event planning, logistics, and on-site support. It helps ensure the smooth execution of the event."
-      },
-      "swag": {
-        "heading": "Swag",
-        "intro": "To foster a sense of unity and pride among participants, we plan to provide event-specific merchandise, such as t-shirts, as part of the sponsorship program. Everybody loves swag.",
-        "first": {
-          "name": "First batch of swag (approximately 20–25 people)",
-          "text": "We will collaborate with an existing local partner to produce the initial batch of t-shirts. These shirts will serve as mementos for participants, highlighting their participation in the event."
-        },
-        "second": {
-          "name": "Second batch of swag",
-          "amount": "Subject to sponsorship",
-          "text": "If we secure sufficient sponsors, we aim to produce an additional batch of t-shirts for a later {year} event. This will allow us to extend the opportunity for participants to receive personalized event merchandise."
-        }
-      }
+      "label": "Where your money goes",
+      "intro": "Sponsorship covers what it takes to run each event, for about 20–25 people, and to keep MTLNOG running. In short:",
+      "items": [
+        { "name": "Food and drinks", "text": "Quality food and non-alcoholic beverages for attendees." },
+        { "name": "Logistics and coordination", "text": "Planning, equipment, supplies and on-site support, so each event runs smoothly." },
+        { "name": "Swag", "text": "Event t-shirts made with a local partner, and a second batch if enough sponsors join us. Everybody loves swag." },
+        { "name": "Operating expenses", "text": "The costs of keeping MTLNOG an incorporated non-profit: incorporation fees, insurance, accounting and infrastructure (hosting, domains and online services)." }
+      ]
     },
     "closing": {
       "heading": "Partner with us",

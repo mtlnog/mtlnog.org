@@ -101,7 +101,7 @@
   "sponsorship": {
     "meta": {
       "title": "Commandites // MTLNOG",
-      "description": "Commanditez les événements en personne de MTLNOG à Montréal : niveaux de commandite, coûts prévus et utilisation de votre soutien."
+      "description": "Commanditez les événements en personne de MTLNOG à Montréal : niveaux de commandite, et où va votre soutien."
     },
     "label": "Commandites {year} · BBQ et rencontres",
     "heading": "Soutenez la communauté des opérateurs réseau de Montréal",
@@ -162,32 +162,14 @@
       "text": "Vous disposez d'un espace pouvant accueillir des opérateurs réseau le temps d'une soirée ? Nous recherchons des organisations prêtes à offrir un lieu gratuitement. Les besoins (capacité, audiovisuel, emplacement) varient d'un événement à l'autre et sont établis avec vous."
     },
     "costs": {
-      "label": "Coûts prévus · par événement (environ 20 à 25 personnes)",
-      "meeting": {
-        "name": "Frais d'événement",
-        "text": "Ce montant comprend divers coûts liés à l'organisation de l'événement, comme les frais administratifs, la logistique et l'équipement ou les fournitures nécessaires."
-      },
-      "food": {
-        "name": "Nourriture et boissons (sans alcool)",
-        "text": "Pour offrir un environnement agréable et stimulant aux participants, nous fournirons de la nourriture et des boissons sans alcool de qualité. Ces provisions contribuent à l'expérience globale de l'événement. Des boissons alcoolisées pourraient être offertes (gratuitement) si le lieu le permet sans permis de la Régie des alcools, des courses et des jeux (RACJ)."
-      },
-      "organization": {
-        "name": "Frais d'organisation",
-        "text": "Ces frais couvrent les dépenses liées à la gestion et à la coordination de l'événement, y compris la planification préalable, la logistique et le soutien sur place. Ils contribuent au bon déroulement de l'événement."
-      },
-      "swag": {
-        "heading": "Articles promotionnels",
-        "intro": "Pour favoriser un sentiment d'unité et de fierté chez les participants, nous prévoyons offrir des articles propres à l'événement, comme des t-shirts, dans le cadre du programme de commandites. Tout le monde aime les articles promotionnels!",
-        "first": {
-          "name": "Premier lot d'articles (environ 20 à 25 personnes)",
-          "text": "Nous collaborerons avec un partenaire local existant pour produire le premier lot de t-shirts. Ces t-shirts serviront de souvenirs aux participants et souligneront leur participation à l'événement."
-        },
-        "second": {
-          "name": "Deuxième lot d'articles",
-          "amount": "Selon les commandites",
-          "text": "Si nous obtenons suffisamment de commanditaires, nous comptons produire un lot supplémentaire de t-shirts pour un événement ultérieur en {year}. Les participants auront ainsi une autre occasion de recevoir des articles personnalisés de l'événement."
-        }
-      }
+      "label": "Où va votre argent",
+      "intro": "Les commandites couvrent ce qu'il faut pour tenir chaque événement, pour environ 20 à 25 personnes, et pour assurer le fonctionnement de MTLNOG. En bref :",
+      "items": [
+        { "name": "Nourriture et boissons", "text": "De la nourriture et des boissons sans alcool de qualité pour les participants." },
+        { "name": "Logistique et coordination", "text": "La planification, l'équipement, les fournitures et le soutien sur place, pour que chaque événement se déroule sans accroc." },
+        { "name": "Articles promotionnels", "text": "Des t-shirts de l'événement produits avec un partenaire local, et un deuxième lot si suffisamment de commanditaires se joignent à nous. Tout le monde aime les articles promotionnels!" },
+        { "name": "Frais de fonctionnement", "text": "Les coûts liés au maintien de MTLNOG comme organisme sans but lucratif constitué : frais d'incorporation, assurances, comptabilité et infrastructure (hébergement, domaines et services en ligne)." }
+      ]
     },
     "closing": {
       "heading": "Devenez partenaire",

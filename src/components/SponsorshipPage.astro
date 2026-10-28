@@ -44,12 +44,6 @@ function bullet(template: string) {
   }
   return { before: text, link: null, after: '' };
 }
-
-const costs = [
-  { text: s.costs.meeting, amount: formatCad(data.costs.meeting, locale) },
-  { text: s.costs.food, amount: formatCad(data.costs.food, locale) },
-  { text: s.costs.organization, amount: formatCad(data.costs.organization, locale) },
-];
 ---
 <Base locale={locale} strings={t} page="sponsorship" title={s.meta.title} description={s.meta.description}>
   <Header locale={locale} strings={t} page="sponsorship" />
@@ -119,25 +113,13 @@ const costs = [
 
     <section class="page-section">
       <div class="section-label">{s.costs.label}</div>
-      {costs.map((cost) => (
+      <p>{s.costs.intro}</p>
+      {s.costs.items.map((item) => (
         <div class="cost">
-          <span class="cost-name">{cost.text.name}</span>
-          <span class="cost-amount">{cost.amount}</span>
-          <p>{cost.text.text}</p>
+          <span class="cost-name">{item.name}</span>
+          <p>{item.text}</p>
         </div>
       ))}
-      <h3>{s.costs.swag.heading}</h3>
-      <p>{s.costs.swag.intro}</p>
-      <div class="cost">
-        <span class="cost-name">{s.costs.swag.first.name}</span>
-        <span class="cost-amount">{formatCad(data.costs.swagFirstBatch, locale)}</span>
-        <p>{s.costs.swag.first.text}</p>
-      </div>
-      <div class="cost">
-        <span class="cost-name">{s.costs.swag.second.name}</span>
-        <span class="cost-amount cost-pending">{s.costs.swag.second.amount}</span>
-        <p>{fill(s.costs.swag.second.text, { year })}</p>
-      </div>
     </section>
 
     <section class="page-section">

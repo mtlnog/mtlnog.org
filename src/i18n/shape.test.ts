@@ -22,6 +22,7 @@ describe('dictionary shape', () => {
     expect(fr.sponsorship.tiers.gold.bullets.length).toBe(en.sponsorship.tiers.gold.bullets.length);
     expect(fr.sponsorship.tiers.silver.bullets.length).toBe(en.sponsorship.tiers.silver.bullets.length);
     expect(fr.sponsorship.closing.paragraphs.length).toBe(en.sponsorship.closing.paragraphs.length);
+    expect(fr.sponsorship.costs.items.length).toBe(en.sponsorship.costs.items.length);
   });
 
   it('role options have the same count in both locales', () => {
