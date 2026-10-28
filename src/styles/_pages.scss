@@ -1,0 +1,91 @@
+// Shared layout for content pages (meetings, team, sponsorship).
+.page-main {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 3.5rem 2.5rem 5rem;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+.page-header {
+  margin-bottom: 3rem;
+
+  h1 {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 740px;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.page-section {
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border);
+
+  h2 {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 1.3rem;
+    color: #fff;
+    margin-bottom: 1.25rem;
+  }
+
+  p {
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 740px;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.empty-state {
+  border: 1px dashed var(--border);
+  padding: 2rem 1.5rem;
+  text-align: center;
+
+  p { margin: 0 auto 1rem; }
+
+  .empty-title {
+    font-family: var(--mono);
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+
+  a {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+
+    &:hover { color: var(--accent2); }
+  }
+}
+
+.meeting-list {
+  list-style: none;
+
+  li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  time { font-family: var(--mono); color: #fff; }
+
+  a { color: var(--accent); text-decoration: none; }
+
+  .venue { margin-left: auto; color: var(--muted); }
+}

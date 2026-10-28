@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import { getStrings, type Locale } from '../i18n/utils';
+import { pathFor, inviteHref } from '../i18n/routes';
+import { meetings, splitMeetings, type Meeting } from '../data/meetings';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getStrings(locale);
+const m = t.meetings;
+
+// Split at build time; a rebuild moves meetings from upcoming to past.
+const today = new Date().toISOString().slice(0, 10);
+const { upcoming, past } = splitMeetings(meetings, today);
+
+const sections: {
+  id: 'upcoming' | 'past';
+  list: Meeting[];
+  text: typeof m.upcoming;
+  href: string;
+}[] = [
+  { id: 'upcoming', list: upcoming, text: m.upcoming, href: inviteHref(locale) },
+  { id: 'past', list: past, text: m.past, href: pathFor('sponsorship', locale) },
+];
+---
+<Base locale={locale} strings={t} page="meetings" title={m.meta.title} description={m.meta.description}>
+  <Header locale={locale} strings={t} page="meetings" />
+  <main class="page-main">
+    <section class="page-header">
+      <div class="section-label">{m.label}</div>
+      <h1>{m.heading}</h1>
+      <p>{m.intro}</p>
+    </section>
+
+    {sections.map((s) => (
+      <section class="page-section" id={s.id}>
+        <h2>{s.text.heading}</h2>
+        {s.list.length === 0 ? (
+          <div class="empty-state">
+            <p class="empty-title">{s.text.emptyTitle}</p>
+            <p>{s.text.emptyText}</p>
+            <a href={s.href}>{s.text.emptyLink}</a>
+          </div>
+        ) : (
+          <ul class="meeting-list">
+            {s.list.map((meeting) => (
+              <li>
+                <time datetime={meeting.date}>{meeting.date}</time>
+                {meeting.url ? <a href={meeting.url}>{meeting.title}</a> : <span>{meeting.title}</span>}
+                <span class="venue">{meeting.venue}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    ))}
+  </main>
+</Base>

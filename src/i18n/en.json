@@ -53,5 +53,26 @@
       "networkError": "Network error. Please check your connection and try again.",
       "captchaError": "Please complete the verification before sending."
     }
+  },
+  "meetings": {
+    "meta": {
+      "title": "Meetings // MTLNOG",
+      "description": "Upcoming and past in-person meetings of MTLNOG, the Montreal Network Operator Group."
+    },
+    "label": "Meetings",
+    "heading": "In-person meetings",
+    "intro": "MTLNOG brings network operators together in person a few times a year. Three meetings are being planned for 2027.",
+    "upcoming": {
+      "heading": "Upcoming meetings",
+      "emptyTitle": "No meeting scheduled yet",
+      "emptyText": "Dates are announced in the Slack workspace first.",
+      "emptyLink": "Request an invite →"
+    },
+    "past": {
+      "heading": "Past meetings",
+      "emptyTitle": "No meetings listed yet",
+      "emptyText": "Meetings will be listed here starting with our 2027 season.",
+      "emptyLink": "Sponsor a meeting →"
+    }
   }
 }

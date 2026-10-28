@@ -53,5 +53,26 @@
       "networkError": "Erreur réseau. Veuillez vérifier votre connexion et réessayer.",
       "captchaError": "Veuillez compléter la vérification avant d'envoyer."
     }
+  },
+  "meetings": {
+    "meta": {
+      "title": "Rencontres // MTLNOG",
+      "description": "Les rencontres en personne à venir et passées de MTLNOG, le groupe des opérateurs réseau de Montréal."
+    },
+    "label": "Rencontres",
+    "heading": "Rencontres en personne",
+    "intro": "MTLNOG réunit les opérateurs réseau en personne quelques fois par année. Trois rencontres sont en préparation pour 2027.",
+    "upcoming": {
+      "heading": "Rencontres à venir",
+      "emptyTitle": "Aucune rencontre prévue pour l'instant",
+      "emptyText": "Les dates sont d'abord annoncées dans l'espace de travail Slack.",
+      "emptyLink": "Demander une invitation →"
+    },
+    "past": {
+      "heading": "Rencontres passées",
+      "emptyTitle": "Aucune rencontre répertoriée pour l'instant",
+      "emptyText": "Les rencontres seront répertoriées ici à partir de notre saison 2027.",
+      "emptyLink": "Commanditer une rencontre →"
+    }
   }
 }
