@@ -95,6 +95,73 @@ input:disabled, select:disabled, textarea:disabled {
 
 textarea { resize: vertical; min-height: 90px; }
 
+// One block of extra fields per topic; only the selected one is shown.
+.topic-block {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 1.1rem 1.25rem 1.25rem;
+  border: 0;
+  border-left: 3px solid var(--accent2);
+  background: rgba(255, 107, 53, 0.04);
+  min-width: 0;
+
+  &[hidden] { display: none; }
+}
+
+.topic-title {
+  float: left; // lets the legend sit inside the grid instead of on the border
+  grid-column: 1 / -1;
+  width: 100%;
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent2);
+}
+
+.group-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+}
+
+label.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text);
+  cursor: pointer;
+
+  input { width: auto; accent-color: var(--accent); }
+}
+
+// Honeypot: off-screen rather than display:none, which some bots skip.
+.hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form-section noscript .status { display: block; margin-bottom: 1.5rem; }
+
 .captcha-wrap {
   grid-column: 1 / -1;
   display: flex;

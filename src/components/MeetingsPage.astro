@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Header from './Header.astro';
 import { getStrings, type Locale } from '../i18n/utils';
-import { pathFor, inviteHref } from '../i18n/routes';
+import { contactHref, pathFor, inviteHref } from '../i18n/routes';
 import { meetings, montrealDate, splitMeetings, type Meeting } from '../data/meetings';
 
 interface Props {
@@ -58,5 +58,10 @@ const sections: {
         )}
       </section>
     ))}
+
+    <section class="page-section speak-cta">
+      <p>{m.speak.text}</p>
+      <a href={contactHref(locale, 'speaking')}>{m.speak.cta}</a>
+    </section>
   </main>
 </Base>

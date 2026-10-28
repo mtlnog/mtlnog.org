@@ -12,5 +12,6 @@ dist/
 mise.local.toml
 .mise.local.toml
 
-# Wrangler local state/cache
+# Wrangler local state/cache and local Worker secrets
 .wrangler/
+.dev.vars

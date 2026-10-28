@@ -3,10 +3,16 @@ import fr from './fr.json';
 import en from './en.json';
 
 // Page sections whose French text must not be left in English.
-const SECTIONS = ['meetings', 'team', 'sponsorship'] as const;
+const SECTIONS = ['meetings', 'team', 'sponsorship', 'form'] as const;
 
 // Leaf paths that are legitimately identical in both languages.
-const SAME_IN_BOTH: string[] = [];
+const SAME_IN_BOTH: string[] = [
+  'form.sectionLabel',
+  'form.fields.org.placeholder',
+  'form.fields.sponsorMessage.label',
+  'form.fields.message.label',
+  'form.fields.capacity.placeholder',
+];
 
 function leaves(obj: unknown, prefix: string): [string, string][] {
   if (typeof obj === 'string') return [[prefix, obj]];

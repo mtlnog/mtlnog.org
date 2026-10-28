@@ -1,0 +1,5 @@
+# Local Worker secrets for `mise run dev-worker`. Copy to .dev.vars (git-ignored).
+# Turnstile's always-pass test secret; pair it with the test sitekey 1x00000000000000000000AA.
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA
+# A Slack incoming webhook for testing. Leave empty to have every delivery fail (rows stay in local D1).
+SLACK_WEBHOOK_URL=

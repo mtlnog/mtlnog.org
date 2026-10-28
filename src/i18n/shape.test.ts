@@ -26,6 +26,6 @@ describe('dictionary shape', () => {
   });
 
   it('role options have the same count in both locales', () => {
-    expect(fr.form.fields.role.options.length).toBe(en.form.fields.role.options.length);
+    expect(fr.form.roles.length).toBe(en.form.roles.length);
   });
 });

@@ -1,13 +1,13 @@
-export const INVITE_TYPES = ['slack', 'sponsorship'] as const;
+import { TOPICS, type Topic } from './contact';
 
-export type InviteType = (typeof INVITE_TYPES)[number];
+export type InviteType = Topic;
 
-function isInviteType(value: string): value is InviteType {
-  return (INVITE_TYPES as readonly string[]).includes(value);
+function isTopic(value: string): value is Topic {
+  return (TOPICS as readonly string[]).includes(value);
 }
 
 // Reads ?type= from a location.search string; only exact known values count.
-export function inviteTypeFromSearch(search: string): InviteType | null {
+export function inviteTypeFromSearch(search: string): Topic | null {
   const value = new URLSearchParams(search).get('type') ?? '';
-  return isInviteType(value) ? value : null;
+  return isTopic(value) ? value : null;
 }

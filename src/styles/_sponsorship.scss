@@ -134,6 +134,21 @@
   padding: 1rem 1.25rem;
 
   p { margin: 0 !important; }
+
+  .callout-cta { margin-top: 0.75rem !important; }
+}
+
+// Mono call-to-action links in callouts and page footers.
+.callout-cta a,
+.speak-cta a {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+
+  &:hover { color: var(--accent2); }
 }
 
 .cost {
