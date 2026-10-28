@@ -44,7 +44,7 @@ URLs are defined once in `src/i18n/routes.ts`. All page text lives in `src/i18n/
 
 - `sponsorship.ts`: program year, stats and their date, event months, tier prices and limits. Update it each year.
 - `meetings.ts`: add an event (`date`, `title`, `venue`, optional `url`) to the Events page; it shows under Upcoming until its date passes, then under Past on the next build.
-- `team.ts`: members and emails. To add a photo, put it in `public/team/` and set `photo: '/team/<name>.jpg'`; until then the page shows initials.
+- `team.ts`: members. Email addresses are deliberately not published. To add a photo, put it in `public/team/` and set `photo: '/team/<name>.jpg'`; until then the page shows initials.
 - `social.ts`: social links used in the hero, footer and Team page.
 
 The old `/fr/rencontres/` and `/en/meetings/` URLs redirect to the Events page (`public/_redirects`).
@@ -61,10 +61,6 @@ The GitHub repo is connected to Cloudflare via Workers Builds; CF builds and dep
 - **Build environment variables** (set for Production and Preview): `PUBLIC_FORMSPREE_ID`, `PUBLIC_HCAPTCHA_SITEKEY`
 
 Deploy manually with `npm run deploy` (requires `wrangler login` or a `CLOUDFLARE_API_TOKEN`).
-
-### Production email obfuscation
-
-The footer uses a plain `mailto:hello@mtlnog.org`. Enable **Scrape Shield > Email Address Obfuscation** on the production Cloudflare zone so Cloudflare rewrites the address at serve time. No source-side obfuscation is needed.
 
 ## CI
 

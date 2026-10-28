@@ -1,12 +1,12 @@
 ---
-// Footer is language-neutral: brand, contact email, social links.
+// Footer is language-neutral: brand and social links. No email addresses, to avoid scrapers.
 import { social } from '../data/social';
 
 const year = new Date().getFullYear();
 ---
 <footer>
   <div class="inner-wrap footer-inner">
-    <p>© {year} MTLNOG · Montreal Network Operator Group · <a href="mailto:hello@mtlnog.org">hello@mtlnog.org</a></p>
+    <p>© {year} MTLNOG · Montreal Network Operator Group</p>
     <p>
       {social.map((s, i) => (
         <>{i > 0 && ' · '}<a href={s.url} target="_blank" rel="noopener">{s.name}</a></>
