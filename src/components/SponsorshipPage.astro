@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Header from './Header.astro';
 import { getStrings, type Locale } from '../i18n/utils';
-import { pathFor, sponsorFormHref } from '../i18n/routes';
+import { contactHref, pathFor, sponsorFormHref } from '../i18n/routes';
 import { sponsorship as data } from '../data/sponsorship';
 import { fill, formatCad, formatList, formatNumber, monthName, monthYear, splitAt } from '../lib/format';
 
@@ -108,7 +108,10 @@ function bullet(template: string) {
 
     <section class="page-section">
       <div class="section-label">{s.venue.label}</div>
-      <div class="callout"><p>{s.venue.text}</p></div>
+      <div class="callout">
+        <p>{s.venue.text}</p>
+        <p class="callout-cta"><a href={contactHref(locale, 'venue')}>{s.venue.cta}</a></p>
+      </div>
     </section>
 
     <section class="page-section">

@@ -1,4 +1,5 @@
 import type { Locale } from './detect';
+import type { Topic } from '../lib/contact';
 
 export type PageKey = 'home' | 'meetings' | 'team' | 'sponsorship';
 
@@ -18,6 +19,11 @@ export function inviteHref(locale: Locale): string {
   return `${pathFor('home', locale)}#invite`;
 }
 
+// Opens the home page contact form with a topic pre-selected.
+export function contactHref(locale: Locale, topic: Topic): string {
+  return `${pathFor('home', locale)}?type=${topic}#invite`;
+}
+
 export function sponsorFormHref(locale: Locale): string {
-  return `${pathFor('home', locale)}?type=sponsorship#invite`;
+  return contactHref(locale, 'sponsorship');
 }

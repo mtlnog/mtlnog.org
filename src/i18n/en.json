@@ -84,6 +84,7 @@
     "label": "Events",
     "heading": "In-person events",
     "intro": "MTLNOG brings network operators together in person a few times a year. Three events are being planned for 2027.",
+    "speak": { "text": "Want to speak at an event? We welcome talks from operators of every size.", "cta": "Propose a talk →" },
     "upcoming": {
       "heading": "Upcoming events",
       "emptyTitle": "No event scheduled yet",
@@ -181,7 +182,8 @@
     },
     "venue": {
       "label": "Venue",
-      "text": "Have a space that could host network operators for an evening? We're looking for organizations that can provide a venue free of charge. Requirements such as capacity, A/V and location vary from event to event, and we'll work them out with you."
+      "text": "Have a space that could host network operators for an evening? We're looking for organizations that can provide a venue free of charge. Requirements such as capacity, A/V and location vary from event to event, and we'll work them out with you.",
+      "cta": "Offer a space →"
     },
     "costs": {
       "label": "Where your money goes",

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { routes, pathFor, inviteHref, sponsorFormHref } from './routes';
+import { routes, pathFor, inviteHref, sponsorFormHref, contactHref } from './routes';
 
 describe('route map', () => {
   it('maps each page to its localized path', () => {
@@ -15,6 +15,12 @@ describe('route map', () => {
   it('builds invite and sponsorship form links', () => {
     expect(inviteHref('en')).toBe('/en/#invite');
     expect(sponsorFormHref('fr')).toBe('/fr/?type=sponsorship#invite');
+    expect(sponsorFormHref('en')).toBe('/en/?type=sponsorship#invite');
+  });
+
+  it('builds contact links that pre-select a topic', () => {
+    expect(contactHref('fr', 'venue')).toBe('/fr/?type=venue#invite');
+    expect(contactHref('en', 'speaking')).toBe('/en/?type=speaking#invite');
   });
 
   it('has a unique path for every page and locale', () => {
