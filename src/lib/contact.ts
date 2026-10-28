@@ -147,3 +147,13 @@ export function formEntriesToPayload(entries: Iterable<[string, string]>): Recor
   }
   return out;
 }
+
+export type SubmitOutcome = 'success' | 'captcha' | 'invalid' | 'server';
+
+// Which message the form shows for an API answer. Only a 400 blames the visitor's input.
+export function submitOutcome(status: number, body: { ok?: boolean; error?: string } | null): SubmitOutcome {
+  if (status === 200 && body?.ok === true) return 'success';
+  if (status === 400 && body?.error === 'captcha') return 'captcha';
+  if (status === 400 && body?.error === 'invalid') return 'invalid';
+  return 'server';
+}

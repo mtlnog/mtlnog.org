@@ -45,6 +45,7 @@ const long = LIMITS.long;
     data-success={f.status.success}
     data-error={f.status.error}
     data-network-error={f.status.networkError}
+    data-server-error={f.status.serverError}
     data-captcha-error={f.status.captchaError}
   >
     <input type="hidden" name="locale" value={locale} />
@@ -189,7 +190,7 @@ const long = LIMITS.long;
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <script>
-  import { formEntriesToPayload } from '../lib/contact';
+  import { formEntriesToPayload, submitOutcome } from '../lib/contact';
   import { inviteTypeFromSearch } from '../lib/inviteType';
 
   type Turnstile = { getResponse: () => string | undefined; reset: () => void };
@@ -248,17 +249,20 @@ const long = LIMITS.long;
           body: JSON.stringify(formEntriesToPayload(entries)),
         });
         const data = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
+        const outcome = submitOutcome(res.status, data);
 
-        if (res.ok && data?.ok) {
+        if (outcome === 'success') {
           const topic = topicSelect?.value;
           form.reset();
           if (topicSelect && topic) topicSelect.value = topic;
           showTopic();
           setStatus(form.dataset.success ?? '', 'success');
-        } else if (data?.error === 'captcha') {
+        } else if (outcome === 'captcha') {
           setStatus(form.dataset.captchaError ?? '', 'error');
-        } else {
+        } else if (outcome === 'invalid') {
           setStatus(form.dataset.error ?? '', 'error');
+        } else {
+          setStatus(form.dataset.serverError ?? '', 'error');
         }
       } catch {
         setStatus(form.dataset.networkError ?? '', 'error');

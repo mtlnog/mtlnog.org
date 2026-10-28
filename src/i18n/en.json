@@ -73,6 +73,7 @@
       "success": "Thanks! Your message has been sent.",
       "error": "Some fields are missing or invalid. Please check the form and try again.",
       "networkError": "Network error. Please check your connection and try again.",
+      "serverError": "Something went wrong on our side. Please try again in a few minutes.",
       "captchaError": "Please complete the verification before sending."
     }
   },

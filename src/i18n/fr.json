@@ -80,6 +80,7 @@
       "success": "Merci ! Votre message a été envoyé.",
       "error": "Des champs sont manquants ou invalides. Veuillez vérifier le formulaire et réessayer.",
       "networkError": "Erreur réseau. Veuillez vérifier votre connexion et réessayer.",
+      "serverError": "Un problème est survenu de notre côté. Veuillez réessayer dans quelques minutes.",
       "captchaError": "Veuillez compléter la vérification avant d'envoyer."
     }
   },

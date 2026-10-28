@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { formEntriesToPayload, validateSubmission } from './contact';
+import { formEntriesToPayload, submitOutcome, validateSubmission } from './contact';
 
 const base = (topic: string) => ({
   topic,
@@ -113,5 +113,20 @@ describe('formEntriesToPayload', () => {
 
   it('makes a single amenity an array', () => {
     expect(formEntriesToPayload([['amenities', 'wifi']])).toEqual({ amenities: ['wifi'] });
+  });
+});
+
+describe('submitOutcome', () => {
+  it('maps API answers to the message the visitor sees', () => {
+    expect(submitOutcome(200, { ok: true })).toBe('success');
+    expect(submitOutcome(400, { ok: false, error: 'captcha' })).toBe('captcha');
+    expect(submitOutcome(400, { ok: false, error: 'invalid' })).toBe('invalid');
+  });
+
+  it('treats server failures and unexpected answers as a server error, not a form problem', () => {
+    expect(submitOutcome(500, { ok: false, error: 'server' })).toBe('server');
+    expect(submitOutcome(502, null)).toBe('server');
+    expect(submitOutcome(200, null)).toBe('server');
+    expect(submitOutcome(404, { ok: false, error: 'not_found' })).toBe('server');
   });
 });
