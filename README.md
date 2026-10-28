@@ -101,7 +101,7 @@ The GitHub repo is connected to Cloudflare via Workers Builds; CF builds and dep
 
 Do these once, before merging the branch that adds the Worker; the deploy fails while `database_id` is still `"local"`:
 
-1. Create the private Slack channel and its incoming webhook.
+1. Create the private Slack channel, then the Slack app from `docs/slack-app-manifest.yml` (instructions at the top of the file), and install it to that channel to get the incoming webhook URL.
 2. `npx wrangler d1 create mtlnog-contact`, then put the printed `database_id` in `wrangler.jsonc` and commit it.
 3. `npx wrangler d1 migrations apply DB --remote`
 4. `npx wrangler secret put TURNSTILE_SECRET` and `npx wrangler secret put SLACK_WEBHOOK_URL`
