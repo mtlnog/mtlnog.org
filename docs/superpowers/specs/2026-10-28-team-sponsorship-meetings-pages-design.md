@@ -113,7 +113,7 @@ The header nav gets four links: Meetings, Team, Sponsorship, and the existing "R
 **Sections:** "Upcoming meetings" and "Past meetings", each with an empty state shown as a dashed box. The wording below was approved in mockup `meetings-v1.html` (left side); translate it to French:
 - **Intro:** "MTLNOG brings network operators together in person a few times a year. Three meetings are being planned for 2027."
 - **Upcoming, empty:** "No meeting scheduled yet" / "Dates are announced in the Slack workspace first." / a "Request an invite →" link to `/{locale}/#invite`.
-- **Past, empty:** "No past meetings yet" / "Our first in-person meeting is coming in 2027." / a "Sponsor a meeting →" link to the Sponsorship page.
+- **Past, empty:** "No sponsored meetings yet" / "Our earlier meetups were funded out of pocket by the organizers. 2027 is our first sponsored season." / a "Sponsor a meeting →" link to the Sponsorship page. Earlier meetups really happened but are not listed (user: "we never had sponsored ones - we used to pay for stuff out of pocket").
 
 The right side of that mockup (meeting cards with sponsor logos) shows a future direction only and is out of scope.
 
