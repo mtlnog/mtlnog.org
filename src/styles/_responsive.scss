@@ -12,6 +12,8 @@
   }
   .page-main { padding: 2.5rem 1.25rem 4rem; }
   .page-header h1 { font-size: 1.6rem; }
+  .person { grid-template-columns: 1fr; gap: 1.25rem; }
+  .person-photo { width: 120px; height: 120px; }
   nav {
     flex-wrap: wrap;
     gap: 0.6rem 1.25rem;

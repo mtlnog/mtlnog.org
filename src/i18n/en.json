@@ -74,5 +74,28 @@
       "emptyText": "Meetings will be listed here starting with our 2027 season.",
       "emptyLink": "Sponsor a meeting →"
     }
+  },
+  "team": {
+    "meta": {
+      "title": "Team // MTLNOG",
+      "description": "The people who organize MTLNOG, the Montreal Network Operator Group."
+    },
+    "label": "Team",
+    "heading": "The people behind MTLNOG",
+    "followUs": "Follow MTLNOG",
+    "members": {
+      "eric": {
+        "role": "Co-founder",
+        "bio": "Eric Dugas is a network architecture, engineering and operations leader and community builder in Montreal’s Internet ecosystem, with almost 20 years of experience in the telecom industry across a range of service providers. He is Director, Network Operations at EBOX and Vice-Chair of CANIX (formerly QIX), the community-driven Internet exchange operator with exchanges in Montréal, Québec City, Ottawa and Toronto. Co-founder of MTLNOG, a non-profit organization founded in 2019 and federally incorporated in 2021 that now has over 110 members, Eric helps bring Montreal’s network operators and engineers together to share knowledge, strengthen peering relationships and grow a stronger local Internet community."
+      },
+      "jonathan": {
+        "role": "Co-founder",
+        "bio": "Jonathan Senecal is a network operations leader and open-source developer in Montreal’s Internet community. Driven by a personal mission to make things, fix stuff and help others, he is known among peers as a curious, self-taught problem solver and a generous mentor. With almost 20 years of experience in the telecom industry, he has designed and operated telecommunications networks for service providers across Canada and the northern US. He is Manager, Network Operations and Technology at Métro Optic and also runs Les Réseaux Loop Inc., a network infrastructure consulting firm. A former board member of QIX (now CANIX), he was also a core maintainer of NetBox, an open-source tool widely used by network operators around the world, and continues to contribute to it. As co-founder of MTLNOG, a federally incorporated non-profit that brings together over 110 network operators and engineers in the Montreal area, Jonathan helps organize its meetups and promotes knowledge sharing and collaboration across the community."
+      },
+      "denis": {
+        "role": "Ad Hoc Director",
+        "bio": "Denis Bonneau is a recognized leader in the telecommunications, digital infrastructure, and broadcast technology sectors. With more than 20 years of experience in business development and building technology communities, he recently joined MTLNOG as an Ad Hoc Director. Drawing on his experience with SMPTE, where he actively contributed to the growth and visibility of the Montreal/Quebec Section, Denis supports MTLNOG in developing its activities, strengthening its network of partners, and creating high-value events for Quebec’s networking and Internet community."
+      }
+    }
   }
 }

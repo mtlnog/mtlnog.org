@@ -74,5 +74,28 @@
       "emptyText": "Les rencontres seront répertoriées ici à partir de notre saison 2027.",
       "emptyLink": "Commanditer une rencontre →"
     }
+  },
+  "team": {
+    "meta": {
+      "title": "Équipe // MTLNOG",
+      "description": "Les personnes qui organisent MTLNOG, le groupe des opérateurs réseau de Montréal."
+    },
+    "label": "Équipe",
+    "heading": "Les gens derrière MTLNOG",
+    "followUs": "Suivez MTLNOG",
+    "members": {
+      "eric": {
+        "role": "Cofondateur",
+        "bio": "Eric Dugas est un leader de l’architecture, de l’ingénierie et des opérations réseau et un rassembleur de la communauté Internet montréalaise. Fort de près de 20 ans d’expérience dans l’industrie des télécommunications auprès de divers fournisseurs de services, il est directeur, Opérations réseau chez EBOX et vice-président de CANIX (anciennement QIX), exploitant de points d’échange Internet à Montréal, Québec, Ottawa et Toronto. Cofondateur de MTLNOG, un organisme à but non lucratif fédéral constitué en 2021 et regroupant plus de 110 membres, Eric contribue à réunir les opérateurs et ingénieurs réseau de Montréal afin de favoriser le partage de connaissances, de renforcer les relations de pair-à-pair (peering) et de faire grandir la communauté Internet locale."
+      },
+      "jonathan": {
+        "role": "Cofondateur",
+        "bio": "Jonathan Senecal est un gestionnaire des opérations réseau et un développeur open source actif dans la communauté Internet montréalaise. Sa mission : bâtir des choses, réparer ce qui brise et aider les autres. Ses pairs le décrivent comme un autodidacte curieux, un pro de la résolution de problèmes et un mentor généreux. Avec près de 20 ans d’expérience en télécommunications, il a conçu et exploité des réseaux de télécommunications pour divers fournisseurs de services au Canada et dans le nord des États-Unis. Il est gestionnaire, Opérations réseau et technologie chez Métro Optic et dirige également Les Réseaux Loop Inc., une firme-conseil en infrastructure réseau. Ancien administrateur du QIX (aujourd’hui CANIX), il a aussi été l’un des mainteneurs de NetBox, un logiciel libre largement utilisé par les opérateurs réseau à travers le monde, auquel il continue de contribuer. Cofondateur de MTLNOG, un organisme à but non lucratif fédéral qui réunit plus de 110 opérateurs et ingénieurs réseau de la région de Montréal, Jonathan s’implique dans l’organisation de ses rencontres et fait la promotion du partage de connaissances et de la collaboration au sein de la communauté."
+      },
+      "denis": {
+        "role": "Directeur ad hoc",
+        "bio": "Denis Bonneau est un leader reconnu dans les secteurs des télécommunications, des infrastructures numériques et des technologies de diffusion. Fort de plus de 20 ans d’expérience en développement des affaires et en mobilisation de communautés technologiques, il s’est récemment joint à l’organisation de MTLNOG à titre de directeur ad hoc. En s’appuyant sur son expérience au sein de SMPTE, où il a contribué activement à la croissance et au rayonnement de la section Montréal/Québec, Denis accompagne MTLNOG dans le développement de ses activités, le renforcement de son réseau de partenaires et la création d’événements à forte valeur pour la communauté des réseaux et de l’Internet au Québec."
+      }
+    }
   }
 }

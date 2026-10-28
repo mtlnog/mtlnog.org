@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import { getStrings, type Locale } from '../i18n/utils';
+import { team } from '../data/team';
+import { social } from '../data/social';
+import { initials } from '../lib/format';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getStrings(locale);
+const s = t.team;
+---
+<Base locale={locale} strings={t} page="team" title={s.meta.title} description={s.meta.description}>
+  <Header locale={locale} strings={t} page="team" />
+  <main class="page-main">
+    <section class="page-header">
+      <div class="section-label">{s.label}</div>
+      <h1>{s.heading}</h1>
+    </section>
+
+    {team.map((member) => (
+      <article class="person page-section">
+        <div class="person-photo">
+          {member.photo
+            ? <img src={member.photo} alt={member.name} width="160" height="160" loading="lazy" />
+            : <span aria-hidden="true">{initials(member.name)}</span>}
+        </div>
+        <div class="person-body">
+          <h2>{member.name}</h2>
+          <p class="person-role">{s.members[member.id].role}</p>
+          <p>{s.members[member.id].bio}</p>
+          <a class="person-email" href={`mailto:${member.email}`}>{member.email}</a>
+        </div>
+      </article>
+    ))}
+
+    <section class="page-section team-social">
+      <h2>{s.followUs}</h2>
+      <div class="links-row">
+        {social.map((link) => (
+          <a class="pill" href={link.url} target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={link.icon} /></svg>
+            {link.name}
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+</Base>

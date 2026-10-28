@@ -1,0 +1,47 @@
+.person {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.person-photo {
+  width: 160px;
+  height: 160px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  img { width: 100%; height: 100%; object-fit: cover; }
+
+  span {
+    font-family: var(--mono);
+    font-size: 2.5rem;
+    color: var(--muted);
+  }
+}
+
+.person-body h2 { margin-bottom: 0.25rem; }
+
+.person-role {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent) !important;
+  margin-bottom: 1rem !important;
+}
+
+.person-email {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--accent2);
+  text-decoration: none;
+
+  &:hover { color: var(--accent); }
+}
+
+.team-social .links-row { margin-top: 0; }
