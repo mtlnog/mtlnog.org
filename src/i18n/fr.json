@@ -4,6 +4,9 @@
     "description": "MTLNOG réunit les ingénieurs et opérateurs de réseau à Montréal, au Québec et au-delà pour partager des connaissances et favoriser les échanges au sein de la communauté des opérateurs de réseau."
   },
   "nav": {
+    "meetings": "Rencontres",
+    "team": "Équipe",
+    "sponsorship": "Commandites",
     "invite": "Demander une invitation"
   },
   "hero": {

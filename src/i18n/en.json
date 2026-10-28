@@ -4,6 +4,9 @@
     "description": "MTLNOG brings together network engineers and operators in Montréal, Quebec, and beyond to share knowledge and foster connections within the network operator community."
   },
   "nav": {
+    "meetings": "Meetings",
+    "team": "Team",
+    "sponsorship": "Sponsorship",
     "invite": "Request an Invite"
   },
   "hero": {

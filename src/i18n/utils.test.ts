@@ -11,6 +11,11 @@ describe('locale utils', () => {
     expect(getStrings('en').nav.invite).toBe('Request an Invite');
   });
 
+  it('has labels for the site navigation', () => {
+    expect(getStrings('fr').nav.team).toBe('Équipe');
+    expect(getStrings('en').nav.sponsorship).toBe('Sponsorship');
+  });
+
   it('otherLocale flips the locale', () => {
     expect(otherLocale('fr')).toBe('en');
     expect(otherLocale('en')).toBe('fr');

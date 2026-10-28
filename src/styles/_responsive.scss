@@ -3,5 +3,15 @@
   .field.full { grid-column: 1; }
   .captcha-wrap { grid-column: 1; }
   .submit-row { grid-column: 1; }
-  nav { display: none; }
+  .header-inner { flex-wrap: wrap; row-gap: 1rem; }
+  .header-actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  nav {
+    flex-wrap: wrap;
+    gap: 0.6rem 1.25rem;
+  }
 }

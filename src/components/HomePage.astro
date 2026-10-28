@@ -12,8 +12,8 @@ interface Props {
 const { locale } = Astro.props;
 const t = getStrings(locale);
 ---
-<Base locale={locale} strings={t}>
-  <Header locale={locale} strings={t} />
+<Base locale={locale} strings={t} page="home">
+  <Header locale={locale} strings={t} page="home" />
   <Hero strings={t} />
   <div class="divider-wrap"><div class="divider"></div></div>
   <InviteForm strings={t} />

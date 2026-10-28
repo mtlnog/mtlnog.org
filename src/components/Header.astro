@@ -1,27 +1,42 @@
 ---
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import type { Locale, Strings } from '../i18n/utils';
+import { pathFor, inviteHref, type PageKey } from '../i18n/routes';
 
 interface Props {
   locale: Locale;
   strings: Strings;
+  page: PageKey;
 }
 
-const { locale, strings } = Astro.props;
+const { locale, strings, page } = Astro.props;
+
+const links: { key: PageKey; label: string }[] = [
+  { key: 'meetings', label: strings.nav.meetings },
+  { key: 'team', label: strings.nav.team },
+  { key: 'sponsorship', label: strings.nav.sponsorship },
+];
 ---
 <header>
   <div class="inner-wrap header-inner">
-    <img class="logo-mark" src="/logo.png" alt="MTLNOG logo" width="605" height="147" />
-    <div class="logo-text">
-      <span>Montreal Network Operator Group</span>
-    </div>
+    <a class="logo-link" href={pathFor('home', locale)}>
+      <img class="logo-mark" src="/logo.png" alt="MTLNOG logo" width="605" height="147" />
+      <div class="logo-text">
+        <span>Montreal Network Operator Group</span>
+      </div>
+    </a>
     <div class="header-actions">
       <nav>
-        <a href="https://www.linkedin.com/company/mtlnog/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://mastodon.social/@mtlnog" target="_blank" rel="noopener">Mastodon</a>
-        <a href="#invite">{strings.nav.invite}</a>
+        {links.map((l) => (
+          <a
+            href={pathFor(l.key, locale)}
+            class={l.key === page ? 'active' : undefined}
+            aria-current={l.key === page ? 'page' : undefined}
+          >{l.label}</a>
+        ))}
+        <a href={inviteHref(locale)}>{strings.nav.invite}</a>
       </nav>
-      <LanguageSwitcher locale={locale} />
+      <LanguageSwitcher locale={locale} page={page} />
     </div>
   </div>
 </header>
