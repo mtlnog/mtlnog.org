@@ -110,7 +110,12 @@ The header nav gets four links: Meetings, Team, Sponsorship, and the existing "R
 
 ### Meetings page
 
-**Sections:** "Upcoming meetings" and "Past meetings", each with an empty state. Upcoming should say no meeting is scheduled yet and point to the Slack invite. Past should say no meetings yet.
+**Sections:** "Upcoming meetings" and "Past meetings", each with an empty state shown as a dashed box. The wording below was approved in mockup `meetings-v1.html` (left side); translate it to French:
+- **Intro:** "MTLNOG brings network operators together in person a few times a year. Three meetings are being planned for 2027."
+- **Upcoming, empty:** "No meeting scheduled yet" / "Dates are announced in the Slack workspace first." / a "Request an invite →" link to `/{locale}/#invite`.
+- **Past, empty:** "No past meetings yet" / "Our first in-person meeting is coming in 2027." / a "Sponsor a meeting →" link to the Sponsorship page.
+
+The right side of that mockup (meeting cards with sponsor logos) shows a future direction only and is out of scope.
 
 **Single page (my call):** both sections share one page, with `#upcoming` and `#past` anchors. The sponsorship tiers' references to the "Upcoming meetings" and "Past meetings" pages point at those anchors.
 
@@ -124,7 +129,6 @@ Each new page gets its own `<title>` and meta description in both languages. The
 
 - **Components:** how pages and components are split, and how the language switcher learns the counterpart URL.
 - **Spacing and layout:** exact spacing and responsive breakpoints, staying consistent with existing partials.
-- **Empty-state wording:** the exact text, in both languages.
 - **Tests:** add unit tests for any new pure logic, such as the query-parameter pre-select and the locale route map. The existing shape test must keep passing. Tests and build must pass.
 
 ## Approved mockups
@@ -132,6 +136,7 @@ Each new page gets its own `<title>` and meta description in both languages. The
 The mockups are in `.superpowers/brainstorm/1130813-1793154967/content/`, which is local and not committed:
 - `sponsorship-v2.html`: the approved sponsorship layout.
 - `team-v1.html`: the approved team layout.
+- `meetings-v1.html`: the approved meetings layout (left side).
 
 ## Appendix A: sponsorship source text (English, corrections applied)
 
