@@ -18,7 +18,7 @@ export const TALK_LENGTHS = ['lightning', 'standard', 'long'] as const;
 export const TALK_LANGUAGES = ['fr', 'en', 'either'] as const;
 export const AMENITIES = ['projector', 'sound', 'wifi', 'food', 'evening'] as const;
 
-export const HONEYPOT_FIELD = 'website';
+export const HONEYPOT_FIELD = 'turnstile_validation';
 export const LIMITS = { short: 200, long: 5000, maxCapacity: 100000, maxBodyBytes: 32768 } as const;
 
 export type Locale = 'fr' | 'en';
