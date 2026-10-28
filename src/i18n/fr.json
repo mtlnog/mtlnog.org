@@ -13,43 +13,72 @@
     "intro": "MTLNOG réunit les opérateurs et ingénieurs réseau de Montréal, de partout au Québec et au-delà. Que vous travailliez en opérations ou en ingénierie, ou que vous vous intéressiez à la communauté des opérateurs de réseau de Montréal, nous nous réunissons pour partager des connaissances et favoriser les échanges."
   },
   "form": {
-    "sectionLabel": "Demande d'accès",
-    "heading": "Rejoindre la communauté",
-    "sub": "Le workspace Slack est soumis à approbation par l'équipe MTLNOG.",
+    "sectionLabel": "Contact",
+    "heading": "Nous joindre",
+    "sub": "Rejoindre le Slack, commanditer, présenter, accueillir un événement ou simplement nous poser une question.",
     "fields": {
+      "topic": { "label": "À quel sujet ?" },
       "fname": { "label": "Prénom", "placeholder": "Jean" },
       "lname": { "label": "Nom", "placeholder": "Tremblay" },
       "email": { "label": "Courriel", "placeholder": "vous@exemple.net" },
       "org": { "label": "Organisation / ASN", "placeholder": "Acme Networks / AS12345" },
-      "role": {
-        "label": "Rôle",
-        "placeholder": "Sélectionner…",
-        "options": [
-          "Ingénieur réseau",
-          "Opérateur réseau",
-          "Ingénieur systèmes",
-          "Gestionnaire réseau",
-          "Chercheur",
-          "Autre"
-        ]
-      },
-      "inviteType": {
-        "label": "Invitation pour",
-        "placeholder": "Sélectionner…",
-        "slack": "Workspace Slack",
-        "sponsorship": "Commandite"
-      },
+      "role": { "label": "Rôle", "placeholder": "Sélectionner…" },
       "intro": {
         "label": "Présentation",
         "placeholder": "Parlez-nous de votre expérience en réseaux et pourquoi vous souhaitez rejoindre MTLNOG."
       },
+      "tier": { "label": "Niveau d'intérêt" },
+      "sponsorMessage": { "label": "Message", "placeholder": "Ce que vous aimeriez retirer de la commandite, et vos questions." },
+      "talkTitle": { "label": "Titre de la présentation", "placeholder": "Leçons tirées du déploiement de RPKI ROV" },
+      "abstract": { "label": "Court résumé", "placeholder": "Quelques phrases sur le contenu et le public visé." },
+      "talkLength": { "label": "Durée" },
+      "talkLanguage": { "label": "Langue" },
+      "speakingNotes": { "label": "Autre chose ?", "placeholder": "Événement souhaité, présentations passées, lien vers les diapos…" },
+      "venueLocation": { "label": "Emplacement du lieu", "placeholder": "Quartier ou adresse, p. ex. Griffintown" },
+      "capacity": { "label": "Capacité approximative", "placeholder": "30" },
+      "amenities": { "label": "Qu'est-ce qui est disponible ?" },
+      "venueNotes": {
+        "label": "Autre chose ?",
+        "placeholder": "Accessibilité, stationnement, transport en commun, dates possibles…"
+      },
+      "message": { "label": "Message", "placeholder": "Comment pouvons-nous vous aider ?" },
       "captcha": "Vérification"
     },
+    "topics": {
+      "slack": "Rejoindre le workspace Slack",
+      "sponsorship": "Commandite",
+      "speaking": "Présenter lors d'un événement",
+      "venue": "Accueillir un événement (lieu)",
+      "general": "Question générale"
+    },
+    "roles": [
+      "Ingénieur réseau",
+      "Opérateur réseau",
+      "Ingénieur systèmes et infrastructure",
+      "Gestionnaire réseau",
+      "Chercheur ou universitaire",
+      "Autre"
+    ],
+    "tiers": { "unsure": "Pas encore décidé", "gold": "Or", "silver": "Argent", "custom": "Formule sur mesure" },
+    "talkLengths": {
+      "lightning": "Éclair (5 à 10 min)",
+      "standard": "Standard (15 à 20 min)",
+      "long": "Plus longue (30 min et plus)"
+    },
+    "talkLanguages": { "fr": "Français", "en": "Anglais", "either": "L'une ou l'autre" },
+    "amenities": {
+      "projector": "Projecteur ou écran",
+      "sound": "Micro / son",
+      "wifi": "Wi-Fi invité",
+      "food": "Nourriture et boissons permises",
+      "evening": "Accès en soirée"
+    },
     "submit": "Envoyer →",
-    "note": "Vos données ne servent qu'à évaluer votre demande.",
+    "note": "Vos renseignements servent uniquement à vous répondre.",
+    "noscript": "Ce formulaire a besoin de JavaScript pour sa vérification antipourriel. Veuillez l'activer pour nous écrire.",
     "status": {
-      "success": "Merci ! Votre demande a été envoyée.",
-      "error": "Une erreur s'est produite. Veuillez réessayer.",
+      "success": "Merci ! Votre message a été envoyé.",
+      "error": "Des champs sont manquants ou invalides. Veuillez vérifier le formulaire et réessayer.",
       "networkError": "Erreur réseau. Veuillez vérifier votre connexion et réessayer.",
       "captchaError": "Veuillez compléter la vérification avant d'envoyer."
     }

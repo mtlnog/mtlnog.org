@@ -2,9 +2,6 @@ import { TOPICS, type Topic } from './contact';
 
 export type InviteType = Topic;
 
-// Options the current invite form shows. Removed when the form moves to all TOPICS.
-export const INVITE_TYPES = ['slack', 'sponsorship'] as const satisfies readonly Topic[];
-
 function isTopic(value: string): value is Topic {
   return (TOPICS as readonly string[]).includes(value);
 }

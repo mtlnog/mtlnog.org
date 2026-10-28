@@ -15,6 +15,7 @@
   .field.full { grid-column: 1; }
   .captcha-wrap { grid-column: 1; }
   .submit-row { grid-column: 1; }
+  .topic-block { grid-template-columns: 1fr; grid-column: 1; padding: 1rem; }
   .page-main { padding: 2.5rem 1.25rem 4rem; }
   .page-header h1 { font-size: 1.6rem; }
   .person { grid-template-columns: 1fr; gap: 1.25rem; }

@@ -1,33 +1,45 @@
 ---
-import type { Strings } from '../i18n/utils';
-import { INVITE_TYPES } from '../lib/inviteType';
+import type { Locale, Strings } from '../i18n/utils';
+import {
+  AMENITIES,
+  HONEYPOT_FIELD,
+  LIMITS,
+  ROLES,
+  TALK_LANGUAGES,
+  TALK_LENGTHS,
+  TIERS,
+  TOPICS,
+} from '../lib/contact';
 
 interface Props {
   strings: Strings;
+  locale: Locale;
 }
 
-const { strings } = Astro.props;
+const { strings, locale } = Astro.props;
 const f = strings.form;
+const fl = f.fields;
 
-// Public client-side identifiers, injected from env (.env locally, Cloudflare Workers project in prod).
-// Fail the build fast if either is missing so we never ship a broken form.
-const FORMSPREE_ID = import.meta.env.PUBLIC_FORMSPREE_ID;
-const HCAPTCHA_SITEKEY = import.meta.env.PUBLIC_HCAPTCHA_SITEKEY;
-if (!FORMSPREE_ID || !HCAPTCHA_SITEKEY) {
-  throw new Error(
-    'Missing PUBLIC_FORMSPREE_ID or PUBLIC_HCAPTCHA_SITEKEY. Set them in .env (local) or the Cloudflare Workers project (prod).',
-  );
+// Public Turnstile sitekey, injected from env (.env locally, Cloudflare Workers build settings in prod).
+// Fail the build fast if it is missing so we never ship a form that can't pass verification.
+const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY;
+if (!TURNSTILE_SITEKEY) {
+  throw new Error('Missing PUBLIC_TURNSTILE_SITEKEY. Set it in .env (local) or the Cloudflare Workers build settings (prod).');
 }
-const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
+
+const short = LIMITS.short;
+const long = LIMITS.long;
 ---
 <section class="form-section" id="invite">
   <div class="section-label">{f.sectionLabel}</div>
   <h2>{f.heading}</h2>
   <p class="sub">{f.sub}</p>
 
+  <noscript><p class="status error">{f.noscript}</p></noscript>
+
   <form
     id="invite-form"
-    action={formAction}
+    action="/api/contact"
     method="POST"
     novalidate
     data-success={f.status.success}
@@ -35,50 +47,134 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
     data-network-error={f.status.networkError}
     data-captcha-error={f.status.captchaError}
   >
-    <div class="field">
-      <label for="fname">{f.fields.fname.label} <span class="req">*</span></label>
-      <input type="text" id="fname" name="fname" autocomplete="given-name" required placeholder={f.fields.fname.placeholder} />
-    </div>
-
-    <div class="field">
-      <label for="lname">{f.fields.lname.label} <span class="req">*</span></label>
-      <input type="text" id="lname" name="lname" autocomplete="family-name" required placeholder={f.fields.lname.placeholder} />
-    </div>
-
-    <div class="field">
-      <label for="email">{f.fields.email.label} <span class="req">*</span></label>
-      <input type="email" id="email" name="email" autocomplete="email" required placeholder={f.fields.email.placeholder} />
-    </div>
-
-    <div class="field">
-      <label for="org">{f.fields.org.label}</label>
-      <input type="text" id="org" name="org" placeholder={f.fields.org.placeholder} />
-    </div>
-
-    <div class="field">
-      <label for="role">{f.fields.role.label} <span class="req">*</span></label>
-      <select id="role" name="role" required>
-        <option value="" disabled selected>{f.fields.role.placeholder}</option>
-        {f.fields.role.options.map((opt) => <option>{opt}</option>)}
-      </select>
-    </div>
-
-    <div class="field">
-      <label for="invite-type">{f.fields.inviteType.label} <span class="req">*</span></label>
-      <select id="invite-type" name="invite_type" required>
-        <option value="" disabled selected>{f.fields.inviteType.placeholder}</option>
-        {INVITE_TYPES.map((type) => <option value={type}>{f.fields.inviteType[type]}</option>)}
-      </select>
-    </div>
+    <input type="hidden" name="locale" value={locale} />
 
     <div class="field full">
-      <label for="intro">{f.fields.intro.label}</label>
-      <textarea id="intro" name="intro" placeholder={f.fields.intro.placeholder}></textarea>
+      <label for="invite-type">{fl.topic.label} <span class="req">*</span></label>
+      <select id="invite-type" name="topic" required>
+        {TOPICS.map((topic) => <option value={topic}>{f.topics[topic]}</option>)}
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="fname">{fl.fname.label} <span class="req">*</span></label>
+      <input type="text" id="fname" name="fname" autocomplete="given-name" required maxlength={short} placeholder={fl.fname.placeholder} />
+    </div>
+
+    <div class="field">
+      <label for="lname">{fl.lname.label} <span class="req">*</span></label>
+      <input type="text" id="lname" name="lname" autocomplete="family-name" required maxlength={short} placeholder={fl.lname.placeholder} />
+    </div>
+
+    <div class="field">
+      <label for="email">{fl.email.label} <span class="req">*</span></label>
+      <input type="email" id="email" name="email" autocomplete="email" required maxlength={short} placeholder={fl.email.placeholder} />
+    </div>
+
+    <div class="field">
+      <label for="org">{fl.org.label}</label>
+      <input type="text" id="org" name="org" autocomplete="organization" maxlength={short} placeholder={fl.org.placeholder} />
+    </div>
+
+    <!-- Only the selected topic's fieldset is enabled, so hidden fields are neither validated nor sent. -->
+    <fieldset class="topic-block" data-topic="slack">
+      <legend class="topic-title">{f.topics.slack}</legend>
+      <div class="field">
+        <label for="role">{fl.role.label} <span class="req">*</span></label>
+        <select id="role" name="role" required>
+          <option value="" disabled selected>{fl.role.placeholder}</option>
+          {ROLES.map((role, i) => <option value={role}>{f.roles[i]}</option>)}
+        </select>
+      </div>
+      <div class="field full">
+        <label for="intro">{fl.intro.label}</label>
+        <textarea id="intro" name="intro" maxlength={long} placeholder={fl.intro.placeholder}></textarea>
+      </div>
+    </fieldset>
+
+    <fieldset class="topic-block" data-topic="sponsorship" hidden disabled>
+      <legend class="topic-title">{f.topics.sponsorship}</legend>
+      <div class="field">
+        <label for="tier">{fl.tier.label}</label>
+        <select id="tier" name="tier">
+          {TIERS.map((tier) => <option value={tier}>{f.tiers[tier]}</option>)}
+        </select>
+      </div>
+      <div class="field full">
+        <label for="sponsor-message">{fl.sponsorMessage.label}</label>
+        <textarea id="sponsor-message" name="message" maxlength={long} placeholder={fl.sponsorMessage.placeholder}></textarea>
+      </div>
+    </fieldset>
+
+    <fieldset class="topic-block" data-topic="speaking" hidden disabled>
+      <legend class="topic-title">{f.topics.speaking}</legend>
+      <div class="field full">
+        <label for="talk-title">{fl.talkTitle.label} <span class="req">*</span></label>
+        <input type="text" id="talk-title" name="talk_title" required maxlength={short} placeholder={fl.talkTitle.placeholder} />
+      </div>
+      <div class="field full">
+        <label for="abstract">{fl.abstract.label} <span class="req">*</span></label>
+        <textarea id="abstract" name="abstract" required maxlength={long} placeholder={fl.abstract.placeholder}></textarea>
+      </div>
+      <div class="field">
+        <label for="talk-length">{fl.talkLength.label}</label>
+        <select id="talk-length" name="talk_length">
+          {TALK_LENGTHS.map((v) => <option value={v} selected={v === 'standard'}>{f.talkLengths[v]}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for="talk-language">{fl.talkLanguage.label}</label>
+        <select id="talk-language" name="talk_language">
+          {TALK_LANGUAGES.map((v) => <option value={v} selected={v === 'either'}>{f.talkLanguages[v]}</option>)}
+        </select>
+      </div>
+      <div class="field full">
+        <label for="speaking-notes">{fl.speakingNotes.label}</label>
+        <textarea id="speaking-notes" name="notes" maxlength={long} placeholder={fl.speakingNotes.placeholder}></textarea>
+      </div>
+    </fieldset>
+
+    <fieldset class="topic-block" data-topic="venue" hidden disabled>
+      <legend class="topic-title">{f.topics.venue}</legend>
+      <div class="field">
+        <label for="venue-location">{fl.venueLocation.label} <span class="req">*</span></label>
+        <input type="text" id="venue-location" name="venue_location" required maxlength={short} placeholder={fl.venueLocation.placeholder} />
+      </div>
+      <div class="field">
+        <label for="capacity">{fl.capacity.label} <span class="req">*</span></label>
+        <input type="number" id="capacity" name="capacity" required min="1" max={LIMITS.maxCapacity} step="1" inputmode="numeric" placeholder={fl.capacity.placeholder} />
+      </div>
+      <div class="field full">
+        <span class="group-label" id="amenities-label">{fl.amenities.label}</span>
+        <div class="checks" role="group" aria-labelledby="amenities-label">
+          {AMENITIES.map((v) => (
+            <label class="check"><input type="checkbox" name="amenities" value={v} /> {f.amenities[v]}</label>
+          ))}
+        </div>
+      </div>
+      <div class="field full">
+        <label for="venue-notes">{fl.venueNotes.label}</label>
+        <textarea id="venue-notes" name="notes" maxlength={long} placeholder={fl.venueNotes.placeholder}></textarea>
+      </div>
+    </fieldset>
+
+    <fieldset class="topic-block" data-topic="general" hidden disabled>
+      <legend class="topic-title">{f.topics.general}</legend>
+      <div class="field full">
+        <label for="message">{fl.message.label} <span class="req">*</span></label>
+        <textarea id="message" name="message" required maxlength={long} placeholder={fl.message.placeholder}></textarea>
+      </div>
+    </fieldset>
+
+    <!-- Honeypot: invisible to people, tempting to bots. -->
+    <div class="hp" aria-hidden="true">
+      <label for={HONEYPOT_FIELD}>Website</label>
+      <input type="text" id={HONEYPOT_FIELD} name={HONEYPOT_FIELD} tabindex="-1" autocomplete="off" />
     </div>
 
     <div class="captcha-wrap">
-      <label>{f.fields.captcha} <span class="req">*</span></label>
-      <div class="h-captcha" data-sitekey={HCAPTCHA_SITEKEY} data-theme="dark"></div>
+      <label>{fl.captcha} <span class="req">*</span></label>
+      <div class="cf-turnstile" data-sitekey={TURNSTILE_SITEKEY} data-theme="dark"></div>
     </div>
 
     <div class="status" id="form-status" role="alert"></div>
@@ -90,19 +186,39 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
   </form>
 </section>
 
-<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <script>
+  import { formEntriesToPayload } from '../lib/contact';
   import { inviteTypeFromSearch } from '../lib/inviteType';
 
-  // Links like /en/?type=sponsorship#invite pre-select the invite type.
-  const presetType = inviteTypeFromSearch(window.location.search);
-  const typeSelect = document.getElementById('invite-type') as HTMLSelectElement | null;
-  if (presetType && typeSelect) typeSelect.value = presetType;
+  type Turnstile = { getResponse: () => string | undefined; reset: () => void };
 
   const form = document.getElementById('invite-form') as HTMLFormElement | null;
+  const topicSelect = document.getElementById('invite-type') as HTMLSelectElement | null;
   const statusEl = document.getElementById('form-status');
   const btn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+
+  function showTopic() {
+    if (!form || !topicSelect) return;
+    for (const block of form.querySelectorAll<HTMLFieldSetElement>('.topic-block')) {
+      const active = block.dataset.topic === topicSelect.value;
+      block.hidden = !active;
+      block.disabled = !active;
+    }
+  }
+
+  // Links like /en/?type=venue#invite pre-select a topic.
+  const preset = inviteTypeFromSearch(window.location.search);
+  if (preset && topicSelect) topicSelect.value = preset;
+  topicSelect?.addEventListener('change', showTopic);
+  showTopic();
+
+  function setStatus(text: string, kind: 'success' | 'error') {
+    if (!statusEl) return;
+    statusEl.className = `status ${kind}`;
+    statusEl.textContent = text;
+  }
 
   if (form && statusEl && btn) {
     form.addEventListener('submit', async (e) => {
@@ -110,41 +226,44 @@ const formAction = `https://formspree.io/f/${FORMSPREE_ID}`;
       statusEl.className = 'status';
       statusEl.textContent = '';
 
-      // Require a completed hCaptcha before sending.
-      const h = (window as unknown as {
-        hcaptcha?: { getResponse?: () => string; reset: () => void };
-      }).hcaptcha;
-      const token = h?.getResponse ? h.getResponse() : '';
-      if (!token) {
-        statusEl.textContent = form.dataset.captchaError ?? '';
-        statusEl.classList.add('error');
+      if (!form.checkValidity()) {
+        form.reportValidity();
         return;
       }
 
+      const turnstile = (window as unknown as { turnstile?: Turnstile }).turnstile;
+      const token = turnstile?.getResponse() ?? '';
+      if (!token) {
+        setStatus(form.dataset.captchaError ?? '', 'error');
+        return;
+      }
+
+      const entries = [...new FormData(form)].filter((entry): entry is [string, string] => typeof entry[1] === 'string');
       btn.disabled = true;
 
       try {
         const res = await fetch(form.action, {
           method: 'POST',
-          body: new FormData(form),
-          headers: { Accept: 'application/json' },
+          headers: { 'content-type': 'application/json', accept: 'application/json' },
+          body: JSON.stringify(formEntriesToPayload(entries)),
         });
+        const data = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
 
-        if (res.ok) {
-          statusEl.textContent = form.dataset.success ?? '';
-          statusEl.classList.add('success');
+        if (res.ok && data?.ok) {
+          const topic = topicSelect?.value;
           form.reset();
-          if (h) h.reset();
+          if (topicSelect && topic) topicSelect.value = topic;
+          showTopic();
+          setStatus(form.dataset.success ?? '', 'success');
+        } else if (data?.error === 'captcha') {
+          setStatus(form.dataset.captchaError ?? '', 'error');
         } else {
-          const data = await res.json().catch(() => null);
-          const apiMsg = data?.errors?.map((x: { message: string }) => x.message).join(', ');
-          statusEl.textContent = apiMsg || form.dataset.error || '';
-          statusEl.classList.add('error');
+          setStatus(form.dataset.error ?? '', 'error');
         }
       } catch {
-        statusEl.textContent = form.dataset.networkError ?? '';
-        statusEl.classList.add('error');
+        setStatus(form.dataset.networkError ?? '', 'error');
       } finally {
+        turnstile?.reset();
         btn.disabled = false;
       }
     });
