@@ -86,25 +86,25 @@
     "members": {
       "eric": {
         "role": "Co-founder",
-        "bio": "Eric Dugas is a network architecture, engineering and operations leader and community builder in Montreal’s Internet ecosystem, with almost 20 years of experience in the telecom industry across a range of service providers. He is Director, Network Operations at EBOX and Vice-Chair of CANIX (formerly QIX), the community-driven Internet exchange operator with exchanges in Montréal, Québec City, Ottawa and Toronto. Co-founder of MTLNOG, a non-profit organization founded in 2019 and federally incorporated in 2021 that now has over 110 members, Eric helps bring Montreal’s network operators and engineers together to share knowledge, strengthen peering relationships and grow a stronger local Internet community."
+        "bio": "Eric Dugas is a network architecture, engineering and operations leader and community builder in Montreal's Internet ecosystem, with almost 20 years of experience in the telecom industry across a range of service providers. He is Director, Network Operations at EBOX and Vice-Chair of CANIX (formerly QIX), the community-driven Internet exchange operator with exchanges in Montréal, Québec City, Ottawa and Toronto. Co-founder of MTLNOG, a non-profit organization founded in 2019 and federally incorporated in 2021 that now has over 110 members, Eric helps bring Montreal's network operators and engineers together to share knowledge, strengthen peering relationships and grow a stronger local Internet community."
       },
       "jonathan": {
         "role": "Co-founder",
-        "bio": "Jonathan Senecal is a network operations leader and open-source developer in Montreal’s Internet community. Driven by a personal mission to make things, fix stuff and help others, he is known among peers as a curious, self-taught problem solver and a generous mentor. With almost 20 years of experience in the telecom industry, he has designed and operated telecommunications networks for service providers across Canada and the northern US. He is Manager, Network Operations and Technology at Métro Optic and also runs Les Réseaux Loop Inc., a network infrastructure consulting firm. A former board member of QIX (now CANIX), he was also a core maintainer of NetBox, an open-source tool widely used by network operators around the world, and continues to contribute to it. As co-founder of MTLNOG, a federally incorporated non-profit that brings together over 110 network operators and engineers in the Montreal area, Jonathan helps organize its meetups and promotes knowledge sharing and collaboration across the community."
+        "bio": "Jonathan Senecal is a network operations leader and open-source developer in Montreal's Internet community. Driven by a personal mission to make things, fix stuff and help others, he is known among peers as a curious, self-taught problem solver and a generous mentor. With almost 20 years of experience in the telecom industry, he has designed and operated telecommunications networks for service providers across Canada and the northern US. He is Manager, Network Operations and Technology at Métro Optic and also runs Les Réseaux Loop Inc., a network infrastructure consulting firm. A former board member of QIX (now CANIX), he was also a core maintainer of NetBox, an open-source tool widely used by network operators around the world, and continues to contribute to it. As co-founder of MTLNOG, a federally incorporated non-profit that brings together over 110 network operators and engineers in the Montreal area, Jonathan helps organize its meetups and promotes knowledge sharing and collaboration across the community."
       },
       "denis": {
         "role": "Ad Hoc Director",
-        "bio": "Denis Bonneau is a recognized leader in the telecommunications, digital infrastructure, and broadcast technology sectors. With more than 20 years of experience in business development and building technology communities, he recently joined MTLNOG as an Ad Hoc Director. Drawing on his experience with SMPTE, where he actively contributed to the growth and visibility of the Montreal/Quebec Section, Denis supports MTLNOG in developing its activities, strengthening its network of partners, and creating high-value events for Quebec’s networking and Internet community."
+        "bio": "Denis Bonneau is a recognized leader in the telecommunications, digital infrastructure, and broadcast technology sectors. With more than 20 years of experience in business development and building technology communities, he recently joined MTLNOG as an Ad Hoc Director. Drawing on his experience with SMPTE, where he actively contributed to the growth and visibility of the Montreal/Quebec Section, Denis supports MTLNOG in developing its activities, strengthening its network of partners, and creating high-value events for Quebec's networking and Internet community."
       }
     }
   },
   "sponsorship": {
     "meta": {
       "title": "Sponsorship // MTLNOG",
-      "description": "Sponsor MTLNOG’s in-person events in Montréal: sponsorship tiers, projected costs and how your support is used."
+      "description": "Sponsor MTLNOG's in-person events in Montréal: sponsorship tiers, projected costs and how your support is used."
     },
     "label": "Sponsorship {year} · BBQ & meetings",
-    "heading": "Support Montreal’s network operator community",
+    "heading": "Support Montreal's network operator community",
     "missionHeading": "Our mission",
     "mission": [
       "MTLNOG is a non-profit organization established in 2019 with the aim of fostering coordination and collaboration among network operators in the greater Montreal area. Our mission is to facilitate knowledge sharing and professional development among networking professionals from diverse industries.",
@@ -137,8 +137,8 @@
           "Valid for all three (3) MTLNOG events of {year}.",
           "Provides local recognition and branding exposure, extending to all MTLNOG events throughout the year",
           "Priority placement of your company logo/presence with banners (provided by the sponsor)",
-          "Logo placement on swag (for {year}, t-shirt only) as MTLNOG’s Gold partner",
-          "Large-sized logo and link on the {upcoming} page of MTLNOG’s website",
+          "Logo placement on swag (for {year}, t-shirt only) as MTLNOG's Gold partner",
+          "Large-sized logo and link on the {upcoming} page of MTLNOG's website",
           "Two social media posts (before and after each {year} event) on LinkedIn, Mastodon, Bluesky, and X",
           "Speaking slot (15-20 min) at one {year} event of your choice",
           "Permanent mention on the {past} page",
@@ -150,7 +150,7 @@
         "bullets": [
           "Valid for all three MTLNOG events of {year}.",
           "Provides year long local recognition and branding exposure.",
-          "Logo and link on the {upcoming} page of MTLNOG’s website",
+          "Logo and link on the {upcoming} page of MTLNOG's website",
           "Two social media posts (before and after each of the events) on LinkedIn, Mastodon, Bluesky, and X",
           "Sponsorship highlight during welcoming presentation.",
           "Permanent mention on the {past} page"
@@ -196,7 +196,7 @@
         "Please let us know if you have any questions or require further information. We look forward to partnering with you to make our events a resounding success."
       ],
       "cta": "Contact us →",
-      "note": "Note: The proposed sponsorship program is subject to revision and customization based on individual sponsors’ requirements and preferences."
+      "note": "Note: The proposed sponsorship program is subject to revision and customization based on individual sponsors' requirements and preferences."
     }
   }
 }
