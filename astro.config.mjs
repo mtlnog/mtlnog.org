@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   // Local dev/preview only — these servers don't exist in production (the site
-  // ships as static files via Cloudflare Pages). Allow access by any hostname
+  // ships as static assets on a Cloudflare Worker). Allow access by any hostname
   // so `--host` works behind a reverse proxy or by machine name (e.g. r630-js),
   // not just localhost/IP. Astro's dev and static-preview servers both read
   // this `server.allowedHosts` value.
