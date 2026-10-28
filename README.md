@@ -31,6 +31,24 @@ npm run build     # static output to dist/
 npm run preview   # serve the built site locally
 ```
 
+## Pages and yearly updates
+
+| Page | French | English |
+|---|---|---|
+| Home + invite form | `/fr/` | `/en/` |
+| Meetings | `/fr/rencontres/` | `/en/meetings/` |
+| Team | `/fr/equipe/` | `/en/team/` |
+| Sponsorship | `/fr/commandites/` | `/en/sponsorship/` |
+
+URLs are defined once in `src/i18n/routes.ts`. All page text lives in `src/i18n/{fr,en}.json`. Facts that change over time live in `src/data/`:
+
+- `sponsorship.ts`: program year, stats and their date, meeting months, tier prices and limits, per-meeting costs. Update it each year.
+- `meetings.ts`: add a meeting (`date`, `title`, `venue`, optional `url`) and it shows under Upcoming until its date passes, then under Past on the next build.
+- `team.ts`: members and emails. To add a photo, put it in `public/team/` and set `photo: '/team/<name>.jpg'`; until then the page shows initials.
+- `social.ts`: social links used in the hero, footer and Team page.
+
+Links like `/en/?type=sponsorship#invite` open the invite form with that option pre-selected.
+
 ## Deploy (Cloudflare Workers - static assets)
 
 The GitHub repo is connected to Cloudflare via Workers Builds; CF builds and deploys on push to `main`. Deploy config lives in `wrangler.jsonc` (Worker name `mtlnog-org`; the built site in `./dist` is served as static assets).
